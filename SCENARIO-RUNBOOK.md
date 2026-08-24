@@ -1,3 +1,12 @@
+<a id="top"></a>
+
+> 🧭 [Scenario 03](README.md) › **Scenario 03 Runbook — Fast Flux DNS**
+
+![Scenario](https://img.shields.io/badge/Scenario_03-Planned-6E7781?style=flat-square)
+![DNSentinel](https://img.shields.io/badge/DNSentinel-Technical_Record-FF9F43?style=flat-square)
+
+---
+
 # Scenario 03 Runbook — Fast Flux DNS
 
 **Status:** Planned — reuses Scenario 02 resolver/victim platform  
@@ -250,3 +259,13 @@ This section should be updated with the actual fields/ports seen during executio
 ## Completion gate
 
 The team proves changing controlled answers, correlates them with client network behavior, tunes against benign change patterns, validates AI/SOC analysis, and records cleanup/reset of temporary Fast Flux resources.
+
+---
+
+<div align="center">
+
+[🏠 Scenario Home](README.md) · [🏗️ Infrastructure](https://github.com/DNSentinel-Lab/DNS-Lab-Infrastructure) · [⬆ Back to top](#top)
+
+<sub>DNSentinel Lab · Evidence-first DNS security engineering</sub>
+
+</div>
