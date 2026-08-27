@@ -51,21 +51,133 @@ Changing DNS answers are not automatically malicious. The project is designed to
 ## 🏗️ Scenario Architecture
 
 ```mermaid
+%%{init: {"themeVariables": {"fontSize": "20px"}}}%%
+
 flowchart LR
-    V[Victim] --> R[Defender DNS Resolver]
-    R --> F[flux.soclab...]
-    F --> A[IP A]
-    F --> B[IP B]
-    F --> C[IP C]
-    A --> CH[Short TTL + Answer Churn]
-    B --> CH
-    C --> CH
-    R -->|DNS telemetry| SPL[Splunk Enterprise]
-    V -->|follow-up network traffic| FLOW[VPC Flow Evidence]
-    CH --> SPL
-    FLOW --> SPL
-    SPL --> SOC[SOC Investigation]
-    SOC --> IR[Human Response + Reset Verification]
+
+    %% =====================================================
+    %% 1 — CLIENT + DNS
+    %% =====================================================
+    subgraph S1[" "]
+        direction TB
+
+        H1["💻 1 · CLIENT + DNS"]
+
+        V["🧑 Victim"]
+        R["🛡️ Defender<br/>DNS Resolver"]
+
+        H1 --> V --> R
+    end
+
+
+    %% =====================================================
+    %% 2 — FAST FLUX
+    %% =====================================================
+    subgraph S2[" "]
+        direction TB
+
+        H2["🌐 2 · FAST FLUX"]
+
+        F["🌍 flux.soclab..."]
+        IPS["🔁 IP A · IP B · IP C"]
+        CH["⏱️ Short TTL<br/>Answer Churn"]
+
+        H2 --> F --> IPS --> CH
+    end
+
+
+    %% =====================================================
+    %% 3 — SECURITY EVIDENCE
+    %% =====================================================
+    subgraph S3[" "]
+        direction TB
+
+        H3["📡 3 · SECURITY EVIDENCE"]
+
+        EV["🌐 DNS Evidence<br/>+ 🔀 VPC Flow"]
+        SPL["🟢 Splunk<br/>Enterprise"]
+
+        H3 --> EV --> SPL
+    end
+
+
+    %% =====================================================
+    %% 4 — SOC RESPONSE
+    %% =====================================================
+    subgraph S4[" "]
+        direction TB
+
+        H4["🛡️ 4 · SOC RESPONSE"]
+
+        SOC["🔎 SOC<br/>Investigation"]
+        IR["👤 Human Response<br/>+ Reset Verify"]
+
+        H4 --> SOC --> IR
+    end
+
+
+    %% =====================================================
+    %% HORIZONTAL STAGE FLOW
+    %% Group-to-group links preserve the four-column layout
+    %% =====================================================
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+
+
+    %% =====================================================
+    %% HEADER STYLES
+    %% =====================================================
+    classDef h1 fill:#172554,stroke:#60a5fa,stroke-width:3px,color:#ffffff,font-size:21px,font-weight:bold;
+    classDef h2 fill:#422006,stroke:#fbbf24,stroke-width:3px,color:#ffffff,font-size:21px,font-weight:bold;
+    classDef h3 fill:#083344,stroke:#22d3ee,stroke-width:3px,color:#ffffff,font-size:21px,font-weight:bold;
+    classDef h4 fill:#450a0a,stroke:#f87171,stroke-width:3px,color:#ffffff,font-size:21px,font-weight:bold;
+
+    class H1 h1;
+    class H2 h2;
+    class H3 h3;
+    class H4 h4;
+
+
+    %% =====================================================
+    %% LARGE NODE TEXT
+    %% =====================================================
+    classDef endpoint fill:#172554,stroke:#60a5fa,stroke-width:2px,color:#ffffff,font-size:20px;
+    classDef resolver fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#ffffff,font-size:20px;
+
+    classDef flux fill:#3b0764,stroke:#c084fc,stroke-width:2px,color:#ffffff,font-size:20px;
+    classDef ips fill:#312e81,stroke:#818cf8,stroke-width:2px,color:#ffffff,font-size:20px;
+    classDef churn fill:#713f12,stroke:#fbbf24,stroke-width:2px,color:#ffffff,font-size:20px;
+
+    classDef evidence fill:#164e63,stroke:#38bdf8,stroke-width:2px,color:#ffffff,font-size:20px;
+    classDef splunk fill:#052e16,stroke:#4ade80,stroke-width:3px,color:#ffffff,font-size:20px;
+
+    classDef soc fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#ffffff,font-size:20px;
+    classDef ir fill:#450a0a,stroke:#f87171,stroke-width:3px,color:#ffffff,font-size:20px;
+
+    class V endpoint;
+    class R resolver;
+
+    class F flux;
+    class IPS ips;
+    class CH churn;
+
+    class EV evidence;
+    class SPL splunk;
+
+    class SOC soc;
+    class IR ir;
+
+
+    %% =====================================================
+    %% CONTAINER STYLES
+    %% =====================================================
+    style S1 fill:#0d1117,stroke:#60a5fa,stroke-width:1px
+    style S2 fill:#0d1117,stroke:#fbbf24,stroke-width:1px
+    style S3 fill:#0d1117,stroke:#22d3ee,stroke-width:1px
+    style S4 fill:#0d1117,stroke:#f87171,stroke-width:1px
+
+    linkStyle default stroke:#a8b3c2,stroke-width:2.5px
 ```
 
 > The design emphasizes DNS answer churn plus network destination evidence rather than treating one changing A record as proof of Fast Flux.
