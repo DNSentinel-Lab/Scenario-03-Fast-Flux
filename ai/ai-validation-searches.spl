@@ -1,0 +1,37 @@
+# Existing AI events / correct index
+index=dns_soc_ai earliest=-24h
+| sort - _time
+| table _time source sourcetype _raw
+
+# Scenario 03 AI output
+index=dns_soc_ai earliest=-30m
+| spath
+| search alert.alert_name="Suspicious Fast Flux DNS Behavior"
+       OR alert_name="Suspicious Fast Flux DNS Behavior"
+       OR "Suspicious Fast Flux DNS Behavior"
+| table _time alert.alert_name alert_name ai.summary ai.confidence _raw
+| sort - _time
+
+# Manual test event
+index=dns_soc_ai earliest=-15m
+alert.alert_id="scenario-03-fastflux-test"
+| spath
+| table _time alert.alert_name ai.summary ai.confidence ai.mitre_attack ai.cyber_kill_chain
+
+# Native webhook failures / status
+index=_internal earliest=-30m
+("Suspicious Fast Flux DNS Behavior" OR "webhook")
+(ERROR OR WARN OR "sendmodalert")
+| table _time log_level component _raw
+| sort - _time
+
+# Webhook action status
+index=_internal earliest=-20m
+component=sendmodalert action=webhook
+| table _time log_level _raw
+| sort - _time
+
+# Verify saved search contents
+| rest /servicesNS/admin/search/saved/searches
+| search title="Suspicious Fast Flux DNS Behavior"
+| table title search cron_schedule actions action.webhook.param.url

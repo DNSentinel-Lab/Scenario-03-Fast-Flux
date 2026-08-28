@@ -1,0 +1,4 @@
+index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow earliest=-30m
+src_ip="10.50.30.20"
+| head 20
+| table _time src_ip dest_ip src_port dest_port protocol action bytes duration

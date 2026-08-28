@@ -1,0 +1,7 @@
+query_name,reason
+ssm.us-east-1.amazonaws.com,AWS Systems Manager
+guardduty-data.us-east-1.amazonaws.com,AWS GuardDuty
+s3.us-east-1.amazonaws.com,AWS S3
+route53.amazonaws.com,AWS Route 53
+esm.ubuntu.com,Ubuntu ESM
+quickdraw.splunk.com,Splunk service

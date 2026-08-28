@@ -1,0 +1,6 @@
+index=dns_soc_aws sourcetype=aws:s3 earliest=-30m
+"flux.soclab.abdul4rehman215.tech"
+| spath
+| rename answers{}.Rdata as answer_ip
+| table _time query_name query_type rcode answer_ip srcaddr
+| sort - _time

@@ -1,0 +1,17 @@
+index=dns_soc_dns sourcetype=unbound:dns earliest=-15m
+| rex "query:\s+(?<client_ip>\d+\.\d+\.\d+\.\d+)\s+(?<domain>[^\s]+)\.\s+A\s+IN"
+| where isnotnull(client_ip)
+| eval evidence_type="DNS"
+| fields _time client_ip domain evidence_type
+| append [
+    search index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow earliest=-15m src_ip="10.50.30.20" dest_port=80
+    | where NOT cidrmatch("10.0.0.0/8",dest_ip) AND NOT cidrmatch("172.16.0.0/12",dest_ip) AND NOT cidrmatch("192.168.0.0/16",dest_ip)
+    | rename src_ip as client_ip
+    | eval evidence_type="NETWORK"
+    | eval network_dest=dest_ip
+    | fields _time client_ip evidence_type network_dest
+]
+| bin _time span=5m
+| stats count(eval(evidence_type="DNS")) as dns_queries count(eval(evidence_type="NETWORK")) as network_connections dc(network_dest) as unique_public_destinations values(network_dest) as destination_ips values(domain) as domains by _time client_ip
+| where dns_queries>0 AND unique_public_destinations>=2
+| sort _time

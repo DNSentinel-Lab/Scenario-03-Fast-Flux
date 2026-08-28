@@ -1,0 +1,12 @@
+index=dns_soc_ai earliest=-24h
+"Suspicious Fast Flux DNS Behavior"
+| spath
+| sort - _time
+| head 1
+| eval detection_name="Suspicious Fast Flux DNS Behavior"
+| eval severity="Medium"
+| eval mitre_technique="T1568.001"
+| eval mitre_name="Dynamic Resolution: Fast Flux DNS"
+| eval detection_window="5 minutes"
+| eval tuning="Benign dynamic domains excluded via lookup"
+| table detection_name severity mitre_technique mitre_name detection_window tuning

@@ -1,271 +1,105 @@
-<a id="top"></a>
-
-> 🧭 [Scenario 03](README.md) › **Scenario 03 Runbook — Fast Flux DNS**
-
-![Scenario](https://img.shields.io/badge/Scenario_03-Planned-6E7781?style=flat-square)
-![DNSentinel](https://img.shields.io/badge/DNSentinel-Technical_Record-FF9F43?style=flat-square)
-
----
-
 # Scenario 03 Runbook — Fast Flux DNS
 
-**Status:** Planned — reuses Scenario 02 resolver/victim platform  
-**Primary MITRE ATT&CK:** T1568.001 — Dynamic Resolution: Fast Flux DNS
+**Scenario status:** 🟠 Ready for official execution  
+**Infrastructure:** ✅ Validated  
+**Detection Engineering:** ✅ Complete  
+**Official SOC / IR:** ⏳ Pending
 
-This is the working checklist for the scenario. Sections remain marked **Planned** until real implementation or evidence exists. Do not fill gaps with invented values.
+## 1. Objective — ✅ Ready
 
-## 1. Objective
+Investigate controlled Fast Flux-like DNS behavior by combining changing A answers, client follow-up network destinations, benign dynamic-DNS context and human response decisions.
 
-Use the controlled lab namespace to produce a domain whose answers change across multiple team-controlled IP addresses with short TTL behavior, then investigate the DNS and network evidence together.
+## 2. Architecture — ✅ Implemented
 
-**Status:** Planned.
+- victim: `10.50.30.20`;
+- defender resolver: `10.50.30.10`;
+- controlled flux nodes: `10.60.10.21–23` with public HTTP reachability;
+- `flux.soclab.abdul4rehman215.tech` with 60-second TTL;
+- Route 53 UPSERT rotation;
+- Splunk Resolver + VPC Flow + AI evidence.
 
-## 2. Architecture
+## 3. Roles — ✅ Locked
 
-Describe only the systems and paths actually used when the scenario is prepared.
+| Role | Owner |
+|---|---|
+| Attack / Simulation | Lubaba |
+| SOC Analyst / Hunter | Abdul-Rehman |
+| Detection Engineer | Musfira |
+| IR / Defender | Sonia |
 
-```text
-Shared infrastructure
-      ↓
-Scenario-specific infrastructure (if any)
-      ↓
-Controlled simulation
-      ↓
-Telemetry
-      ↓
-Splunk / AI / Human SOC / IR
-```
+## 4. Infrastructure / pre-flight — ✅ Validated
 
-**Scenario infrastructure dependency:** Reuse the Scenario 02 resolver, victim and sinkhole. At preparation time, provision or identify a small set of team-controlled reachable endpoints/IPs and create temporary short-TTL `flux.soclab.abdul4rehman215.tech` DNS behavior. Remove/reset temporary resources after the exercise.
+The three-node pool, SG, HTTP responses, Route 53 update path, authoritative answers, victim cache refresh, follow-up connections and VPC Flow evidence have been proven.
 
-**Status:** Planned.
+## 5. Baseline — ✅ Complete
 
-## 3. Prerequisites
+Normal victim network/DNS behavior was measured before final thresholds were frozen.
 
-Before execution, confirm:
+## 6. Hunting — ✅ Complete
 
-- required shared infrastructure is healthy;
-- scenario-specific infrastructure, if any, has been built and validated;
-- telemetry is arriving with usable timestamps/fields;
-- the shared AI bridge is available;
-- the Project Lead has the approved simulation plan and ground-truth clock;
-- Detection Engineer has captured the normal baseline before attack activity;
-- SOC Analyst and IR/Defender know the expected exercise window but do not receive the final detection answer in advance.
+Public destination churn, Resolver answer churn and DNS-answer/network matching were tested. Legitimate dynamic services were found and used for tuning.
 
-**Status:** Planned.
+## 7. Detection — ✅ Complete
 
-## 4. Attack / Simulation
-
-Record the final controlled commands/tools, safety limits and start/end timestamps only when the exercise is executed.
-
-The simulation must stay inside owned/authorized lab infrastructure and match the scenario objective.
-
-**Status:** Planned.
-
-## 5. Telemetry
-
-List the real sources that capture this scenario. Candidate shared sources include:
-
-- Route 53 public authoritative query logs;
-- AWS VPC Resolver Query Logs;
-- team-controlled resolver logs from Scenario 02 onward;
-- VPC Flow Logs;
-- Nginx access telemetry when Web follow-up is relevant;
-- CloudTrail when control-plane changes are part of the evidence;
-- endpoint/client telemetry only where it is actually collected.
-
-Do not force unused telemetry into the scenario.
-
-**Status:** Planned.
-
-## 6. Detection
-
-Detection focus:
-
-- one hostname returning multiple/changing answer IPs;
-- short TTL behavior and answer churn across time windows;
-- distinct destination count;
-- correlation between DNS answers and victim connections;
-- VPC Flow evidence for follow-up destinations;
-- normal CDN-like or benign address changes considered during tuning;
-
-Write the final behavioral hypothesis after observing baseline data.
-
-**Status:** Planned.
-
-## 7. SPL / Detection Logic
-
-Use files under [`spl/`](spl/) after real searches exist:
+Detection v1.0: [`spl/detection.spl`](spl/detection.spl)
 
 ```text
-baseline.spl
-hunting.spl
-detection.spl
-validation.spl
+5-minute window
+unique_matched_ips >= 2
+matched_connections >= 3
+A + NOERROR
+public answers only
+known benign dynamic domains excluded
 ```
 
-Thresholds must be tuned from real baseline and controlled testing rather than copied from an example.
+## 8. Alert — ✅ Complete
 
-**Status:** Planned.
+Scheduled every five minutes, Number of Results > 0, Triggered Alerts + webhook.
 
-## 8. Alert
+## 9. AI assistance — ✅ Engineering validated
 
-The final alert should contain enough evidence for a human analyst to start investigation without guessing field meanings.
+Shared AI bridge receives the Scenario 03 result contract and writes advisory summaries to `dns_soc_ai`.
 
-Recommended common fields:
+## 10. Dashboard — ✅ Complete
 
-- detection name/version;
-- first/last event time;
-- observed client/source identity;
-- query count / unique-name count / scenario-specific metric;
-- relevant query names/types/results;
-- supporting Web/network context;
-- severity and rationale;
-- raw-event or drilldown search.
+Final JSON: [`dashboard/scenario-03-fast-flux-detection.dashboard.json`](dashboard/scenario-03-fast-flux-detection.dashboard.json)
 
-**Status:** Planned.
+## 11. Official simulation — ⏳ Pending
 
-## 9. AI Triage
+Owner: Lubaba. Use [`attacker/SCENARIO-03-ADVERSARY-PLAYBOOK.md`](attacker/SCENARIO-03-ADVERSARY-PLAYBOOK.md). Keep ground truth private until defender decisions are locked.
 
-The shared AI bridge is reused. This repository adds only the scenario profile/payload mapping after the detection fields are stable.
+## 12. SOC analysis — ⏳ Pending
 
-Record:
+Owner: Abdul-Rehman. Use [`soc/investigation-template.md`](soc/investigation-template.md).
 
-- payload sent;
-- AI summary returned;
-- useful observations;
-- missing/incorrect claims;
-- what the SOC Analyst verified independently.
+## 13. IR / containment — ⏳ Pending
 
-**Status:** Planned.
+Owner: Sonia. Use [`ir/response-playbook.md`](ir/response-playbook.md). Response must be human-approved and narrow.
 
-## 10. SOC Analysis
+## 14. Verification — ⏳ Pending
 
-Build the human investigation timeline from raw evidence. Document pivots, competing explanations, disposition and confidence.
+Prove before/after DNS + network behavior and normal DNS continuity.
 
-The AI output is supporting context only.
+## 15. Cleanup / reset — ⏳ Pending
 
-**Status:** Planned.
+Stop rotation, reset temporary DNS/response policy as agreed, stop/terminate temporary flux resources when the exercise is closed, and verify safe state.
 
-## 11. Incident Response
+## 16. Final comparison — ⏳ Pending
 
-The response should prevent or redirect access to the controlled Fast Flux namespace only after analyst confirmation. Verification must show the DNS/network effect, not merely that a rule was saved.
+Compare Lubaba ground truth with Detection v1.0, AI summary, Abdul-Rehman's SOC conclusion and Sonia's IR decision.
 
-Record the approved decision and who performed it.
+## 17. MITRE — ✅ Locked
 
-**Status:** Planned.
+`T1568.001 — Dynamic Resolution: Fast Flux DNS`
 
-## 12. Evidence
+## 18. False positives — ✅ Engineering complete
 
-Store structured evidence notes under [`evidence/`](evidence/) and screenshots under [`screenshots/`](screenshots/).
+Known dynamic AWS/Ubuntu/Splunk services were observed and tuned through a lookup. The analyst must still consider CDN/cloud/load-balancing context.
 
-Evidence should cover:
+## 19. Lessons — 🟡 Engineering lessons complete
 
-- pre-scenario health/baseline;
-- ground-truth timing;
-- telemetry;
-- detection/alert;
-- AI output;
-- SOC analysis;
-- containment;
-- verification.
+Detection Engineering lessons are documented. Official exercise lessons remain pending.
 
-**Status:** Planned.
+## 20. Screenshots / evidence — 🟡 Engineering curated
 
-## 13. Containment
-
-Containment is performed only after the human investigation reaches the scenario's approved response condition.
-
-Do not treat detection or AI output as automatic authorization.
-
-**Status:** Planned.
-
-## 14. Verification
-
-Prove what changed after response. Use before/after DNS, network, Web or endpoint evidence appropriate to the scenario.
-
-**Status:** Planned.
-
-## 15. Results
-
-Summarize the final outcome after the exercise:
-
-- detection result;
-- SOC disposition;
-- response result;
-- verification result;
-- whether the scenario completion condition passed.
-
-**Status:** Planned.
-
-## 16. MITRE ATT&CK Mapping
-
-Primary mapping: **T1568.001 — Dynamic Resolution: Fast Flux DNS**.
-
-Review the mapping against the behavior that was actually generated and detected. Add no extra techniques unless evidence supports them.
-
-If a Cyber Kill Chain view is included, record only the phase that the implemented behavior genuinely demonstrates and cite the scenario evidence for that choice.
-
-**Status:** Planned.
-
-## 17. False Positives
-
-Test plausible benign activity that resembles part of the scenario. Record each threshold or logic change and why it improved separation.
-
-**Status:** Planned.
-
-## 18. Lessons Learned
-
-Capture useful technical, detection, analyst and IR lessons. Write them as reusable engineering knowledge rather than a chat/debugging transcript.
-
-**Status:** Planned.
-
-## 19. Reproduction Instructions
-
-At completion, provide a clean ordered path:
-
-```text
-Prerequisites
-→ scenario infrastructure
-→ baseline
-→ controlled simulation
-→ validate telemetry
-→ run detection
-→ investigate
-→ AI comparison
-→ contain
-→ verify
-→ cleanup/reset
-```
-
-**Status:** Planned.
-
-## 20. Screenshots
-
-Use descriptive filenames and show screenshots next to the sections they prove. Keep a compact screenshot index in [`screenshots/README.md`](screenshots/README.md).
-
-**Status:** Planned.
-
-## Network & protocol view
-
-- Layer 7 DNS: answer IP set, TTL and answer-change timing;
-- Layer 4: client connections to returned services/ports where generated;
-- Layer 3: changing destination IPs and VPC Flow evidence;
-- Endpoint/client: monitored victim identity;
-- Containment: resolver block/sinkhole or controlled destination restriction when approved;
-
-This section should be updated with the actual fields/ports seen during execution.
-
-## Completion gate
-
-The team proves changing controlled answers, correlates them with client network behavior, tunes against benign change patterns, validates AI/SOC analysis, and records cleanup/reset of temporary Fast Flux resources.
-
----
-
-<div align="center">
-
-[🏠 Scenario Home](README.md) · [🏗️ Infrastructure](https://github.com/DNSentinel-Lab/DNS-Lab-Infrastructure) · [⬆ Back to top](#top)
-
-<sub>DNSentinel Lab · Evidence-first DNS security engineering</sub>
-
-</div>
+Infrastructure and Detection Engineering evidence is curated. Official attacker/SOC/IR evidence will be added only after execution.

@@ -1,0 +1,3 @@
+index=dns_soc_aws earliest=-24h
+| stats count by sourcetype
+| sort - count

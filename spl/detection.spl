@@ -1,0 +1,80 @@
+index=dns_soc_aws sourcetype=aws:s3 earliest=-30m
+| spath
+| rename answers{}.Rdata as answer_ip
+| where query_type="A" AND rcode="NOERROR" AND isnotnull(answer_ip)
+| eval query_name=lower(rtrim(query_name,"."))
+| mvexpand answer_ip
+| eval bucket=_time
+| bin bucket span=5m
+| fields bucket query_name answer_ip
+| dedup bucket query_name answer_ip
+
+| join type=inner max=0 bucket answer_ip [
+    search index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow earliest=-30m
+    src_ip="10.50.30.20"
+    | where NOT cidrmatch("10.0.0.0/8",dest_ip)
+        AND NOT cidrmatch("172.16.0.0/12",dest_ip)
+        AND NOT cidrmatch("192.168.0.0/16",dest_ip)
+    | eval bucket=_time
+    | bin bucket span=5m
+    | rename dest_ip as answer_ip
+    | fields bucket src_ip answer_ip
+]
+
+| stats
+    count as matched_connections
+    dc(answer_ip) as unique_matched_ips
+    values(answer_ip) as matched_ips
+  by bucket query_name src_ip
+
+| where unique_matched_ips>=2
+      AND matched_connections>=3
+
+| lookup fastflux_benign_domains.csv query_name OUTPUT reason as benign_reason
+| where isnull(benign_reason)
+
+| rename bucket as _time
+
+| eval alert_id="scenario-03-fastflux-" . strftime(_time,"%Y%m%d%H%M%S")
+| eval alert_name="Suspicious Fast Flux DNS Behavior"
+| eval scenario="Scenario 03 - Fast Flux DNS"
+| eval severity="medium"
+| eval event_time=strftime(_time,"%Y-%m-%dT%H:%M:%SZ")
+| eval source=src_ip
+
+| eval mitre_technique="T1568.001"
+| eval mitre_name="Dynamic Resolution: Fast Flux DNS"
+
+| eval detection_reason="Multiple DNS answer IPs were followed by connections to those same IPs within 5 minutes"
+| eval matched_ips_text=mvjoin(matched_ips,",")
+
+| eval evidence_json=json_object(
+    "client_ip",src_ip,
+    "domain",query_name,
+    "matched_connections",matched_connections,
+    "unique_matched_ips",unique_matched_ips,
+    "matched_ips",matched_ips_text,
+    "detection_reason",detection_reason,
+    "mitre_technique",mitre_technique,
+    "mitre_name",mitre_name
+)
+
+| table
+    _time
+    alert_id
+    alert_name
+    scenario
+    severity
+    event_time
+    source
+    evidence_json
+    src_ip
+    query_name
+    matched_connections
+    unique_matched_ips
+    matched_ips
+    mitre_technique
+    mitre_name
+    detection_reason
+
+| sort _time

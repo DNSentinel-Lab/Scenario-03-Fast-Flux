@@ -1,0 +1,4 @@
+index=dns_soc_dns sourcetype=unbound:dns earliest=-30m
+"flux.soclab.abdul4rehman215.tech"
+| head 20
+| table _time host source _raw

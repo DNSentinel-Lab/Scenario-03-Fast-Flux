@@ -1,28 +1,18 @@
 <a id="top"></a>
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1,6,14,20,26&height=225&section=header&text=Scenario%2003%20%E2%80%94%20Fast%20Flux%20DNS&fontSize=38&fontColor=ffffff&animation=fadeIn&fontAlignY=36&desc=DNSentinel%20Lab%20%7C%20Planned%20Dynamic%20Resolution%20Case%20File&descSize=16&descAlignY=58&descColor=FF9F43" width="100%" alt="Scenario 03 — Fast Flux DNS" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1,6,14,20,26&height=225&section=header&text=Scenario%2003%20%E2%80%94%20Fast%20Flux%20DNS&fontSize=38&fontColor=ffffff&animation=fadeIn&fontAlignY=36&desc=DNSentinel%20Lab%20%7C%20Infrastructure%20%2B%20Detection%20Engineering%20Complete%20%E2%80%94%20Official%20Execution%20Next&descSize=15&descAlignY=58&descColor=FF9F43" width="100%" alt="Scenario 03 — Fast Flux DNS" />
 
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=21&duration=2900&pause=900&color=FF9F43&center=true&vCenter=true&repeat=true&width=960&height=72&lines=Changing+Answers+%E2%86%92+Short+TTL+%E2%86%92+Network+Correlation;Design+Ready+%7C+Execution+Begins+When+Scenario+03+Starts" alt="Scenario workflow animation" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&duration=2900&pause=900&color=FF9F43&center=true&vCenter=true&repeat=true&width=1080&height=72&lines=Changing+Answers+%E2%86%92+Matched+Destinations+%E2%86%92+Behavioral+Detection;Infrastructure+%E2%9C%85+%7C+Detection+Engineering+%E2%9C%85+%7C+Official+SOC%2FIR+Exercise+Next" alt="Scenario workflow animation" />
 
-![Scenario](https://img.shields.io/badge/Scenario_03-Planned-6E7781?style=for-the-badge)
-![AWS](https://img.shields.io/badge/AWS-Security_Lab-FF9900?style=for-the-badge&logo=amazonwebservices&logoColor=white)
+![Scenario](https://img.shields.io/badge/Scenario_03-READY_FOR_EXECUTION-F59E0B?style=for-the-badge)
+![Infrastructure](https://img.shields.io/badge/Infrastructure-Validated-2EA44F?style=for-the-badge)
+![Detection](https://img.shields.io/badge/Detection_Engineering-Complete-2EA44F?style=for-the-badge)
 ![Splunk](https://img.shields.io/badge/Splunk-Enterprise-000000?style=for-the-badge&logo=splunk&logoColor=white)
-![DNS](https://img.shields.io/badge/DNS-Security-00B8D9?style=for-the-badge)
 ![MITRE](https://img.shields.io/badge/MITRE-T1568.001-E34F26?style=for-the-badge)
-![Unbound](https://img.shields.io/badge/Unbound-Defender_DNS-4C8BF5?style=for-the-badge)
-![AI](https://img.shields.io/badge/AI-Shared_Foundation-7B2CBF?style=for-the-badge)
+![AI](https://img.shields.io/badge/AI-Assisted_Triage-Validated-7B2CBF?style=for-the-badge)
 
-<br/>
-
-![Stars](https://img.shields.io/github/stars/DNSentinel-Lab/Scenario-03-Fast-Flux?style=flat-square)
-![Forks](https://img.shields.io/github/forks/DNSentinel-Lab/Scenario-03-Fast-Flux?style=flat-square)
-![Last Commit](https://img.shields.io/github/last-commit/DNSentinel-Lab/Scenario-03-Fast-Flux?style=flat-square)
-![Repo Size](https://img.shields.io/github/repo-size/DNSentinel-Lab/Scenario-03-Fast-Flux?style=flat-square)
-![License](https://img.shields.io/github/license/DNSentinel-Lab/Scenario-03-Fast-Flux?style=flat-square)
-![Issues](https://img.shields.io/github/issues/DNSentinel-Lab/Scenario-03-Fast-Flux?style=flat-square)
-
-**A planned dynamic-resolution investigation that will correlate controlled DNS answer churn and short TTL behavior with real client/network evidence before any response decision.**
+**A controlled Fast Flux DNS case file with validated AWS infrastructure, real DNS answer churn, victim follow-up traffic, a tuned Splunk detection, scheduled alerting, AI-assisted context, and a two-tab investigation dashboard. The official attacker → SOC → IR execution is intentionally still pending.**
 
 [🏗️ Infrastructure](https://github.com/DNSentinel-Lab/DNS-Lab-Infrastructure) · [🔎 Scenario 01](https://github.com/DNSentinel-Lab/Scenario-01-DNS-Recon) · [🧬 Scenario 02](https://github.com/DNSentinel-Lab/Scenario-02-DGA) · [**🔄 Scenario 03**](https://github.com/DNSentinel-Lab/Scenario-03-Fast-Flux) · [🛰️ Scenario 04](https://github.com/DNSentinel-Lab/Scenario-04-DNS-Tunneling)
 
@@ -30,302 +20,243 @@
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
-## 🎯 Mission Brief
+# 🔄 DNSentinel Scenario 03 — Fast Flux DNS
 
-| Field | Scenario record |
-|---|---|
-| **Mission** | Produce controlled Fast Flux-like DNS answer changes and investigate DNS answer churn together with client network behavior |
-| **Status** | ⚪ Planned — design ready; execution has not started |
-| **MITRE ATT&CK** | `T1568.001 — Dynamic Resolution: Fast Flux DNS` |
-| **Cyber Kill Chain** | Command & Control |
-| **Core DNS evidence** | Multiple/changing answer IPs, short TTL behavior, answer-change timing |
-| **Network evidence** | Victim follow-up destinations and VPC Flow correlation where generated |
-| **Response** | Human-approved DNS block/sinkhole or controlled destination restriction, followed by reset/verification |
+Scenario 03 asks a harder question than “did one hostname return more than one IP?” Legitimate cloud and CDN services also move between addresses. The engineering goal was therefore to build a controlled moving destination, make the victim genuinely follow those DNS answers, and then detect **DNS-returned public IPs that were actually contacted by the same victim in the same short time window**.
 
-### What this scenario is designed to prove
+> **Core question:** can we detect and investigate dynamic DNS infrastructure without confusing ordinary cloud/CDN behavior with malicious Fast Flux?
 
-Changing DNS answers are not automatically malicious. The project is designed to demonstrate how an analyst combines DNS answer churn, TTL behavior, destination changes and benign CDN-like tuning context before making a response decision.
+## 🚦 Current Status
 
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
-
-## 🏗️ Scenario Architecture
-
-```mermaid
-%%{init: {"themeVariables": {"fontSize": "20px"}}}%%
-
-flowchart LR
-
-    %% =====================================================
-    %% 1 — CLIENT + DNS
-    %% =====================================================
-    subgraph S1[" "]
-        direction TB
-
-        H1["💻 1 · CLIENT + DNS"]
-
-        V["🧑 Victim"]
-        R["🛡️ Defender<br/>DNS Resolver"]
-
-        H1 --> V --> R
-    end
-
-
-    %% =====================================================
-    %% 2 — FAST FLUX
-    %% =====================================================
-    subgraph S2[" "]
-        direction TB
-
-        H2["🌐 2 · FAST FLUX"]
-
-        F["🌍 flux.soclab..."]
-        IPS["🔁 IP A · IP B · IP C"]
-        CH["⏱️ Short TTL<br/>Answer Churn"]
-
-        H2 --> F --> IPS --> CH
-    end
-
-
-    %% =====================================================
-    %% 3 — SECURITY EVIDENCE
-    %% =====================================================
-    subgraph S3[" "]
-        direction TB
-
-        H3["📡 3 · SECURITY EVIDENCE"]
-
-        EV["🌐 DNS Evidence<br/>+ 🔀 VPC Flow"]
-        SPL["🟢 Splunk<br/>Enterprise"]
-
-        H3 --> EV --> SPL
-    end
-
-
-    %% =====================================================
-    %% 4 — SOC RESPONSE
-    %% =====================================================
-    subgraph S4[" "]
-        direction TB
-
-        H4["🛡️ 4 · SOC RESPONSE"]
-
-        SOC["🔎 SOC<br/>Investigation"]
-        IR["👤 Human Response<br/>+ Reset Verify"]
-
-        H4 --> SOC --> IR
-    end
-
-
-    %% =====================================================
-    %% HORIZONTAL STAGE FLOW
-    %% Group-to-group links preserve the four-column layout
-    %% =====================================================
-    S1 --> S2
-    S2 --> S3
-    S3 --> S4
-
-
-    %% =====================================================
-    %% HEADER STYLES
-    %% =====================================================
-    classDef h1 fill:#172554,stroke:#60a5fa,stroke-width:3px,color:#ffffff,font-size:21px,font-weight:bold;
-    classDef h2 fill:#422006,stroke:#fbbf24,stroke-width:3px,color:#ffffff,font-size:21px,font-weight:bold;
-    classDef h3 fill:#083344,stroke:#22d3ee,stroke-width:3px,color:#ffffff,font-size:21px,font-weight:bold;
-    classDef h4 fill:#450a0a,stroke:#f87171,stroke-width:3px,color:#ffffff,font-size:21px,font-weight:bold;
-
-    class H1 h1;
-    class H2 h2;
-    class H3 h3;
-    class H4 h4;
-
-
-    %% =====================================================
-    %% LARGE NODE TEXT
-    %% =====================================================
-    classDef endpoint fill:#172554,stroke:#60a5fa,stroke-width:2px,color:#ffffff,font-size:20px;
-    classDef resolver fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#ffffff,font-size:20px;
-
-    classDef flux fill:#3b0764,stroke:#c084fc,stroke-width:2px,color:#ffffff,font-size:20px;
-    classDef ips fill:#312e81,stroke:#818cf8,stroke-width:2px,color:#ffffff,font-size:20px;
-    classDef churn fill:#713f12,stroke:#fbbf24,stroke-width:2px,color:#ffffff,font-size:20px;
-
-    classDef evidence fill:#164e63,stroke:#38bdf8,stroke-width:2px,color:#ffffff,font-size:20px;
-    classDef splunk fill:#052e16,stroke:#4ade80,stroke-width:3px,color:#ffffff,font-size:20px;
-
-    classDef soc fill:#083344,stroke:#22d3ee,stroke-width:2px,color:#ffffff,font-size:20px;
-    classDef ir fill:#450a0a,stroke:#f87171,stroke-width:3px,color:#ffffff,font-size:20px;
-
-    class V endpoint;
-    class R resolver;
-
-    class F flux;
-    class IPS ips;
-    class CH churn;
-
-    class EV evidence;
-    class SPL splunk;
-
-    class SOC soc;
-    class IR ir;
-
-
-    %% =====================================================
-    %% CONTAINER STYLES
-    %% =====================================================
-    style S1 fill:#0d1117,stroke:#60a5fa,stroke-width:1px
-    style S2 fill:#0d1117,stroke:#fbbf24,stroke-width:1px
-    style S3 fill:#0d1117,stroke:#22d3ee,stroke-width:1px
-    style S4 fill:#0d1117,stroke:#f87171,stroke-width:1px
-
-    linkStyle default stroke:#a8b3c2,stroke-width:2.5px
-```
-
-> The design emphasizes DNS answer churn plus network destination evidence rather than treating one changing A record as proof of Fast Flux.
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
-
-## 🔄 SOC Lifecycle & Implementation Reality
-
-| Stage | State |
-|---|---|
-| **Design** | ✅ |
-| **Infrastructure Reuse** | 🟡 |
-| **Baseline** | ⚪ |
-| **Simulate** | ⚪ |
-| **Detect** | ⚪ |
-| **SOC/IR** | ⚪ |
-| **Verify** | ⚪ |
-| **Document** | 🟡 |
+| Workstream | Status | Owner |
+|---|---|---|
+| Fast Flux infrastructure extension | ✅ Complete / validated | [Musfira](https://github.com/MUSFIRA-ZAFAR) |
+| Detection Engineering + tuning | ✅ Complete | [Musfira](https://github.com/MUSFIRA-ZAFAR) |
+| Scheduled alert + Scenario 03 AI contract | ✅ Validated | [Musfira](https://github.com/MUSFIRA-ZAFAR) |
+| Dashboard Studio | ✅ Complete | [Musfira](https://github.com/MUSFIRA-ZAFAR) |
+| Official controlled simulation | ⏳ Pending | [Lubaba](https://github.com/lubaba1513-pixel) |
+| Independent SOC investigation | ⏳ Pending | [Abdul-Rehman](https://github.com/abdul4rehman215) |
+| IR / Defender response | ⏳ Pending | [Sonia](https://github.com/sonia11mansha415) |
+| Containment verification + safe reset | ⏳ Pending | Sonia + team |
+| Full scenario closeout | ⏳ Pending | Team |
 
 > [!IMPORTANT]
-> ✅ means supported by implemented project evidence. 🟡 means design/infrastructure/documentation exists but the scenario stage is not complete. ⚪ means planned and is **not presented as implemented**.
+> **Infrastructure complete + Detection Engineering complete does not mean the full scenario is complete.** The official information-separated attacker/SOC/IR exercise still has to be performed and documented.
 
+## 👥 Scenario 03 Roles
 
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+| Role | Owner | Responsibility |
+|---|---|---|
+| Attack / Simulation Operator | Lubaba | execute the frozen controlled Fast Flux exercise and preserve private ground truth |
+| SOC Analyst / Threat Hunter | Abdul-Rehman | investigate alerts independently and decide what the evidence proves |
+| Detection Engineer | Musfira | infrastructure telemetry validation, baseline, hunts, final SPL, tuning, alert, AI contract and dashboard |
+| Incident Responder / Defender | Sonia | independently validate the SOC handoff, apply an approved response, verify and reset |
 
-## 🎯 Objective
+## 🏗️ Implemented Architecture
 
-Use the controlled lab namespace to produce a domain whose answers change across multiple team-controlled IP addresses with short TTL behavior, then investigate the DNS and network evidence together.
+```mermaid
+flowchart LR
+    V[Victim\n10.50.30.20] --> R[Unbound Resolver\n10.50.30.10]
+    R --> F[flux.soclab.abdul4rehman215.tech\nTTL 60s]
+    F --> N1[Flux Node 01]
+    F --> N2[Flux Node 02]
+    F --> N3[Flux Node 03]
+    N1 --> NET[Victim HTTP Follow-up]
+    N2 --> NET
+    N3 --> NET
+    R --> DNS[Resolver Query Logs / Unbound]
+    NET --> FLOW[VPC Flow Logs]
+    DNS --> SPL[Splunk Enterprise]
+    FLOW --> SPL
+    SPL --> DET[Detection v1.0]
+    DET --> AI[Shared AI Bridge]
+    DET --> SOC[SOC Analyst]
+    AI --> SOC
+    SOC --> IR[IR / Defender - official run pending]
+```
 
-## 🏗️ Infrastructure Dependency
+### Controlled Fast Flux pool
 
-Reuse the Scenario 02 resolver, victim and sinkhole. At preparation time, provision or identify a small set of team-controlled reachable endpoints/IPs and create temporary short-TTL `flux.soclab.abdul4rehman215.tech` DNS behavior. Remove/reset temporary resources after the exercise.
+| Node | Private IP | Exercise-time public IP* |
+|---|---:|---:|
+| `dns-flux-node01` | `10.60.10.21` | `13.220.94.188` |
+| `dns-flux-node02` | `10.60.10.22` | `52.73.218.100` |
+| `dns-flux-node03` | `10.60.10.23` | `54.81.98.44` |
 
-The shared AWS/Splunk platform is not rebuilt inside this repository. Any new AWS resource is designed in the infrastructure project and documented there after it exists.
+\*Public addresses are **observed run values**, not permanent architecture constants. The rotation script refreshes current node public IPs before each cycle.
 
-## 🔎 Detection Focus
+The shared infrastructure implementation is documented in the [DNS-Lab-Infrastructure repository](https://github.com/DNSentinel-Lab/DNS-Lab-Infrastructure).
 
-- one hostname returning multiple/changing answer IPs;
-- short TTL behavior and answer churn across time windows;
-- distinct destination count;
-- correlation between DNS answers and victim connections;
-- VPC Flow evidence for follow-up destinations;
-- normal CDN-like or benign address changes considered during tuning;
+## ✅ What the Infrastructure Validation Proved
 
-## 🌐 Network & Protocol View
+The build was validated beyond “Route 53 changed a record.” The working chain became:
 
-- Layer 7 DNS: answer IP set, TTL and answer-change timing;
-- Layer 4: client connections to returned services/ports where generated;
-- Layer 3: changing destination IPs and VPC Flow evidence;
-- Endpoint/client: monitored victim identity;
-- Containment: resolver block/sinkhole or controlled destination restriction when approved;
+```text
+rotation script
+→ Route 53 UPSERT
+→ authoritative A answer changes
+→ resolver cache/TTL refresh
+→ victim receives new answer
+→ victim connects to that exact IP
+→ HTTP 200
+→ VPC Flow records the destination
+→ Splunk receives the evidence
+```
 
-DNS is Layer 7 evidence, but the scenario should correlate it with the Layer 3/4, endpoint, cloud or application evidence that actually helps prove the behavior.
+![Victim follows rotating DNS answers](screenshots/infrastructure/06-victim-follows-rotating-answers.png)
 
-## 📊 Planned Dashboard
+*The victim followed the DNS-returned destination and received HTTP 200 from the controlled Fast Flux nodes.*
 
-The dashboard should follow one shared time range and lead the analyst from summary → behavior → correlation → raw evidence.
+## 🧠 Detection Engineering — Completed by Musfira
 
-- Shared time range plus client/domain/answer filters;
-- KPIs: total queries, unique answer IPs, answer changes, TTL summary, unique destinations;
-- Answer/IP churn over time;
-- TTL distribution and current/previous answer sets;
-- Victim follow-up destinations from VPC Flow Logs;
-- Before/after containment or temporary-record reset evidence;
+Musfira did not begin with a pre-written Fast Flux rule. The work started with real field validation and repeatedly tested whether the proposed behavior could separate the lab activity from normal AWS/cloud traffic.
 
-See [`dashboard/README.md`](dashboard/README.md) for the planned layout.
+```text
+validate telemetry
+→ baseline normal victim traffic
+→ hunt public destination churn
+→ discover Resolver answer data in aws:s3
+→ extract answers{}.Rdata
+→ match DNS answers to VPC destinations
+→ test legitimate dynamic services
+→ reject weak discriminators
+→ tune through a benign lookup
+→ freeze Detection v1.0
+→ scheduled alert
+→ AI contract
+→ dashboard
+```
 
-## 👥 Team
+### The important false-positive lesson
 
-| Role | Member |
-|---|---|
-| Project Lead / Attack Simulation | Sonia |
-| SOC Analyst | Lubaba |
-| Detection Engineer | Abdul-Rehman |
-| IR / Defender | Musfira |
+A simple DNS churn hunt also found legitimate dynamic infrastructure such as AWS SSM, GuardDuty, S3, Route 53, Ubuntu ESM and a Splunk service. That result prevented the project from using the weak rule:
 
-## 🔄 Scenario Workflow
+```text
+multiple A records = Fast Flux
+```
 
-This repository follows the common 20-part standard:
+Instead, the final rule requires **DNS answer-to-network destination matching**, short-window concentration and explicit benign tuning.
 
-**Objective → Architecture → Prerequisites → Simulation → Telemetry → Detection → SPL → Alert → AI Triage → SOC Analysis → IR → Evidence → Containment → Verification → Results → MITRE → False Positives → Lessons → Reproduction → Screenshots.**
+![DNS churn hunt shows benign noise](screenshots/detection-engineering/04-dns-churn-benign-noise.png)
 
-The working checklist is [`SCENARIO-RUNBOOK.md`](SCENARIO-RUNBOOK.md).
+## 🎯 Detection v1.0
+
+**Name:** `Suspicious Fast Flux DNS Behavior`  
+**MITRE:** `T1568.001 — Dynamic Resolution: Fast Flux DNS`  
+**Severity:** Medium  
+**Behavioral window:** 5 minutes
+
+The rule requires:
+
+```text
+A / NOERROR Resolver response
++
+public DNS answer
++
+victim contacted the same returned IP
++
+unique_matched_ips >= 2
++
+matched_connections >= 3
++
+RFC1918 destinations excluded
++
+known benign dynamic domains excluded by lookup
+```
+
+The canonical search is preserved in [`spl/detection.spl`](spl/detection.spl).
+
+![Final tuned Fast Flux detection](screenshots/detection-engineering/06-final-detection.png)
+
+> The detection is behavior-based. It does not fire simply because the lab hostname contains the word `flux`.
+
+## 🔔 Operational Alerting + AI Assistance
+
+The frozen rule was operationalized as a scheduled Splunk alert:
+
+```text
+Schedule: */5 * * * *
+Trigger: Number of Results > 0
+Action: Triggered Alerts + Webhook
+Webhook: internal dns-soc-ai-bridge route
+```
+
+The final result contract includes `alert_id`, `alert_name`, `scenario`, `severity`, `event_time`, `source` and `evidence_json`. The shared bridge then returns advisory context to `index=dns_soc_ai`.
+
+AI remains a second opinion. The final AI result used **medium confidence** and did not claim that Fast Flux-like behavior alone proved malware.
+
+## 📊 Final Dashboard
+
+The final Dashboard Studio export is preserved at [`dashboard/scenario-03-fast-flux-detection.dashboard.json`](dashboard/scenario-03-fast-flux-detection.dashboard.json).
+
+### Detection Overview
+
+![Scenario 03 Detection Overview](screenshots/detection-engineering/11-dashboard-detection-overview.png)
+
+The overview combines detection activity, active answer count, 24-hour answer history and AI-assisted triage.
+
+### Detection Context
+
+![Scenario 03 Detection Context](screenshots/detection-engineering/12-dashboard-detection-context.png)
+
+The context tab keeps the detection name, Medium severity, MITRE `T1568.001`, five-minute window and benign lookup tuning visible to the analyst.
+
+## 🛠️ Engineering Lessons That Changed the Rule
+
+The strongest lessons were not cosmetic fixes. They changed the detection design:
+
+- a stale search window can look like a broken detection;
+- private HTTP destinations polluted the first multi-destination threshold, so RFC1918 ranges were excluded;
+- time-only DNS/network correlation mixed unrelated domains;
+- Resolver Query Logs were already present under generic `aws:s3` and exposed the real `answers{}.Rdata` field;
+- DNS churn alone produced legitimate cloud false positives;
+- “one answer per response” and “higher churn rate” were both tested and rejected as discriminators;
+- the lookup itself needed data-quality validation;
+- a working webhook route can still fail at the application schema boundary;
+- the dashboard kept a historical fourth IP instead of forcing the display to match the expected three-node story.
+
+See [`detection-engineering/TROUBLESHOOTING-AND-LESSONS.md`](detection-engineering/TROUBLESHOOTING-AND-LESSONS.md).
 
 ## 🗂️ Repository Navigation
 
+| Area | Purpose |
+|---|---|
+| [`detection-engineering/`](detection-engineering/) | full engineering story, validation and lessons |
+| [`spl/`](spl/) | baseline, hunts, final detection, validation, alert config and tuning lookup |
+| [`dashboard/`](dashboard/) | final Dashboard Studio JSON and five panel searches |
+| [`ai/`](ai/) | Scenario 03 payload/bridge mapping and validation artifacts |
+| [`evidence/`](evidence/) | engineering evidence and simulation validation references |
+| [`screenshots/`](screenshots/) | curated infrastructure, Detection Engineering and troubleshooting images |
+| [`attacker/`](attacker/) | official Lubaba execution plan / private ground-truth template |
+| [`soc/`](soc/) | Abdul-Rehman investigation template and questions |
+| [`ir/`](ir/) | Sonia response playbook — official response still pending |
+| [`exercise/`](exercise/) | official execution gates and closeout boundary |
+
+## ⏭️ What Happens Next
+
+The engineering environment should now be treated as frozen for the official exercise.
+
 ```text
-.
-├── README.md                 # scenario overview and locked design
-├── SCENARIO-RUNBOOK.md       # 20-part execution/documentation checklist
-├── dashboard/                # dashboard plan, later final XML/export
-├── spl/                      # baseline, hunting, detection and validation SPL
-├── ai/                       # scenario profile/payload mapping for shared AI bridge
-├── ir/                       # response/containment/verification record
-├── evidence/                 # structured ground truth and evidence notes
-└── screenshots/              # curated visual evidence
+Lubaba: controlled simulation + private ground truth
+        ↓
+Detection v1.0 / saved alert / AI / dashboard (unchanged)
+        ↓
+Abdul-Rehman: independent SOC investigation + disposition
+        ↓
+Sonia: independent IR validation + approved containment if warranted
+        ↓
+before/after verification + safe reset
+        ↓
+team ground-truth reveal + final closeout
 ```
 
-The folders are prepared now, but fake implementation artifacts are not. Real `.spl`, dashboard XML, AI profiles and evidence are added only when they have been built and tested.
-
-## 🔗 Shared Project References
-
-- [DNS Lab Infrastructure](https://github.com/DNSentinel-Lab/DNS-Lab-Infrastructure) — shared AWS, DNS, Splunk and AI foundation
-- [Scenario infrastructure roadmap](https://github.com/DNSentinel-Lab/DNS-Lab-Infrastructure/blob/main/00-project-design/scenario-infrastructure-roadmap.md) — future EC2/DNS/network changes owned by the infrastructure repository
-- [Scenario documentation standard](https://github.com/DNSentinel-Lab/DNS-Lab-Infrastructure/blob/main/00-project-design/scenario-documentation-standard.md) — common 20-part SOC workflow, dashboard and evidence rules
-
-## ✅ Completion Condition
-
-The team proves changing controlled answers, correlates them with client network behavior, tunes against benign change patterns, validates AI/SOC analysis, and records cleanup/reset of temporary Fast Flux resources.
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
-
-## 🧠 Security Engineering Skills in Scope
-
-| Skill area | Scenario evidence / design focus |
-|---|---|
-| **DNS Analysis** | Answer set changes, TTL and answer-change timing |
-| **Network Correlation** | Changing destination IPs and VPC Flow follow-up evidence |
-| **Detection Engineering** | Baseline/tuning against benign CDN-like behavior |
-| **SOC Investigation** | DNS + network evidence correlation |
-| **Incident Response** | Approved block/sinkhole or restriction plus cleanup/reset verification |
-| **AI-Assisted SOC** | Shared AI profile only after stable detection fields exist |
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
-
-## 📚 Documentation Model
-
-This scenario repository is a **case/execution layer** built on the shared [DNS Lab Infrastructure](https://github.com/DNSentinel-Lab/DNS-Lab-Infrastructure). It intentionally separates:
-
-- **Design / prerequisites** — what must exist before the exercise;
-- **Simulation / ground truth** — what the authorized operator actually generated;
-- **Detection Engineering** — baseline, hunting, tuned detection and validation;
-- **SOC investigation** — defender-visible evidence and human disposition;
-- **IR / containment** — independently justified response and verification;
-- **Evidence** — screenshots and structured artifacts that prove the final claims.
-
-> [!NOTE]
-> Planned work stays labelled as planned. This repository does not create fake screenshots, fake SPL results, fake ML metrics or fake incident outcomes to make a scenario look complete.
+No official SOC conclusion, containment result or final outcome is claimed in this repository yet.
 
 <div align="center">
 
 ### DNSentinel Lab
 **Build the telemetry. Prove the detection. Investigate the evidence. Verify the response.**
 
-[🏗️ Infrastructure](https://github.com/DNSentinel-Lab/DNS-Lab-Infrastructure) · [🔎 Scenario 01](https://github.com/DNSentinel-Lab/Scenario-01-DNS-Recon) · [🧬 Scenario 02](https://github.com/DNSentinel-Lab/Scenario-02-DGA) · [**🔄 Scenario 03**](https://github.com/DNSentinel-Lab/Scenario-03-Fast-Flux) · [🛰️ Scenario 04](https://github.com/DNSentinel-Lab/Scenario-04-DNS-Tunneling)
-
 [⬆ Back to top](#top)
 
 </div>
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1,6,14,20,26&height=120&section=footer" width="100%" alt="footer" />
