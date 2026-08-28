@@ -1,0 +1,6 @@
+index=dns_soc_dns sourcetype=unbound:dns earliest=-60m
+| rex "query:\s+(?<client_ip>\d+\.\d+\.\d+\.\d+)\s+(?<domain>[^\s]+)\.\s+(?<qtype>[A-Z]+)\s+IN"
+| where client_ip="10.50.30.20"
+| stats count as queries dc(qtype) as query_types values(qtype) as types by domain
+| sort - queries
+| head 20

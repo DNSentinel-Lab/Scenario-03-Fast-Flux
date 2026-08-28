@@ -1,0 +1,16 @@
+index=dns_soc_aws sourcetype=aws:s3 earliest=-30m
+| spath
+| rename answers{}.Rdata as answer_ip
+| where query_type="A" AND rcode="NOERROR" AND isnotnull(answer_ip)
+| eval query_name=lower(rtrim(query_name,"."))
+| mvexpand answer_ip
+| fields _time query_name answer_ip
+| join type=inner answer_ip [
+    search index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow earliest=-30m src_ip="10.50.30.20"
+    | rename dest_ip as answer_ip
+    | fields _time src_ip answer_ip
+]
+| bin _time span=5m
+| stats count as matched_connections dc(answer_ip) as unique_matched_ips values(answer_ip) as matched_ips by _time query_name src_ip
+| where unique_matched_ips>=2
+| sort _time

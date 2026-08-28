@@ -1,0 +1,10 @@
+index=dns_soc_aws sourcetype=aws:s3 earliest=-30m
+| spath
+| rename answers{}.Rdata as answer_ip
+| where query_type="A" AND rcode="NOERROR" AND isnotnull(answer_ip)
+| eval query_name=lower(rtrim(query_name,"."))
+| eval answer_ip=mvdedup(answer_ip)
+| eval unique_answers_this_response=mvcount(answer_ip)
+| search query_name="flux.soclab.abdul4rehman215.tech" OR query_name="ssm.us-east-1.amazonaws.com"
+| table _time query_name unique_answers_this_response answer_ip
+| sort - _time

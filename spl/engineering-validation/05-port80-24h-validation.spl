@@ -1,0 +1,4 @@
+index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow earliest=-24h
+src_ip="10.50.30.20" dest_port=80
+| stats count as connections dc(dest_ip) as unique_destinations values(dest_ip) as destination_ips min(_time) as first_seen max(_time) as last_seen
+| convert ctime(first_seen) ctime(last_seen)

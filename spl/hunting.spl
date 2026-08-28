@@ -1,0 +1,21 @@
+/* Hunt 1 — public HTTP destination churn from the victim */
+index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow earliest=-30m
+src_ip="10.50.30.20" dest_port=80
+| where NOT cidrmatch("10.0.0.0/8",dest_ip)
+    AND NOT cidrmatch("172.16.0.0/12",dest_ip)
+    AND NOT cidrmatch("192.168.0.0/16",dest_ip)
+| bin _time span=5m
+| stats count as connections dc(dest_ip) as unique_public_destinations values(dest_ip) as destination_ips by _time src_ip
+| where unique_public_destinations>=2
+| sort _time
+
+/* Hunt 2 — DNS A-answer churn from Resolver Query Logs */
+index=dns_soc_aws sourcetype=aws:s3 earliest=-30m
+| spath
+| rename answers{}.Rdata as answer_ip
+| where query_type="A" AND rcode="NOERROR" AND isnotnull(answer_ip)
+| eval query_name=lower(rtrim(query_name,"."))
+| bin _time span=5m
+| stats count as dns_events dc(answer_ip) as unique_answer_ips values(answer_ip) as answer_ips by _time query_name
+| where unique_answer_ips>=2
+| sort _time

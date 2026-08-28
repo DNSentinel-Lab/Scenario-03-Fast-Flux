@@ -1,0 +1,5 @@
+index=dns_soc_ai earliest=-15m
+"Suspicious Fast Flux DNS Behavior"
+| spath
+| sort - _time
+| table _time alert.alert_id alert.alert_name ai.summary ai.confidence

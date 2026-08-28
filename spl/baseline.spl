@@ -1,0 +1,13 @@
+/* Scenario 03 baseline — network destinations by port */
+index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow earliest=-60m
+src_ip="10.50.30.20"
+| stats count as connections dc(dest_ip) as unique_destinations values(dest_ip) as destination_ips by dest_port
+| sort - connections
+
+/* Scenario 03 baseline — DNS activity by domain */
+index=dns_soc_dns sourcetype=unbound:dns earliest=-60m
+| rex "query:\s+(?<client_ip>\d+\.\d+\.\d+\.\d+)\s+(?<domain>[^\s]+)\.\s+(?<qtype>[A-Z]+)\s+IN"
+| where client_ip="10.50.30.20"
+| stats count as queries dc(qtype) as query_types values(qtype) as types by domain
+| sort - queries
+| head 20
