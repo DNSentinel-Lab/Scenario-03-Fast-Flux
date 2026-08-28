@@ -10,7 +10,7 @@
 ![Detection](https://img.shields.io/badge/Detection_Engineering-Complete-2EA44F?style=for-the-badge)
 ![Splunk](https://img.shields.io/badge/Splunk-Enterprise-000000?style=for-the-badge&logo=splunk&logoColor=white)
 ![MITRE](https://img.shields.io/badge/MITRE-T1568.001-E34F26?style=for-the-badge)
-![AI](https://img.shields.io/badge/AI-Assisted_Triage-Validated-7B2CBF?style=for-the-badge)
+![AI](https://img.shields.io/badge/AI--Assisted_Triage-Validated-7B2CBF?style=for-the-badge)
 
 **A controlled Fast Flux DNS case file with validated AWS infrastructure, real DNS answer churn, victim follow-up traffic, a tuned Splunk detection, scheduled alerting, AI-assisted context, and a two-tab investigation dashboard. The official attacker → SOC → IR execution is intentionally still pending.**
 
