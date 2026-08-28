@@ -1,42 +1,29 @@
-<a id="top"></a>
-<img src="https://capsule-render.vercel.app/api?type=soft&color=gradient&customColorList=1,6,14,20,26&height=135&section=header&text=%F0%9F%A7%BE%20Evidence%20Workspace&fontSize=28&fontColor=ffffff&animation=fadeIn&desc=Scenario%2003%20%E2%80%94%20Fast%20Flux%20DNS&descSize=14&descAlignY=68&descColor=FF9F43" width="100%" alt="🧾 Evidence Workspace" />
+# Scenario 03 Evidence Workspace
 
-<div align="center">
+**Current state:** Infrastructure + Detection Engineering evidence complete; official execution evidence pending.
 
-![Scenario](https://img.shields.io/badge/Scenario_03-Planned-6E7781?style=flat-square)
-![Workspace](https://img.shields.io/badge/Workspace-Evidence_Workspace-2EA44F?style=flat-square)
+## Engineering evidence already preserved
 
-[🏠 Scenario Home](../README.md) · [🏗️ Shared Infrastructure](https://github.com/DNSentinel-Lab/DNS-Lab-Infrastructure) · [🗂️ All Scenario Repositories](https://github.com/orgs/DNSentinel-Lab/repositories)
+Integrity index: [`ENGINEERING-EVIDENCE-MANIFEST.md`](ENGINEERING-EVIDENCE-MANIFEST.md) / [`ENGINEERING-EVIDENCE-MANIFEST.csv`](ENGINEERING-EVIDENCE-MANIFEST.csv).
 
-</div>
 
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+- infrastructure build/validation screenshots in [`../screenshots/infrastructure/`](../screenshots/infrastructure/);
+- Detection Engineering screenshots in [`../screenshots/detection-engineering/`](../screenshots/detection-engineering/);
+- curated troubleshooting evidence in [`../screenshots/troubleshooting/`](../screenshots/troubleshooting/);
+- validated infrastructure/simulation scripts in [`engineering-validation/`](engineering-validation/), including the preserved `flux-rotate.sh`;
+- final SPL and tuning artifacts in [`../spl/`](../spl/);
+- Dashboard Studio JSON in [`../dashboard/`](../dashboard/).
 
-**Status:** Empty by design until real scenario work begins.
+## Official execution evidence still required
 
-Keep structured non-image evidence here, such as:
+The official run should later add:
 
-- ground-truth start/end timestamps;
-- simulation notes/commands suitable for the project record;
-- saved search/result exports where useful;
-- detection tuning notes;
-- analyst timeline/findings;
-- AI comparison notes;
-- containment/verification notes;
-- cleanup/reset confirmation.
+- Lubaba's private start/end ground truth;
+- frozen-detection alert evidence from the official run;
+- Abdul-Rehman's independent SOC timeline/disposition;
+- Sonia's IR validation, approved action and verification;
+- before/after DNS + network evidence;
+- cleanup/reset confirmation;
+- final ground-truth comparison.
 
-Screenshots belong in [`../screenshots/`](../screenshots/).
-
-Evidence should prove the scenario chain rather than preserve every intermediate command or troubleshooting message.
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
-
-<div align="center">
-
-**DNSentinel Scenario 03 · Fast Flux DNS**
-
-[🏠 Scenario Home](../README.md) · [🏗️ Infrastructure](https://github.com/DNSentinel-Lab/DNS-Lab-Infrastructure) · [⬆ Back to top](#top)
-
-</div>
-
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=1,6,14,20,26&height=75&section=footer" width="100%" alt="footer" />
+Do not backfill those results from engineering validation traffic.
