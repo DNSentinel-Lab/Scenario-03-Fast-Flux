@@ -1,0 +1,8 @@
+index=dns_soc_aws sourcetype=aws:s3 earliest=-30m
+| spath
+| rename answers{}.Rdata as answer_ip
+| where query_type="A" AND rcode="NOERROR" AND isnotnull(answer_ip)
+| eval query_name=lower(rtrim(query_name,"."))
+| mvexpand answer_ip
+| search query_name="flux.soclab.abdul4rehman215.tech"
+| stats dc(answer_ip) as unique_rotating_ips

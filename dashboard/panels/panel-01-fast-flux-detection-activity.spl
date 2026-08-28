@@ -1,0 +1,24 @@
+index=dns_soc_aws sourcetype=aws:s3 earliest=-24h
+| spath
+| rename answers{}.Rdata as answer_ip
+| where query_type="A" AND rcode="NOERROR" AND isnotnull(answer_ip)
+| eval query_name=lower(rtrim(query_name,"."))
+| mvexpand answer_ip
+| eval bucket=_time
+| bin bucket span=5m
+| fields bucket query_name answer_ip
+| dedup bucket query_name answer_ip
+| join type=inner max=0 bucket answer_ip [
+    search index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow earliest=-24h src_ip="10.50.30.20"
+    | where NOT cidrmatch("10.0.0.0/8",dest_ip) AND NOT cidrmatch("172.16.0.0/12",dest_ip) AND NOT cidrmatch("192.168.0.0/16",dest_ip)
+    | eval bucket=_time
+    | bin bucket span=5m
+    | rename dest_ip as answer_ip
+    | fields bucket src_ip answer_ip
+]
+| stats count as matched_connections dc(answer_ip) as unique_matched_ips by bucket query_name src_ip
+| where unique_matched_ips>=2 AND matched_connections>=3
+| lookup fastflux_benign_domains.csv query_name OUTPUT reason as benign_reason
+| where isnull(benign_reason)
+| rename bucket as _time
+| timechart span=5m sum(matched_connections) as "Matched Connections"

@@ -1,0 +1,202 @@
+{
+  "visualizations": {
+    "viz_fdI608S5": {
+      "type": "splunk.line",
+      "dataSources": {
+        "primary": "ds_sycuzObb"
+      },
+      "title": "Fast Flux Detection Activity"
+    },
+    "viz_st78iB4N": {
+      "type": "splunk.singlevalue",
+      "dataSources": {
+        "primary": "ds_QIOrfkls"
+      },
+      "title": "Active Fast Flux IPs (Last 30m)"
+    },
+    "viz_iMTweyyr": {
+      "type": "splunk.table",
+      "dataSources": {
+        "primary": "ds_5EySliDY"
+      },
+      "title": "Fast Flux IP History (24h)"
+    },
+    "viz_mhtdygBz": {
+      "type": "splunk.table",
+      "dataSources": {
+        "primary": "ds_axxEJVbt"
+      },
+      "title": "AI-Assisted Triage Summary"
+    },
+    "viz_ebW5shBz": {
+      "type": "splunk.table",
+      "dataSources": {
+        "primary": "ds_QuUeEYlR"
+      },
+      "title": "Detection Metadata"
+    }
+  },
+  "dataSources": {
+    "ds_sycuzObb": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=dns_soc_aws sourcetype=aws:s3 earliest=-24h\r\n| spath\r\n| rename answers{}.Rdata as answer_ip\r\n| where query_type=\"A\" AND rcode=\"NOERROR\" AND isnotnull(answer_ip)\r\n| eval query_name=lower(rtrim(query_name,\".\"))\r\n| mvexpand answer_ip\r\n| eval bucket=_time\r\n| bin bucket span=5m\r\n| fields bucket query_name answer_ip\r\n| dedup bucket query_name answer_ip\r\n\r\n| join type=inner max=0 bucket answer_ip [\r\n    search index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow earliest=-24h\r\n    src_ip=\"10.50.30.20\"\r\n    | where NOT cidrmatch(\"10.0.0.0/8\",dest_ip)\r\n        AND NOT cidrmatch(\"172.16.0.0/12\",dest_ip)\r\n        AND NOT cidrmatch(\"192.168.0.0/16\",dest_ip)\r\n    | eval bucket=_time\r\n    | bin bucket span=5m\r\n    | rename dest_ip as answer_ip\r\n    | fields bucket src_ip answer_ip\r\n]\r\n\r\n| stats count as matched_connections dc(answer_ip) as unique_matched_ips\r\n  by bucket query_name src_ip\r\n\r\n| where unique_matched_ips>=2 AND matched_connections>=3\r\n| lookup fastflux_benign_domains.csv query_name OUTPUT reason as benign_reason\r\n| where isnull(benign_reason)\r\n| rename bucket as _time\r\n| timechart span=5m sum(matched_connections) as \"Matched Connections\""
+      },
+      "name": "Fast Flux Detection Activity"
+    },
+    "ds_QIOrfkls": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=dns_soc_aws sourcetype=aws:s3 earliest=-30m\r\n| spath\r\n| rename answers{}.Rdata as answer_ip\r\n| where query_type=\"A\" AND rcode=\"NOERROR\" AND isnotnull(answer_ip)\r\n| eval query_name=lower(rtrim(query_name,\".\"))\r\n| mvexpand answer_ip\r\n| search query_name=\"flux.soclab.abdul4rehman215.tech\"\r\n| stats dc(answer_ip) as unique_rotating_ips"
+      },
+      "name": "Active Fast Flux IPs"
+    },
+    "ds_5EySliDY": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=dns_soc_aws sourcetype=aws:s3 earliest=-24h\r\n| spath\r\n| rename answers{}.Rdata as answer_ip\r\n| where query_type=\"A\" AND rcode=\"NOERROR\" AND isnotnull(answer_ip)\r\n| eval query_name=lower(rtrim(query_name,\".\"))\r\n| mvexpand answer_ip\r\n| search query_name=\"flux.soclab.abdul4rehman215.tech\"\r\n| stats count as dns_answers\r\n        min(_time) as first_seen\r\n        max(_time) as last_seen\r\n  by answer_ip\r\n| convert ctime(first_seen) ctime(last_seen)\r\n| sort - dns_answers"
+      },
+      "name": "Fast Flux IP History"
+    },
+    "ds_axxEJVbt": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=dns_soc_ai earliest=-24h\r\n\"Suspicious Fast Flux DNS Behavior\"\r\n| spath\r\n| sort - _time\r\n| table\r\n    _time\r\n    alert.alert_name\r\n    ai.summary\r\n    ai.confidence"
+      },
+      "name": "AI-Assisted Triage Summary"
+    },
+    "ds_QuUeEYlR": {
+      "type": "ds.search",
+      "options": {
+        "query": "index=dns_soc_ai earliest=-24h\r\n\"Suspicious Fast Flux DNS Behavior\"\r\n| spath\r\n| sort - _time\r\n| head 1\r\n| eval detection_name=\"Suspicious Fast Flux DNS Behavior\"\r\n| eval severity=\"Medium\"\r\n| eval mitre_technique=\"T1568.001\"\r\n| eval mitre_name=\"Dynamic Resolution: Fast Flux DNS\"\r\n| eval detection_window=\"5 minutes\"\r\n| eval tuning=\"Benign dynamic domains excluded via lookup\"\r\n| table detection_name severity mitre_technique mitre_name detection_window tuning",
+        "enableSmartSources": true
+      },
+      "name": "Detection Metadata"
+    }
+  },
+  "defaults": {
+    "dataSources": {
+      "ds.search": {
+        "options": {
+          "queryParameters": {
+            "latest": "$global_time.latest$",
+            "earliest": "$global_time.earliest$"
+          }
+        }
+      },
+      "ds.spl2": {
+        "options": {
+          "queryParameters": {
+            "latest": "$global_time.latest$",
+            "earliest": "$global_time.earliest$"
+          }
+        }
+      }
+    },
+    "visualizations": {
+      "global": {
+        "showProgressBar": true
+      }
+    }
+  },
+  "inputs": {
+    "input_global_trp": {
+      "type": "input.timerange",
+      "options": {
+        "token": "global_time",
+        "defaultValue": "-24h@h,now"
+      },
+      "title": "Global Time Range"
+    }
+  },
+  "layout": {
+    "options": {},
+    "globalInputs": [
+      "input_global_trp"
+    ],
+    "tabs": {
+      "items": [
+        {
+          "layoutId": "layout_1",
+          "label": "Detection Overview"
+        },
+        {
+          "layoutId": "layout_YC12KUvG",
+          "label": "Detection Context"
+        }
+      ]
+    },
+    "layoutDefinitions": {
+      "layout_1": {
+        "type": "absolute",
+        "structure": [
+          {
+            "item": "viz_fdI608S5",
+            "type": "block",
+            "position": {
+              "x": 20,
+              "y": 10,
+              "w": 690,
+              "h": 470
+            }
+          },
+          {
+            "item": "viz_st78iB4N",
+            "type": "block",
+            "position": {
+              "x": 730,
+              "y": 10,
+              "w": 680,
+              "h": 470
+            }
+          },
+          {
+            "item": "viz_iMTweyyr",
+            "type": "block",
+            "position": {
+              "x": 20,
+              "y": 500,
+              "w": 680,
+              "h": 450
+            }
+          },
+          {
+            "item": "viz_mhtdygBz",
+            "type": "block",
+            "position": {
+              "x": 720,
+              "y": 500,
+              "w": 700,
+              "h": 450
+            }
+          }
+        ],
+        "options": {
+          "width": 1440,
+          "height": 960,
+          "display": "auto"
+        }
+      },
+      "layout_YC12KUvG": {
+        "type": "grid",
+        "structure": [
+          {
+            "item": "viz_ebW5shBz",
+            "type": "block",
+            "position": {
+              "x": 0,
+              "y": 0,
+              "w": 1440,
+              "h": 400
+            }
+          }
+        ],
+        "options": {
+          "width": 1440
+        }
+      }
+    }
+  },
+  "description": "Detection engineering dashboard for Fast Flux DNS behavior, DNS answer churn, matched network connections, alerting, and AI-assisted triage.",
+  "title": "Scenario 03 - Fast Flux DNS Detection"
+}
