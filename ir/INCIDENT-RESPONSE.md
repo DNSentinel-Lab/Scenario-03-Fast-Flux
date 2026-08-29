@@ -1,13 +1,16 @@
 <a id="top"></a>
 
-> 🧭 [Scenario 03](../README.md) › [IR / Defender](README.md) › **Incident Response — Fast Flux DNS**
+<img src="https://capsule-render.vercel.app/api?type=soft&color=gradient&customColorList=24,20,14,6,1&height=150&section=header&text=%F0%9F%9B%A1%EF%B8%8F%20Incident%20Response%20%E2%80%94%20Scenario%2003%20Fast%20Flux%20DNS&fontSize=30&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=DNSentinel%20Lab%20%C2%B7%20Scenario%2003%20%C2%B7%20Fast%20Flux%20DNS%20%C2%B7%20Incident%20Response&descSize=13&descAlignY=68&descColor=14B8A6" width="100%" alt="Incident Response — Scenario 03 Fast Flux DNS" />
 
 <div align="center">
 
-![Scenario](https://img.shields.io/badge/Scenario_03-COMPLETE-2EA44F?style=flat-square) ![Workspace](https://img.shields.io/badge/Workspace-Incident_Response-5E35B1?style=flat-square) ![Decision](https://img.shields.io/badge/Decision-NO_CONTAINMENT-2EA44F?style=flat-square)
+![Scenario](https://img.shields.io/badge/Scenario_03-COMPLETE-2EA44F?style=flat-square) ![Workspace](https://img.shields.io/badge/Workspace-Incident_Response-14B8A6?style=flat-square) ![MITRE](https://img.shields.io/badge/MITRE-T1568.001-E34F26?style=flat-square)
+
+[🏠 Scenario Home](../README.md) · [🛡️ Workspace](README.md) · [🧾 Evidence](../evidence/README.md)
 
 </div>
 
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 # 🛡️ Incident Response — Scenario 03 Fast Flux DNS
 
 **Incident Responder / Defender:** [Sonia](https://github.com/sonia11mansha415)  
@@ -79,7 +82,7 @@ Representative transitions included:
 
 This is stronger than copying the operator timeline because it was derived entirely from defender telemetry.
 
-## ⏱️ 5. Preserve the historical TTL limitation
+## 📌 ⏱️ 5. Preserve the historical TTL limitation
 
 Historical Resolver Query Log events did not expose a TTL field in the preserved data.
 
@@ -214,7 +217,7 @@ It was **not applied**.
 
 No human approval gate was invoked because no enforcing change was proposed.
 
-## ✅ 14. Verify the resolver / RPZ safe state anyway
+## 🛡️ ✅ 14. Verify the resolver / RPZ safe state anyway
 
 A no-containment decision still needed a clean closeout.
 
@@ -290,10 +293,14 @@ IR intentionally preserved these gaps:
 - [IR shell validation](shell/)
 - [Curated evidence](evidence/)
 
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+
 <div align="center">
 
-**Sonia · Strengthen the evidence. Measure current risk. Change only what the evidence justifies.**
+[🏠 Scenario Home](../README.md) · [🛡️ Workspace](README.md) · [⬆ Back to top](#top)
 
-[🏠 Scenario Home](../README.md) · [⬆ Back to top](#top)
+**Evidence before attribution. Context before containment.**
 
 </div>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=26,20,14,6,1&height=80&section=footer" width="100%" alt="DNSentinel Scenario 03 footer" />
