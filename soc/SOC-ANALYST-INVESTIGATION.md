@@ -1,13 +1,16 @@
 <a id="top"></a>
 
-> 🧭 [Scenario 03](../README.md) › [SOC](README.md) › **SOC Analyst Investigation — Fast Flux DNS**
+<img src="https://capsule-render.vercel.app/api?type=soft&color=gradient&customColorList=6,12,20,24,26&height=150&section=header&text=%F0%9F%94%8E%20SOC%20Analyst%20Investigation%20%E2%80%94%20Scenario%2003%20Fast%20Flux%20DNS&fontSize=30&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=DNSentinel%20Lab%20%C2%B7%20Scenario%2003%20%C2%B7%20Fast%20Flux%20DNS%20%C2%B7%20SOC%20%2F%20Threat%20Hunting&descSize=13&descAlignY=68&descColor=22D3EE" width="100%" alt="SOC Analyst Investigation — Scenario 03 Fast Flux DNS" />
 
 <div align="center">
 
-![Scenario](https://img.shields.io/badge/Scenario_03-COMPLETE-2EA44F?style=flat-square) ![Workspace](https://img.shields.io/badge/Workspace-SOC_Investigation-3949AB?style=flat-square) ![Disposition](https://img.shields.io/badge/Disposition-INCONCLUSIVE-F59E0B?style=flat-square)
+![Scenario](https://img.shields.io/badge/Scenario_03-COMPLETE-2EA44F?style=flat-square) ![Workspace](https://img.shields.io/badge/Workspace-SOC_%2F_Threat_Hunting-22D3EE?style=flat-square) ![MITRE](https://img.shields.io/badge/MITRE-T1568.001-E34F26?style=flat-square)
+
+[🏠 Scenario Home](../README.md) · [🔎 Workspace](README.md) · [🧾 Evidence](../evidence/README.md)
 
 </div>
 
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 # 🔎 SOC Analyst Investigation — Scenario 03 Fast Flux DNS
 
 **SOC Analyst / Threat Hunter:** [Abdul-Rehman](https://github.com/abdul4rehman215)  
@@ -263,10 +266,14 @@ Sonia was asked to independently answer the questions the SOC could not:
 - [SOC → IR handoff](SOC-TO-IR-HANDOFF.md)
 - [Troubleshooting / learning journey](TROUBLESHOOTING-NOTES.md)
 
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+
 <div align="center">
 
-**Abdul-Rehman · Validate the behavior. Preserve the limits. Escalate the unanswered questions.**
+[🏠 Scenario Home](../README.md) · [🔎 Workspace](README.md) · [⬆ Back to top](#top)
 
-[🏠 Scenario Home](../README.md) · [⬆ Back to top](#top)
+**Evidence before attribution. Context before containment.**
 
 </div>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=26,20,14,6,1&height=80&section=footer" width="100%" alt="DNSentinel Scenario 03 footer" />
