@@ -14,19 +14,55 @@
 
 # 🎯 Private Ground Truth — Scenario 03
 
-> Keep private until defender decisions are locked.
+> Kept private during the information-separated SOC and IR investigation.
+> Defender decisions are now locked and the Scenario 03 closeout is complete.
 
-- Operator: Lubaba
-- UTC start:
-- UTC end:
-- Flux hostname: `flux.soclab.abdul4rehman215.tech`
-- TTL at start:
-- Node/public-IP map at start:
-- Rotation transitions (UTC):
-- Victim follow-up start/end:
-- Unexpected events:
-- Rotation stop time:
-- Cleanup performed after reveal:
+- **Operator:** [Lubaba](https://github.com/lubaba1513-pixel)
+
+- **UTC start:** `2026-08-28T12:43:43Z`
+
+- **UTC end:** `2026-08-28T12:58:30Z`
+
+- **Flux hostname:** `flux.soclab.abdul4rehman215.tech`
+
+- **TTL at start:** `60 seconds`
+
+- **Node/public-IP map at start:**
+  - `dns-flux-node01` → `13.220.94.188`
+  - `dns-flux-node02` → `52.73.218.100`
+  - `dns-flux-node03` → `54.81.98.44`
+
+- **Rotation transitions (UTC) — first complete controller cycle:**
+  - `12:43:46Z` → `dns-flux-node01` → `13.220.94.188`
+  - `12:45:47Z` → `dns-flux-node02` → `52.73.218.100`
+  - `12:47:48Z` → `dns-flux-node03` → `54.81.98.44`
+  - The approved controller continued cycling through the same three-node pool until the official stop.
+
+- **Victim follow-up start/end:**
+  - Start: `2026-08-28T12:52:18Z`
+  - End: `2026-08-28T12:58:04Z`
+  - Victim: `dns-soc-victim01`
+  - Resolver: `dns-soc-resolver01` / `10.50.30.10`
+  - The victim resolved the Fast Flux hostname and followed the returned IP with HTTP.
+  - Successful follow-up was observed across all three controlled destinations with HTTP `200`.
+
+- **Unexpected events:**
+  - During pre-flight, the deployed `flux-rotate.sh` SHA-256 differed from the repository copy.
+  - The deployed script was inspected rather than replaced blindly.
+  - Bash syntax, hostname, Route 53 settings, TTL, three-node pool, and `120-second` rotation interval were independently validated before execution.
+  - No material runtime failure occurred during the official Fast Flux run.
+
+- **Rotation stop time:** `2026-08-28T12:58:30Z`
+  - Controller stopped cleanly.
+  - `flux-rotate.sh` process confirmed no longer running.
+
+- **Cleanup performed after reveal:**
+  - **Yes.**
+  - Victim follow-up loop stopped cleanly.
+  - Fast Flux controller stopped cleanly.
+  - Temporary three-node Fast Flux EC2 pool was **stopped/deleted/reset after the exercise**.
+  - Exact EC2 teardown UTC timestamp was **not preserved**, so none is claimed.
+  - No Scenario 03 RPZ containment was applied because IR concluded containment was not required.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
