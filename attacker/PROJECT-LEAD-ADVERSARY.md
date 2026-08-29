@@ -32,16 +32,174 @@ The controlled behavior had two moving pieces:
 2. `dns-soc-victim01` resolved the stable hostname through the defender resolver and followed the returned destination over HTTP.
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#030712",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#f8fafc",
+    "fontSize": "31px"
+  },
+  "flowchart": {
+    "nodeSpacing": 52,
+    "rankSpacing": 65,
+    "curve": "basis",
+    "padding": 20
+  }
+}}%%
+
 flowchart LR
-    O["🎯 dns-attack01<br/>Operator"] -->|Route 53 UPSERT| F["flux.soclab.abdul4rehman215.tech<br/>TTL 60"]
-    F --> A["dns-flux-node01<br/>13.220.94.188"]
-    F --> B["dns-flux-node02<br/>52.73.218.100"]
-    F --> C["dns-flux-node03<br/>54.81.98.44"]
-    V["dns-soc-victim01<br/>10.50.30.20"] --> R["dns-soc-resolver01<br/>10.50.30.10"]
-    R --> F
-    V -->|HTTP follows DNS answer| A
-    V -->|HTTP follows DNS answer| B
-    V -->|HTTP follows DNS answer| C
+
+    %% =====================================================
+    %% 1 · ACTORS + RESOLUTION
+    %% =====================================================
+    subgraph LEFT[" "]
+        direction TB
+
+        H1["🎯 1 · ACTORS + DNS"]
+
+        O["🎯 dns-attack01<br/>Operator"]
+
+        V["💻 dns-soc-victim01<br/>10.50.30.20"]
+
+        R["🛡️ dns-soc-resolver01<br/>10.50.30.10"]
+
+        HTTP["🌐 HTTP FOLLOW-UP<br/>Uses Resolved Answer"]
+
+        H1 --> O
+        H1 --> V
+
+        V ==> R
+        V ==> HTTP
+    end
+
+
+    %% =====================================================
+    %% 2 · FAST FLUX DNS
+    %% =====================================================
+    subgraph DNS[" "]
+        direction TB
+
+        H2["🔄 2 · FAST FLUX DNS"]
+
+        F["🌍 flux.soclab.abdul4rehman215.tech<br/>⏱️ TTL 60"]
+
+        ROT["⚡ ROTATING DNS ANSWERS<br/>Short TTL · Changing IPs"]
+
+        H2 ==> F ==> ROT
+    end
+
+
+    %% =====================================================
+    %% 3 · FLUX NODES
+    %% =====================================================
+    subgraph NODES[" "]
+        direction TB
+
+        H3["🛰️ 3 · ROTATING ENDPOINTS"]
+
+        A["🟢 dns-flux-node01<br/>13.220.94.188"]
+
+        B["🟠 dns-flux-node02<br/>52.73.218.100"]
+
+        C["🟣 dns-flux-node03<br/>54.81.98.44"]
+
+        H3 --> A
+        H3 --> B
+        H3 --> C
+    end
+
+
+    %% =====================================================
+    %% DNS CONTROL + RESOLUTION
+    %% =====================================================
+    O ==>|"Route 53 UPSERT"| F
+
+    R ==> F
+
+    ROT ==> A
+    ROT ==> B
+    ROT ==> C
+
+
+    %% =====================================================
+    %% HTTP FOLLOW-UP
+    %% =====================================================
+    HTTP -.-> A
+    HTTP -.-> B
+    HTTP -.-> C
+
+
+    %% =====================================================
+    %% GLOSSY HEADERS
+    %% =====================================================
+    classDef actorHeader fill:#082f49,stroke:#67e8f9,stroke-width:7px,color:#ffffff,font-size:35px,font-weight:bold;
+
+    classDef dnsHeader fill:#4c1d95,stroke:#e879f9,stroke-width:7px,color:#ffffff,font-size:35px,font-weight:bold;
+
+    classDef nodeHeader fill:#14532d,stroke:#86efac,stroke-width:7px,color:#ffffff,font-size:35px,font-weight:bold;
+
+    class H1 actorHeader;
+    class H2 dnsHeader;
+    class H3 nodeHeader;
+
+
+    %% =====================================================
+    %% ACTOR COLORS
+    %% =====================================================
+    classDef attacker fill:#7f1d1d,stroke:#fb7185,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef victim fill:#172554,stroke:#60a5fa,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef resolver fill:#075985,stroke:#22d3ee,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef http fill:#0f766e,stroke:#5eead4,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    class O attacker;
+    class V victim;
+    class R resolver;
+    class HTTP http;
+
+
+    %% =====================================================
+    %% FAST FLUX COLORS
+    %% =====================================================
+    classDef flux fill:#581c87,stroke:#f0abfc,stroke-width:7px,color:#ffffff,font-size:32px,font-weight:bold;
+
+    classDef rotation fill:#713f12,stroke:#fbbf24,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    class F flux;
+    class ROT rotation;
+
+
+    %% =====================================================
+    %% ROTATING NODE COLORS
+    %% =====================================================
+    classDef node1 fill:#14532d,stroke:#4ade80,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef node2 fill:#9a3412,stroke:#fb923c,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef node3 fill:#4c1d95,stroke:#c084fc,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    class A node1;
+    class B node2;
+    class C node3;
+
+
+    %% =====================================================
+    %% PREMIUM PANELS
+    %% =====================================================
+    style LEFT fill:#06131d,stroke:#22d3ee,stroke-width:4px
+
+    style DNS fill:#150821,stroke:#d946ef,stroke-width:4px
+
+    style NODES fill:#07140d,stroke:#4ade80,stroke-width:4px
+
+
+    %% =====================================================
+    %% BRIGHT CONNECTORS
+    %% =====================================================
+    linkStyle default stroke:#f8fafc,stroke-width:5px;
 ```
 
 ## 🧭 2. Information separation
