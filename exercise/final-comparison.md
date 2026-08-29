@@ -1,13 +1,16 @@
 <a id="top"></a>
 
-> 🧭 [Scenario 03](../README.md) › [Exercise Control](README.md) › **Final Comparison — Ground Truth vs Defender Evidence**
+<img src="https://capsule-render.vercel.app/api?type=soft&color=gradient&customColorList=6,12,19,24,30&height=150&section=header&text=%F0%9F%8E%AD%20Final%20Comparison%20%E2%80%94%20One%20Fast%20Flux%20Event%2C%20Four%20Evidence%20Views&fontSize=30&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=DNSentinel%20Lab%20%C2%B7%20Scenario%2003%20%C2%B7%20Fast%20Flux%20DNS%20%C2%B7%20Exercise%20Control&descSize=13&descAlignY=68&descColor=A78BFA" width="100%" alt="Final Comparison — One Fast Flux Event, Four Evidence Views" />
 
 <div align="center">
 
-![Scenario](https://img.shields.io/badge/Scenario_03-COMPLETE-2EA44F?style=flat-square) ![Document](https://img.shields.io/badge/Document-Final_Comparison-F59E0B?style=flat-square) ![MITRE](https://img.shields.io/badge/MITRE-T1568.001-E34F26?style=flat-square)
+![Scenario](https://img.shields.io/badge/Scenario_03-COMPLETE-2EA44F?style=flat-square) ![Workspace](https://img.shields.io/badge/Workspace-Exercise_Control-A78BFA?style=flat-square) ![MITRE](https://img.shields.io/badge/MITRE-T1568.001-E34F26?style=flat-square)
+
+[🏠 Scenario Home](../README.md) · [🎭 Workspace](README.md) · [🧾 Evidence](../evidence/README.md)
 
 </div>
 
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 # 🧾 Final Comparison — One Fast Flux Event, Four Evidence Views
 
 This comparison was created only after the SOC and IR decisions were locked. It does not retroactively give a role information that the role did not have when making its decision.
@@ -108,7 +111,7 @@ But by IR decision time:
 
 The strongest IR action was therefore **not** to change resolver policy.
 
-## ⏱️ TTL comparison — preserve the evidence distinction
+## 🧾 ⏱️ TTL comparison — preserve the evidence distinction
 
 | Perspective | TTL fact |
 |---|---|
@@ -137,14 +140,18 @@ No Scenario 03 RPZ enforcement had been activated, so there was no Scenario 03 c
 
 The exact temporary-node teardown timestamp was not included in the preserved operator/IR evidence and is therefore not invented in the final comparison.
 
-## ✅ Final scenario outcome
+## 🏁 ✅ Final scenario outcome
 
 > **The exercise succeeded because each role reached the strongest conclusion its own evidence supported.** Lubaba generated controlled Fast Flux behavior without steering toward Splunk. Musfira's frozen detection surfaced the behavior. Abdul-Rehman confirmed a serious Fast Flux-like anomaly without inventing malware attribution. Sonia independently strengthened the case, found controlled endpoint context, measured current risk, and correctly declined unnecessary containment. The final reveal then showed that the defender conclusions aligned with the authorized operator ground truth.
 
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+
 <div align="center">
 
-**Evidence before verdict. Context before containment.**
+[🏠 Scenario Home](../README.md) · [🎭 Workspace](README.md) · [⬆ Back to top](#top)
 
-[🏠 Scenario Home](../README.md) · [🎬 Execution](../SCENARIO-03-EXECUTION.md) · [⬆ Back to top](#top)
+**Evidence before attribution. Context before containment.**
 
 </div>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=26,20,14,6,1&height=80&section=footer" width="100%" alt="DNSentinel Scenario 03 footer" />

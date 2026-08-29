@@ -1,5 +1,18 @@
-# Scenario 03 — Fast Flux DNS
-## Final Incident Response Report
+<a id="top"></a>
+
+<img src="https://capsule-render.vercel.app/api?type=soft&color=gradient&customColorList=24,20,14,6,1&height=150&section=header&text=%F0%9F%9B%A1%EF%B8%8F%20Scenario%2003%20%E2%80%94%20Fast%20Flux%20DNS&fontSize=30&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=DNSentinel%20Lab%20%C2%B7%20Scenario%2003%20%C2%B7%20Fast%20Flux%20DNS%20%C2%B7%20Incident%20Response&descSize=13&descAlignY=68&descColor=14B8A6" width="100%" alt="Scenario 03 — Fast Flux DNS" />
+
+<div align="center">
+
+![Scenario](https://img.shields.io/badge/Scenario_03-COMPLETE-2EA44F?style=flat-square) ![Workspace](https://img.shields.io/badge/Workspace-Incident_Response-14B8A6?style=flat-square) ![MITRE](https://img.shields.io/badge/MITRE-T1568.001-E34F26?style=flat-square)
+
+[🏠 Scenario Home](../README.md) · [🛡️ Workspace](README.md) · [🧾 Evidence](../evidence/README.md)
+
+</div>
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+# 📌 Scenario 03 — Fast Flux DNS
+## 🛡️ Final Incident Response Report
 
 **Incident Responder / Defender:** Sonia  
 **Scenario:** DNSentinel Scenario 03 — Fast Flux DNS  
@@ -8,7 +21,7 @@
 **Final IR disposition:** **CONTROLLED / EXPECTED SCENARIO ACTIVITY — NO CONTAINMENT REQUIRED**  
 **Malicious attribution:** Not established  
 
-## Executive summary
+## 📌 Executive summary
 
 IR independently reproduced the core DNS and network behavior raised by the SOC handoff. Defender-side AWS Resolver Query Logs showed the Scenario 03 domain returning all three reported public A-record addresses, and VPC Flow Logs showed `dns-soc-victim01` (`10.50.30.20`) connecting to those same addresses over allowed TCP/80. Exact AWS `query_timestamp` values demonstrated repeated answer changes.
 
@@ -20,7 +33,7 @@ At the time of response decision, the activity was inactive in DNS telemetry, in
 
 **Decision:** containment was not necessary or proportionate. No RPZ rule, resolver-policy change, host isolation, sinkhole enforcement, reload, or restart was performed.
 
-## Evidence-backed findings
+## 🧾 Evidence-backed findings
 
 1. **Three A-record answers independently validated**
    - `13.220.94.188`
@@ -45,20 +58,20 @@ At the time of response decision, the activity was inactive in DNS telemetry, in
 
 10. **Resolver safe state verified**: `unbound-checkconf` returned no errors, Unbound was active, unrelated DNS worked from the victim, and the Scenario 03 domain resolved normally.
 
-## Historical vs live TTL
+## 📌 Historical vs live TTL
 
 - **Historical evidence:** TTL was not exposed in the preserved Resolver Query Log events searched by IR.
 - **Live post-investigation check:** victim query through `10.50.30.10` returned `flux.soclab.abdul4rehman215.tech` with TTL `60` and public answer `52.73.218.100` at the time of verification.
 - IR therefore does **not** retroactively assert that every historical answer had TTL 60.
 
-## Classification
+## 📌 Classification
 
 **Behavior classification:** Confirmed Fast Flux-like DNS/network behavior.  
 **Context classification:** Strongly consistent with controlled Scenario 03 victim-follow-up/test activity.  
 **Malicious attribution:** Low / unsupported.  
 **Compromise status:** No defender evidence of malware compromise or malicious C2.  
 
-## Response decision
+## 🛡️ Response decision
 
 **No containment required.**
 
@@ -72,7 +85,7 @@ Rationale:
 
 Because no enforcing action was proposed, the mandatory human-approval gate was not crossed.
 
-## Reset / safe-state record
+## ✅ Reset / safe-state record
 
 No temporary Scenario 03 containment was applied, so no rollback/reset action was required. IR still verified the equivalent safe state:
 - active RPZ file contained no `flux.soclab.abdul4rehman215.tech` rule;
@@ -82,7 +95,7 @@ No temporary Scenario 03 containment was applied, so no rollback/reset action wa
 - unrelated DNS worked from the victim;
 - Scenario 03 domain resolved to a public A record, not the sinkhole.
 
-## Residual risk and limitations
+## 📌 Residual risk and limitations
 
 - Historical TTL was unavailable from preserved Resolver Query Log events.
 - The earliest portion of activity cannot be tied to a specific interactive user/session from available defender evidence.
@@ -90,6 +103,18 @@ No temporary Scenario 03 containment was applied, so no rollback/reset action wa
 - Splunk lacked endpoint/process telemetry for the victim during the incident window.
 - The evidence supports controlled test activity strongly, but IR intentionally does not use hidden operator ground truth to fill attribution gaps.
 
-## Final conclusion
+## 🏁 Final conclusion
 
 The SOC escalation was justified because the DNS/network behavior was real and unusual. IR independently confirmed the Fast Flux-like pattern, strengthened DNS-answer evidence, correlated network follow-up, scoped the affected client, investigated endpoint context, and verified current and resolver safe state. Defender-discovered endpoint evidence strongly supports a controlled Scenario 03 test workflow rather than malware-driven malicious C2. No containment was required, and the resolver remained in normal safe operation.
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+
+<div align="center">
+
+[🏠 Scenario Home](../README.md) · [🛡️ Workspace](README.md) · [⬆ Back to top](#top)
+
+**Evidence before attribution. Context before containment.**
+
+</div>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=26,20,14,6,1&height=80&section=footer" width="100%" alt="DNSentinel Scenario 03 footer" />

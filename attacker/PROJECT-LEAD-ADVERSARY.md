@@ -1,13 +1,16 @@
 <a id="top"></a>
 
-> 🧭 [Scenario 03](../README.md) › [Operator](README.md) › **Project Lead / Operator — Fast Flux DNS**
+<img src="https://capsule-render.vercel.app/api?type=soft&color=gradient&customColorList=26,20,14,6,1&height=150&section=header&text=%F0%9F%8E%AF%20Project%20Lead%20%2F%20Operator%20%E2%80%94%20Scenario%2003%20Fast%20Flux%20DNS&fontSize=30&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=DNSentinel%20Lab%20%C2%B7%20Scenario%2003%20%C2%B7%20Fast%20Flux%20DNS%20%C2%B7%20Project%20Lead%20%2F%20Operator&descSize=13&descAlignY=68&descColor=F59E0B" width="100%" alt="Project Lead / Operator — Scenario 03 Fast Flux DNS" />
 
 <div align="center">
 
-![Scenario](https://img.shields.io/badge/Scenario_03-COMPLETE-2EA44F?style=flat-square) ![Workspace](https://img.shields.io/badge/Workspace-Operator-F59E0B?style=flat-square) ![Document](https://img.shields.io/badge/Document-Evidence_Backed-A855F7?style=flat-square)
+![Scenario](https://img.shields.io/badge/Scenario_03-COMPLETE-2EA44F?style=flat-square) ![Workspace](https://img.shields.io/badge/Workspace-Project_Lead_%2F_Operator-F59E0B?style=flat-square) ![MITRE](https://img.shields.io/badge/MITRE-T1568.001-E34F26?style=flat-square)
+
+[🏠 Scenario Home](../README.md) · [🎯 Workspace](README.md) · [🧾 Evidence](../evidence/README.md)
 
 </div>
 
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 # 🎯 Project Lead / Operator — Scenario 03 Fast Flux DNS
 
 **Role owner:** [Lubaba](https://github.com/lubaba1513-pixel)  
@@ -210,10 +213,14 @@ The preserved evidence package does not contain the exact node teardown timestam
 - [`../SCENARIO-03-EXECUTION.md`](../SCENARIO-03-EXECUTION.md) — end-to-end case
 - [`../exercise/final-comparison.md`](../exercise/final-comparison.md) — operator vs defender comparison
 
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+
 <div align="center">
 
-**Lubaba · Preserve the boundary. Generate the behavior. Let the defenders prove the rest.**
+[🏠 Scenario Home](../README.md) · [🎯 Workspace](README.md) · [⬆ Back to top](#top)
 
-[🏠 Scenario Home](../README.md) · [⬆ Back to top](#top)
+**Evidence before attribution. Context before containment.**
 
 </div>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=26,20,14,6,1&height=80&section=footer" width="100%" alt="DNSentinel Scenario 03 footer" />

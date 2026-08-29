@@ -1,4 +1,17 @@
-# Scenario 03 — Claim → Evidence Map
+<a id="top"></a>
+
+<img src="https://capsule-render.vercel.app/api?type=soft&color=gradient&customColorList=1,6,14,20,26&height=150&section=header&text=%F0%9F%A7%BE%20Scenario%2003%20%E2%80%94%20Claim%20%E2%86%92%20Evidence%20Map&fontSize=30&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=DNSentinel%20Lab%20%C2%B7%20Scenario%2003%20%C2%B7%20Fast%20Flux%20DNS%20%C2%B7%20Evidence%20%2F%20Closeout&descSize=13&descAlignY=68&descColor=F59E0B" width="100%" alt="Scenario 03 — Claim → Evidence Map" />
+
+<div align="center">
+
+![Scenario](https://img.shields.io/badge/Scenario_03-COMPLETE-2EA44F?style=flat-square) ![Workspace](https://img.shields.io/badge/Workspace-Evidence_%2F_Closeout-F59E0B?style=flat-square) ![MITRE](https://img.shields.io/badge/MITRE-T1568.001-E34F26?style=flat-square)
+
+[🏠 Scenario Home](../README.md) · [🧾 Workspace](README.md) · [🧾 Evidence](../evidence/README.md)
+
+</div>
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+# 🧾 Scenario 03 — Claim → Evidence Map
 
 This map keeps the closeout defensible. It shows which preserved artifact supports each major public claim.
 
@@ -22,6 +35,18 @@ This map keeps the closeout defensible. It shows which preserved artifact suppor
 | Resolver remained healthy and normal DNS worked | [`ir/evidence/E19-unbound-healthy.png`](../ir/evidence/E19-unbound-healthy.png), [`E20-final-victim-dns-verification.png`](../ir/evidence/E20-final-victim-dns-verification.png) | closeout verification |
 | Temporary Fast Flux EC2 pool was retired after the exercise | final team closeout record | exact teardown timestamp/screenshot not present in attached role evidence; repository does not invent one |
 
-## Rule
+## 🧠 Rule
 
 A public statement should be no stronger than the evidence in this table. When a field or timestamp was unavailable, the limitation remains part of the final record.
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+
+<div align="center">
+
+[🏠 Scenario Home](../README.md) · [🧾 Workspace](README.md) · [⬆ Back to top](#top)
+
+**Evidence before attribution. Context before containment.**
+
+</div>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=26,20,14,6,1&height=80&section=footer" width="100%" alt="DNSentinel Scenario 03 footer" />
