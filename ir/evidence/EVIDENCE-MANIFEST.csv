@@ -1,0 +1,21 @@
+file,sha256,purpose
+E01-aws-sourcetype-inventory.png,183b1ac2ccf4ddf77d92041bdd7fa95ef7b68a1a3475298bfe6c122a5ccdb151,AWS sourcetype inventory used before Resolver source discovery.
+E03-independent-three-ip-dns-answer-history.png,774743694206ba574335c116d6e71193eae34a94b04c367f7c6a9b4334834e89,Resolver Query Logs independently show all three historical A answers.
+E04-exact-dns-answer-transition-timeline.png,b9bd867040b9f40b8466c7bd8116241116ee712f2b812a1e028a6b990d88e7a7,Answer transitions reconstructed using AWS query_timestamp.
+E05-historical-ttl-not-exposed.png,e79caec6b0c46b52dfa62ef4bc9fc4282227c1d3fe8242b8285a25d53677e376,Historical Resolver data did not expose TTL.
+E06-victim-to-three-ips-narrow-window.png,e0c9968a919426f2810fceefc2978f9891eb06a4192b5887ce37efee646c872f,IR VPC Flow correlation from victim to all three A-answer IPs.
+E07-current-dns-activity-check-zero.png,92bae5a65fbb486c29d54f4d194daad9b29961fbfb6d0e36212b51664db8b6c2,No current matching DNS activity at IR decision time.
+E08-current-network-activity-check-zero.png,a432d23f7f555dd3eeccb03a5e357b424e09a56cf7494bc861faffc327a34b60,No current matching VPC Flow activity at IR decision time.
+E09-single-client-scope.png,5be7a34a3d4f2c44a01b2ef4af9ae9e6d20bf98cabf16178e7b54f6059176233,Expanded IR scope remains one resolver-visible client.
+E10-splunk-endpoint-telemetry-gap-by-hostname.png,b29e93ecaa06baef28478a43d57b8a3e39be83c42bed1c336ab17c84631baac0,Splunk did not provide useful endpoint/process telemetry for victim.
+E11-focused-ssm-to-root-session-evidence.png,121ab09422ad1f329274055248603d39be6bd2928b63e26251123c038dd174a3,Local journal shows SSM-to-root interactive context.
+E12-defender-discovered-scenario-03-shell-history.png,e746be49982c9d75baac401fe5dd5496a5e2bcfb9b29a84ce27d968516c6848f,Root shell history shows Scenario 03 dig/curl follow-up logic.
+E13-cloudtrail-ssm-actor.png,ff7f86a766e18d21bb4f1e26aa3ee279349b0d2624daf30a9d92c99d30222f83,CloudTrail StartSession context for the later interactive session.
+E14-full-window-ssm-session-scope.png,bfd129a2db1bf1e0f7a6b7f67a5a69ac9287efa08189eb9e221586b78551beb4,Full-window SSM session scope.
+E15-no-earlier-interactive-login.png,16441ad38a516563ec648e67b0dc7a8cb842266214358bf81bd8a4b70da47ed6,Earlier local activity not explained by another interactive login.
+E16-cron-ruled-out.png,1c797c32d27124148be64176fb5dbada685aa4ecc7ab50e91da6d88858a1835e,Cron did not contain Scenario 03 dig/curl/resolver logic.
+E17-no-active-dig-curl-process.png,543ca2f46663d64bbf0a999d8c6421988bb89c8cff764f5b5d7e84ec7109cf37,No active matching dig/curl process at IR check time.
+E18-active-rpz-contains-no-scenario-03-flux-rule.png,f97b93ff17408814d1e5a27ca0af14df9a314f36b2f579b14641d67f605c2ba5,Active RPZ contains no Scenario 03 flux rule.
+E19-unbound-healthy.png,df9a239d0245610010777c19f415e14e3a97fbd1fed0277de8cf3dcaaa48acdc,Unbound configuration valid and service active.
+E20-final-victim-dns-verification.png,7e91849fd4a4d5dec13c93592eb089a71e880c29515544dcf60c937175411128,Victim-side normal DNS + Scenario 03 public answer / live TTL verification.
+T01-resolver-self-query-refused.png,d780ba35c7d7cd16270a9a14b982e1e3bb6b7145cf0fbdef46bc30ccbefe8a98,Troubleshooting: resolver self-query refused; client-path validation used instead.
