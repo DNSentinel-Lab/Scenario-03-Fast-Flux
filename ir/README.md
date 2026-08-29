@@ -1,6 +1,6 @@
 <a id="top"></a>
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=24,20,14,6,1&height=190&section=header&text=%F0%9F%9B%A1%EF%B8%8F%20Incident%20Response%20%26%20Defender&fontSize=34&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Scenario%2003%20%C2%B7%20Sonia%20%C2%B7%20Independent%20Validation%20%E2%86%92%20Proportionate%20Decision%20%E2%86%92%20Safe%20State&descSize=15&descAlignY=61&descColor=14B8A6" width="100%" alt="🛡️ Incident Response & Defender" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=190&section=header&text=Incident%20Response%20and%20Defender&fontSize=34&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Scenario%2003%20-%20Sonia%20-%20Independent%20Validation%20to%20Proportionate%20Decision%20to%20Safe%20State&descSize=15&descAlignY=61" width="100%" alt="🛡️ Incident Response & Defender" />
 
 <div align="center">
 
@@ -37,15 +37,161 @@ Sonia's job was not to repeat the SOC investigation or activate RPZ because the 
 ## ⚖️ Response Decision Path
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#030712",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#f8fafc",
+    "fontSize": "30px"
+  },
+  "flowchart": {
+    "nodeSpacing": 48,
+    "rankSpacing": 58,
+    "curve": "basis",
+    "padding": 20
+  }
+}}%%
+
 flowchart LR
-    A["📨 SOC Handoff"] --> B["🔎 Independent DNS History"]
-    B --> C["🌐 Network Correlation"]
-    C --> D["⏱️ Current Activity Check"]
-    D --> E["🖥️ Endpoint / Session Context"]
-    E --> F["🧭 Risk + Attribution Decision"]
-    F --> G{"⚖️ Is containment proportionate?"}
-    G -->|No| H["🛡️ Verify RPZ Safe State"]
-    H --> I["✅ Verify Resolver + Victim DNS"]
+
+    %% =====================================================
+    %% 1 · EVIDENCE REVIEW
+    %% =====================================================
+    subgraph REVIEW[" "]
+        direction TB
+
+        H1["🔎 1 · EVIDENCE REVIEW"]
+
+        A["📨 SOC<br/>HANDOFF"]
+
+        B["🔍 INDEPENDENT<br/>DNS HISTORY"]
+
+        C["🌐 NETWORK<br/>CORRELATION"]
+
+        H1 ==> A ==> B ==> C
+    end
+
+
+    %% =====================================================
+    %% 2 · RISK DECISION
+    %% =====================================================
+    subgraph DECISION[" "]
+        direction TB
+
+        H2["⚖️ 2 · RISK DECISION"]
+
+        D["⏱️ CURRENT<br/>ACTIVITY CHECK"]
+
+        E["🖥️ ENDPOINT / SESSION<br/>CONTEXT"]
+
+        F["🧭 RISK + ATTRIBUTION<br/>DECISION"]
+
+        G{"⚖️ IS CONTAINMENT<br/>PROPORTIONATE?"}
+
+        H2 ==> D ==> E ==> F ==> G
+    end
+
+
+    %% =====================================================
+    %% 3 · SAFE-STATE VERIFICATION
+    %% =====================================================
+    subgraph VERIFY[" "]
+        direction TB
+
+        H3["✅ 3 · SAFE-STATE VERIFICATION"]
+
+        N["🟢 NO CONTAINMENT<br/>REQUIRED"]
+
+        H["🛡️ VERIFY RPZ<br/>SAFE STATE"]
+
+        I["✅ VERIFY RESOLVER<br/>+ VICTIM DNS"]
+
+        H3 ==> N ==> H ==> I
+    end
+
+
+    %% =====================================================
+    %% CLEAN LEFT → RIGHT HANDOFFS
+    %% =====================================================
+    REVIEW ==> DECISION
+
+    G ==> N
+
+
+    %% =====================================================
+    %% PREMIUM GLOSSY HEADERS
+    %% =====================================================
+    classDef reviewHeader fill:#075985,stroke:#67e8f9,stroke-width:7px,color:#ffffff,font-size:35px,font-weight:bold;
+
+    classDef decisionHeader fill:#78350f,stroke:#fbbf24,stroke-width:7px,color:#ffffff,font-size:35px,font-weight:bold;
+
+    classDef verifyHeader fill:#14532d,stroke:#86efac,stroke-width:7px,color:#ffffff,font-size:35px,font-weight:bold;
+
+    class H1 reviewHeader;
+    class H2 decisionHeader;
+    class H3 verifyHeader;
+
+
+    %% =====================================================
+    %% EVIDENCE REVIEW COLORS
+    %% =====================================================
+    classDef handoff fill:#172554,stroke:#60a5fa,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef dns fill:#075985,stroke:#22d3ee,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef network fill:#164e63,stroke:#38bdf8,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    class A handoff;
+    class B dns;
+    class C network;
+
+
+    %% =====================================================
+    %% DECISION COLORS
+    %% =====================================================
+    classDef activity fill:#4c1d95,stroke:#c084fc,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef endpoint fill:#312e81,stroke:#a78bfa,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef risk fill:#9a3412,stroke:#fb923c,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef gate fill:#713f12,stroke:#fde047,stroke-width:7px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    class D activity;
+    class E endpoint;
+    class F risk;
+    class G gate;
+
+
+    %% =====================================================
+    %% VERIFICATION COLORS
+    %% =====================================================
+    classDef noContain fill:#0f766e,stroke:#5eead4,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef rpz fill:#166534,stroke:#4ade80,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef complete fill:#065f46,stroke:#86efac,stroke-width:7px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    class N noContain;
+    class H rpz;
+    class I complete;
+
+
+    %% =====================================================
+    %% GLOSSY PANELS
+    %% =====================================================
+    style REVIEW fill:#051521,stroke:#22d3ee,stroke-width:4px
+
+    style DECISION fill:#180d05,stroke:#fbbf24,stroke-width:4px
+
+    style VERIFY fill:#06150d,stroke:#4ade80,stroke-width:4px
+
+
+    %% =====================================================
+    %% BRIGHT CONNECTORS
+    %% =====================================================
+    linkStyle default stroke:#f8fafc,stroke-width:6px;
 ```
 
 ## 🖼️ IR Evidence Highlights
