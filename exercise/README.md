@@ -26,102 +26,159 @@ The scenario was designed so each role could only claim what its evidence suppor
   "themeVariables": {
     "background": "#050814",
     "primaryTextColor": "#ffffff",
-    "lineColor": "#e5eefc",
-    "fontSize": "28px"
+    "lineColor": "#f8fafc",
+    "fontSize": "29px"
   },
   "flowchart": {
     "nodeSpacing": 52,
-    "rankSpacing": 62,
+    "rankSpacing": 64,
     "curve": "basis",
     "padding": 20
   }
 }}%%
 
-flowchart TB
+flowchart LR
 
     %% =====================================================
-    %% TOP FOUNDATION
+    %% FOUNDATION
     %% =====================================================
     A["🧠 FROZEN DETECTION<br/>ENGINEERING"]
 
+
     %% =====================================================
-    %% LEFT — OPERATOR SIDE
+    %% INFORMATION-SEPARATED PATHS
     %% =====================================================
-    subgraph LEFT[" "]
+    subgraph PATHS[" "]
         direction TB
-        B["🎯 OPERATOR<br/>GROUND TRUTH"]
-        X["🔒 HIDDEN FROM DEFENDERS<br/>UNTIL REVEAL"]
-        B --> X
+
+        %% -------------------------------------------------
+        %% OPERATOR / GROUND-TRUTH PATH
+        %% -------------------------------------------------
+        subgraph OPERATOR[" "]
+            direction LR
+
+            OH["🎯 OPERATOR PATH"]
+
+            B["🎯 OPERATOR<br/>GROUND TRUTH"]
+
+            X["🔒 HIDDEN FROM DEFENDERS<br/>UNTIL REVEAL"]
+
+            OH ==> B ==> X
+        end
+
+
+        %% -------------------------------------------------
+        %% DEFENDER PATH
+        %% -------------------------------------------------
+        subgraph DEFENDER[" "]
+            direction LR
+
+            DH["🛡️ DEFENDER PATH"]
+
+            C["🔎 SOC<br/>INVESTIGATION"]
+
+            D["🛡️ IR<br/>VALIDATION"]
+
+            E["⚖️ RESPONSE<br/>DECISION"]
+
+            DH ==> C ==> D ==> E
+        end
     end
 
-    %% =====================================================
-    %% RIGHT — DEFENDER SIDE
-    %% =====================================================
-    subgraph RIGHT[" "]
-        direction TB
-        C["🔎 SOC<br/>INVESTIGATION"]
-        D["🛡️ IR<br/>VALIDATION"]
-        E["⚖️ RESPONSE<br/>DECISION"]
-
-        C --> D --> E
-    end
 
     %% =====================================================
-    %% SHARED OUTCOME
+    %% REVEAL + CLOSEOUT
     %% =====================================================
     F["🎭 GROUND-TRUTH<br/>REVEAL"]
+
     G["🧾 FINAL<br/>COMPARISON"]
+
     H["♻️ TEMPORARY NODE<br/>CLEANUP + CLOSEOUT"]
 
+
     %% =====================================================
-    %% FLOW
+    %% MAIN FLOW
     %% =====================================================
     A ==> B
     A ==> C
 
-    X -. "withheld until analyst work is complete" .-> F
+    X -.-> F
     E ==> F
 
     F ==> G ==> H
 
-    %% =====================================================
-    %% PREMIUM STYLES
-    %% =====================================================
-    classDef foundation fill:#172554,stroke:#60a5fa,stroke-width:5px,color:#ffffff,font-size:29px,font-weight:bold;
-    classDef truth fill:#7c2d12,stroke:#fb923c,stroke-width:5px,color:#ffffff,font-size:29px,font-weight:bold;
-    classDef hidden fill:#3f1d1d,stroke:#f87171,stroke-width:5px,color:#ffffff,font-size:27px,font-weight:bold;
-    classDef soc fill:#083344,stroke:#22d3ee,stroke-width:5px,color:#ffffff,font-size:29px,font-weight:bold;
-    classDef ir fill:#312e81,stroke:#a78bfa,stroke-width:5px,color:#ffffff,font-size:29px,font-weight:bold;
-    classDef decision fill:#422006,stroke:#fbbf24,stroke-width:5px,color:#ffffff,font-size:29px,font-weight:bold;
-    classDef reveal fill:#581c87,stroke:#e879f9,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
-    classDef final fill:#14532d,stroke:#4ade80,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
-    classDef cleanup fill:#0f766e,stroke:#2dd4bf,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
 
+    %% =====================================================
+    %% FOUNDATION
+    %% =====================================================
+    classDef foundation fill:#172554,stroke:#60a5fa,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+
+    %% =====================================================
+    %% OPERATOR PATH — ORANGE / RED
+    %% =====================================================
+    classDef operatorHeader fill:#78350f,stroke:#fbbf24,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef truth fill:#9a3412,stroke:#fb923c,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef hidden fill:#450a0a,stroke:#fb7185,stroke-width:6px,color:#ffffff,font-size:28px,font-weight:bold;
+
+
+    %% =====================================================
+    %% DEFENDER PATH — CYAN / BLUE
+    %% =====================================================
+    classDef defenderHeader fill:#075985,stroke:#67e8f9,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef soc fill:#083344,stroke:#22d3ee,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef ir fill:#312e81,stroke:#a78bfa,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef decision fill:#713f12,stroke:#fde047,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+
+    %% =====================================================
+    %% REVEAL / COMPARISON / CLOSEOUT
+    %% =====================================================
+    classDef reveal fill:#581c87,stroke:#f0abfc,stroke-width:7px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef final fill:#14532d,stroke:#86efac,stroke-width:7px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef cleanup fill:#0f766e,stroke:#5eead4,stroke-width:7px,color:#ffffff,font-size:29px,font-weight:bold;
+
+
+    %% =====================================================
+    %% APPLY CLASSES
+    %% =====================================================
     class A foundation;
+
+    class OH operatorHeader;
     class B truth;
     class X hidden;
+
+    class DH defenderHeader;
     class C soc;
     class D ir;
     class E decision;
+
     class F reveal;
     class G final;
     class H cleanup;
 
-    %% =====================================================
-    %% CONTAINER STYLES
-    %% =====================================================
-    style LEFT fill:#120a07,stroke:#fb923c,stroke-width:2px
-    style RIGHT fill:#08131f,stroke:#38bdf8,stroke-width:2px
 
     %% =====================================================
-    %% CONNECTOR STYLES
+    %% PREMIUM PANELS
     %% =====================================================
-    linkStyle 0 stroke:#fb923c,stroke-width:5px
-    linkStyle 1 stroke:#38bdf8,stroke-width:5px
-    linkStyle 2 stroke:#f87171,stroke-width:4px,stroke-dasharray:8 6
-    linkStyle 3 stroke:#e879f9,stroke-width:5px
-    linkStyle 4 stroke:#86efac,stroke-width:5px
-    linkStyle 5 stroke:#2dd4bf,stroke-width:5px
+    style PATHS fill:#050814,stroke:#334155,stroke-width:2px
+
+    style OPERATOR fill:#160a05,stroke:#fb923c,stroke-width:4px
+
+    style DEFENDER fill:#051521,stroke:#22d3ee,stroke-width:4px
+
+
+    %% =====================================================
+    %% BRIGHT CONNECTORS
+    %% =====================================================
+    linkStyle default stroke:#f8fafc,stroke-width:5px;
 ```
 
 ## ✅ Completed Gates
