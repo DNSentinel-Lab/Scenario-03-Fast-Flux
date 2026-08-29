@@ -1,0 +1,3 @@
+index=dns_soc_dns sourcetype=unbound:dns earliest=-15m
+| stats count as events min(_time) as first_seen max(_time) as last_seen
+| convert ctime(first_seen) ctime(last_seen)

@@ -1,3 +1,5 @@
+> **Closeout note:** This reusable template was prepared before the official investigation. The completed Scenario 03 analyst record is [`SOC-ANALYST-INVESTIGATION.md`](SOC-ANALYST-INVESTIGATION.md).
+
 # Scenario 03 SOC Investigation Template — Abdul-Rehman
 
 ## Alert

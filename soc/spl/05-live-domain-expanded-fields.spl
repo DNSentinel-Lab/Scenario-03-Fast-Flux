@@ -1,0 +1,5 @@
+index=dns_soc_dns sourcetype=unbound:dns
+"flux.soclab.abdul4rehman215.tech"
+earliest="08/28/2026:12:45:00"
+latest="08/28/2026:12:55:00"
+| table _time *
