@@ -11,7 +11,6 @@
 </div>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
-# 🔎 Scenario 03 — SOC Investigation SPL Index
 
 `split/` is not used here; all executed investigation searches are stored in [`spl/`](spl/). The production detection itself remained frozen during the SOC investigation.
 
