@@ -85,34 +85,258 @@ This repository now records the complete case rather than only the engineering p
 
 | Role | Owner | What the role proved |
 |---|---|---|
-| 🎯 Project Lead / Operator | Lubaba | preserved controller integrity, executed approved rotation, generated real victim follow-up, kept ground truth separated, stopped cleanly |
-| 🧠 Detection Engineer | Musfira | converted Resolver answers + VPC Flow into a tuned behavior-based detection and operational alert |
-| 🔎 SOC Analyst / Threat Hunter | Abdul-Rehman | validated the alert from defender evidence, scoped the activity, challenged AI, completed 5W1H, escalated with attribution limits |
-| 🛡️ IR / Defender | Sonia | independently rebuilt answer history, investigated host context, ruled on containment, verified resolver/RPZ safe state |
+| 🎯 Project Lead / Operator | [Lubaba](https://github.com/lubaba1513-pixel) | preserved controller integrity, executed approved rotation, generated real victim follow-up, kept ground truth separated, stopped cleanly |
+| 🧠 Detection Engineer | [Musfira](https://github.com/MUSFIRA-ZAFAR) | converted Resolver answers + VPC Flow into a tuned behavior-based detection and operational alert |
+| 🔎 SOC Analyst / Threat Hunter | [Abdul-Rehman](https://github.com/abdul4rehman215) | validated the alert from defender evidence, scoped the activity, challenged AI, completed 5W1H, escalated with attribution limits |
+| 🛡️ IR / Defender | [Sonia](https://github.com/sonia11mansha415) | independently rebuilt answer history, investigated host context, ruled on containment, verified resolver/RPZ safe state |
 
 ## 🏗️ What Actually Happened
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#030712",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#f8fafc",
+    "fontSize": "30px"
+  },
+  "flowchart": {
+    "nodeSpacing": 48,
+    "rankSpacing": 58,
+    "curve": "basis",
+    "padding": 20
+  }
+}}%%
+
 flowchart LR
-    O["🎯 Lubaba<br/>dns-attack01"] -->|approved Route 53 UPSERT rotation| F["flux.soclab.abdul4rehman215.tech<br/>TTL 60"]
-    F --> N1["13.220.94.188"]
-    F --> N2["52.73.218.100"]
-    F --> N3["54.81.98.44"]
-    V["🖥️ dns-soc-victim01<br/>10.50.30.20"] --> R["🛡️ dns-soc-resolver01<br/>10.50.30.10"]
-    R --> F
-    V -->|HTTP/80 follows returned answer| N1
-    V -->|HTTP/80 follows returned answer| N2
-    V -->|HTTP/80 follows returned answer| N3
-    R --> D["DNS / Resolver evidence"]
-    V --> W["VPC Flow evidence"]
-    D --> S["Splunk Enterprise"]
-    W --> S
-    S --> DET["Detection v1.0"]
-    DET --> SOC["🔎 Abdul-Rehman<br/>SOC Investigation"]
-    DET --> AI["🤖 AI Assistance"]
-    AI --> SOC
-    SOC --> IR["🛡️ Sonia<br/>IR Validation"]
-    IR --> DEC["Controlled / Expected<br/>No containment required"]
+
+    %% =====================================================
+    %% 1 · SCENARIO ACTORS + DNS
+    %% =====================================================
+    subgraph SOURCE[" "]
+        direction TB
+
+        H1["🎯 1 · SCENARIO + DNS"]
+
+        O["🎯 Lubaba<br/>dns-attack01<br/>Approved Route 53 Rotation"]
+
+        V["🖥️ dns-soc-victim01<br/>10.50.30.20"]
+
+        R["🛡️ dns-soc-resolver01<br/>10.50.30.10"]
+
+        HTTP["🌐 HTTP / 80<br/>Follow Returned DNS Answer"]
+
+        H1 --> O
+        H1 --> V
+
+        V ==> R
+        V ==> HTTP
+    end
+
+
+    %% =====================================================
+    %% 2 · FAST FLUX ROTATION
+    %% =====================================================
+    subgraph FLUX[" "]
+        direction TB
+
+        H2["🔄 2 · FAST FLUX ROTATION"]
+
+        F["🌍 flux.soclab.abdul4rehman215.tech<br/>⏱ TTL 60"]
+
+        ROT["⚡ ROTATING ANSWERS<br/>Three Controlled Endpoints"]
+
+        N1["🟢 dns-flux-node01<br/>13.220.94.188"]
+
+        N2["🟠 dns-flux-node02<br/>52.73.218.100"]
+
+        N3["🟣 dns-flux-node03<br/>54.81.98.44"]
+
+        H2 ==> F ==> ROT
+
+        ROT --> N1
+        ROT --> N2
+        ROT --> N3
+    end
+
+
+    %% =====================================================
+    %% 3 · EVIDENCE + DETECTION
+    %% =====================================================
+    subgraph DETECTION[" "]
+        direction TB
+
+        H3["📡 3 · EVIDENCE + DETECTION"]
+
+        D["📡 DNS / RESOLVER<br/>Evidence"]
+
+        W["🌐 VPC FLOW<br/>Evidence"]
+
+        S["🟢 SPLUNK ENTERPRISE<br/>Correlation + Analysis"]
+
+        DET["🧠 DETECTION v1.0<br/>Fast Flux Analytics"]
+
+        H3 --> D
+        H3 --> W
+
+        D ==> S
+        W ==> S
+
+        S ==> DET
+    end
+
+
+    %% =====================================================
+    %% 4 · HUMAN ANALYSIS + DECISION
+    %% =====================================================
+    subgraph HUMAN[" "]
+        direction TB
+
+        H4["🛡️ 4 · ANALYSIS + DECISION"]
+
+        AI["🤖 AI ASSISTANCE<br/>Evidence Context"]
+
+        SOC["🔎 Abdul-Rehman<br/>SOC Investigation"]
+
+        IR["🛡️ Sonia<br/>IR Validation"]
+
+        DEC["✅ CONTROLLED / EXPECTED<br/>No Containment Required"]
+
+        H4 --> AI
+        H4 --> SOC
+
+        AI ==> SOC
+        SOC ==> IR ==> DEC
+    end
+
+
+    %% =====================================================
+    %% CLEAN CROSS-STAGE FLOW
+    %% =====================================================
+
+    %% Operator changes authoritative answers
+    O ==> F
+
+    %% Victim resolves through defender DNS
+    R ==> F
+
+    %% HTTP follows whichever answer DNS returns
+    HTTP -.-> ROT
+
+    %% Telemetry enters evidence pipeline
+    R ==> D
+    HTTP ==> W
+
+    %% Detection enters human workflow
+    DET ==> AI
+    DET ==> SOC
+
+
+    %% =====================================================
+    %% PREMIUM NEON HEADERS
+    %% =====================================================
+    classDef sourceHeader fill:#082f49,stroke:#67e8f9,stroke-width:7px,color:#ffffff,font-size:34px,font-weight:bold;
+
+    classDef fluxHeader fill:#713f12,stroke:#fbbf24,stroke-width:7px,color:#ffffff,font-size:34px,font-weight:bold;
+
+    classDef detectHeader fill:#312e81,stroke:#a78bfa,stroke-width:7px,color:#ffffff,font-size:34px,font-weight:bold;
+
+    classDef humanHeader fill:#14532d,stroke:#86efac,stroke-width:7px,color:#ffffff,font-size:34px,font-weight:bold;
+
+    class H1 sourceHeader;
+    class H2 fluxHeader;
+    class H3 detectHeader;
+    class H4 humanHeader;
+
+
+    %% =====================================================
+    %% SCENARIO + DNS COLORS
+    %% =====================================================
+    classDef operator fill:#7f1d1d,stroke:#fb7185,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef victim fill:#172554,stroke:#60a5fa,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef resolver fill:#075985,stroke:#22d3ee,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef http fill:#0f766e,stroke:#5eead4,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    class O operator;
+    class V victim;
+    class R resolver;
+    class HTTP http;
+
+
+    %% =====================================================
+    %% FAST FLUX COLORS
+    %% =====================================================
+    classDef domain fill:#581c87,stroke:#f0abfc,stroke-width:7px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef rotation fill:#9a3412,stroke:#fb923c,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef node1 fill:#14532d,stroke:#4ade80,stroke-width:6px,color:#ffffff,font-size:28px,font-weight:bold;
+
+    classDef node2 fill:#9a3412,stroke:#fdba74,stroke-width:6px,color:#ffffff,font-size:28px,font-weight:bold;
+
+    classDef node3 fill:#4c1d95,stroke:#c084fc,stroke-width:6px,color:#ffffff,font-size:28px,font-weight:bold;
+
+    class F domain;
+    class ROT rotation;
+    class N1 node1;
+    class N2 node2;
+    class N3 node3;
+
+
+    %% =====================================================
+    %% EVIDENCE + DETECTION COLORS
+    %% =====================================================
+    classDef dnsEvidence fill:#083344,stroke:#22d3ee,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef flowEvidence fill:#172554,stroke:#60a5fa,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef splunk fill:#14532d,stroke:#4ade80,stroke-width:7px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef detection fill:#4c1d95,stroke:#e879f9,stroke-width:7px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    class D dnsEvidence;
+    class W flowEvidence;
+    class S splunk;
+    class DET detection;
+
+
+    %% =====================================================
+    %% HUMAN WORKFLOW COLORS
+    %% =====================================================
+    classDef ai fill:#581c87,stroke:#f0abfc,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef soc fill:#075985,stroke:#38bdf8,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef ir fill:#312e81,stroke:#a78bfa,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef final fill:#166534,stroke:#86efac,stroke-width:7px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    class AI ai;
+    class SOC soc;
+    class IR ir;
+    class DEC final;
+
+
+    %% =====================================================
+    %% GLOSSY PANELS
+    %% =====================================================
+    style SOURCE fill:#06131d,stroke:#22d3ee,stroke-width:4px
+
+    style FLUX fill:#180d05,stroke:#fbbf24,stroke-width:4px
+
+    style DETECTION fill:#0d1022,stroke:#a78bfa,stroke-width:4px
+
+    style HUMAN fill:#07140d,stroke:#4ade80,stroke-width:4px
+
+
+    %% =====================================================
+    %% BRIGHT CONNECTORS
+    %% =====================================================
+    linkStyle default stroke:#f8fafc,stroke-width:5px;
 ```
 
 ### Exercise-time endpoint pool
@@ -127,7 +351,7 @@ These public IPs are **historical run evidence**, not permanent architecture con
 
 ## 🎬 Official Operator Result
 
-Lubaba's approved controller ran unchanged from `dns-attack01` and completed a full three-node cycle. The victim then resolved the stable hostname through `10.50.30.10` and followed the returned address over HTTP.
+[Lubaba's](https://github.com/lubaba1513-pixel) approved controller ran unchanged from `dns-attack01` and completed a full three-node cycle. The victim then resolved the stable hostname through `10.50.30.10` and followed the returned address over HTTP.
 
 ```text
 Official Fast Flux start: 2026-08-28T12:43:43Z
@@ -135,6 +359,7 @@ Victim follow-up start:   2026-08-28T12:52:18Z
 Victim follow-up end:     2026-08-28T12:58:04Z
 Official Fast Flux end:   2026-08-28T12:58:30Z
 ```
+<!--
 
 ![Official Fast Flux start](attacker/evidence/06-official-fast-flux-start.png)
 
@@ -143,6 +368,7 @@ Official Fast Flux end:   2026-08-28T12:58:30Z
 ![Victim follows the third node](attacker/evidence/09-victim-follows-third-node.png)
 
 *The victim resolved the changing hostname and successfully followed the returned destination; HTTP `200` and `remote_ip` matched the DNS answer.*
+-->
 
 [Read Lubaba's complete operator story →](attacker/PROJECT-LEAD-ADVERSARY.md)
 
@@ -197,7 +423,7 @@ The live alert surfaced the scenario domain with three public IPs. Abdul-Rehman 
 
 The 37-versus-42 difference was preserved rather than forced to match; the manual investigation and production rule used different aggregation/window logic.
 
-Abdul-Rehman locked:
+[Abdul-Rehman](https://github.com/abdul4rehman215) locked:
 
 > **SOC Disposition: INCONCLUSIVE — ESCALATION WARRANTED**  
 > **Fast Flux-like behavior confidence: Medium-High**  
@@ -223,7 +449,7 @@ raw evidence
 
 ## 🛡️ IR — Stronger Evidence, Different Decision
 
-Sonia did not simply repeat the SOC handoff. She independently found the AWS Resolver Query Log source, extracted the three A answers, used AWS `query_timestamp` for answer chronology, validated victim-to-destination flows, checked current activity, and then investigated the victim host when Splunk lacked endpoint/process telemetry.
+[Sonia](https://github.com/sonia11mansha415) did not simply repeat the SOC handoff. She independently found the AWS Resolver Query Log source, extracted the three A answers, used AWS `query_timestamp` for answer chronology, validated victim-to-destination flows, checked current activity, and then investigated the victim host when Splunk lacked endpoint/process telemetry.
 
 ### IR strengthened the case with
 
@@ -260,10 +486,11 @@ Even without an enforcing change, IR verified that the environment was left safe
 - the Scenario 03 hostname resolved to a public A record during final defender validation;
 - no matching `dig` / `curl` process remained active.
 
+<!--
 ![Final victim DNS verification](ir/evidence/E20-final-victim-dns-verification.png)
 
 *The final victim-side check proved normal resolver operation and observed a live TTL of 60. IR did not retroactively claim that every historical answer had TTL 60 because historical Resolver events did not expose TTL.*
-
+-->
 
 ## 📸 Scenario 03 Evidence Highlights
 
