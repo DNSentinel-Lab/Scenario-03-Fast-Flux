@@ -21,14 +21,175 @@ Scenario 03 reused the shared DNSentinel Flask/OpenAI/HEC bridge. No second AI s
 ## 🔁 Evidence Path
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#030712",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#f8fafc",
+    "fontSize": "31px"
+  },
+  "flowchart": {
+    "nodeSpacing": 48,
+    "rankSpacing": 58,
+    "curve": "basis",
+    "padding": 20
+  }
+}}%%
+
 flowchart LR
-    A["🧠 Detection v1.0"] --> B["🚨 Splunk Alert"]
-    B --> C["🔗 Webhook"]
-    C --> D["🤖 dns-soc-ai-bridge"]
-    D --> E["🧠 LLM"]
-    E --> F["📥 Splunk HEC"]
-    F --> G["🔎 index=dns_soc_ai"]
-    G --> H["👤 Human Validation"]
+
+    %% =====================================================
+    %% 1 · DETECTION + ALERT
+    %% =====================================================
+    subgraph DETECT[" "]
+        direction TB
+
+        H1["🚨 1 · DETECTION + ALERT"]
+
+        A["🧠 Detection v1.0"]
+
+        B["🚨 Splunk Alert"]
+
+        H1 ==> A ==> B
+    end
+
+
+    %% =====================================================
+    %% 2 · AI ENRICHMENT
+    %% =====================================================
+    subgraph AI[" "]
+        direction TB
+
+        H2["🤖 2 · AI ENRICHMENT"]
+
+        C["🔗 Webhook"]
+
+        D["⚙️ dns-soc-ai-bridge"]
+
+        E["🧠 LLM<br/>Context + Summary"]
+
+        H2 ==> C ==> D ==> E
+    end
+
+
+    %% =====================================================
+    %% 3 · RETURN TO SPLUNK
+    %% =====================================================
+    subgraph RETURN[" "]
+        direction TB
+
+        H3["📥 3 · SPLUNK RETURN"]
+
+        F["📥 Splunk HEC"]
+
+        G["🔎 AI Triage Index<br/>dns_soc_ai"]
+
+        H3 ==> F ==> G
+    end
+
+
+    %% =====================================================
+    %% 4 · HUMAN VALIDATION
+    %% =====================================================
+    subgraph HUMAN[" "]
+        direction TB
+
+        H4["👤 4 · HUMAN DECISION"]
+
+        H["🔍 Human Validation<br/>Review Raw Evidence"]
+
+        V["✅ Analyst Verdict<br/>Evidence Owns the Truth"]
+
+        H4 ==> H ==> V
+    end
+
+
+    %% =====================================================
+    %% KEEP ALL 4 STAGES PARALLEL
+    %% =====================================================
+    DETECT ==> AI
+    AI ==> RETURN
+    RETURN ==> HUMAN
+
+
+    %% =====================================================
+    %% GLOSSY NEON HEADERS
+    %% =====================================================
+    classDef detectHeader fill:#450a0a,stroke:#fb7185,stroke-width:7px,color:#ffffff,font-size:35px,font-weight:bold;
+
+    classDef aiHeader fill:#4c1d95,stroke:#e879f9,stroke-width:7px,color:#ffffff,font-size:35px,font-weight:bold;
+
+    classDef splunkHeader fill:#075985,stroke:#67e8f9,stroke-width:7px,color:#ffffff,font-size:35px,font-weight:bold;
+
+    classDef humanHeader fill:#14532d,stroke:#86efac,stroke-width:7px,color:#ffffff,font-size:35px,font-weight:bold;
+
+    class H1 detectHeader;
+    class H2 aiHeader;
+    class H3 splunkHeader;
+    class H4 humanHeader;
+
+
+    %% =====================================================
+    %% DETECTION COLORS
+    %% =====================================================
+    classDef detection fill:#7f1d1d,stroke:#fb7185,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef alert fill:#9a3412,stroke:#fb923c,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    class A detection;
+    class B alert;
+
+
+    %% =====================================================
+    %% AI COLORS
+    %% =====================================================
+    classDef webhook fill:#312e81,stroke:#818cf8,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef bridge fill:#581c87,stroke:#c084fc,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef llm fill:#701a75,stroke:#f0abfc,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    class C webhook;
+    class D bridge;
+    class E llm;
+
+
+    %% =====================================================
+    %% SPLUNK RETURN COLORS
+    %% =====================================================
+    classDef hec fill:#0c4a6e,stroke:#22d3ee,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef index fill:#075985,stroke:#7dd3fc,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    class F hec;
+    class G index;
+
+
+    %% =====================================================
+    %% HUMAN VALIDATION COLORS
+    %% =====================================================
+    classDef analyst fill:#065f46,stroke:#4ade80,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    classDef verdict fill:#166534,stroke:#86efac,stroke-width:7px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    class H analyst;
+    class V verdict;
+
+
+    %% =====================================================
+    %% PREMIUM NEON PANELS
+    %% =====================================================
+    style DETECT fill:#17080c,stroke:#fb7185,stroke-width:4px
+    style AI fill:#150821,stroke:#d946ef,stroke-width:4px
+    style RETURN fill:#051521,stroke:#22d3ee,stroke-width:4px
+    style HUMAN fill:#06150d,stroke:#4ade80,stroke-width:4px
+
+
+    %% =====================================================
+    %% BRIGHT CONNECTORS
+    %% =====================================================
+    linkStyle default stroke:#f8fafc,stroke-width:6px;
 ```
 
 ## ✅ What AI Got Right
