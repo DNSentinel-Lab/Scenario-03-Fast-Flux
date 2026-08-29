@@ -16,7 +16,7 @@
 
 # 🛡️ Scenario 03 Incident Response Workspace
 
-Sonia's job was not to repeat the SOC investigation or activate RPZ because the mechanism existed. IR independently rebuilt the answer history, strengthened network/host context, measured current risk and changed the environment **only if the evidence justified it**.
+[Sonia's](https://github.com/sonia11mansha415) job was not to repeat the SOC investigation or activate RPZ because the mechanism existed. IR independently rebuilt the answer history, strengthened network/host context, measured current risk and changed the environment **only if the evidence justified it**.
 
 ## 🚦 Response Snapshot
 
