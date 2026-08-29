@@ -1,17 +1,16 @@
 <a id="top"></a>
 
-<img src="https://capsule-render.vercel.app/api?type=soft&color=gradient&customColorList=1,6,14,20,26&height=155&section=header&text=%F0%9F%8E%AC%20Scenario%2003%20End-to-End%20Execution&fontSize=30&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Fast%20Flux%20Rotation%20%E2%86%92%20Detection%20%E2%86%92%20SOC%20%E2%86%92%20IR%20%E2%86%92%20Safe-State%20Closeout&descSize=14&descAlignY=68&descColor=FF9F43" width="100%" alt="Scenario 03 End-to-End Execution" />
+<img src="https://capsule-render.vercel.app/api?type=soft&color=gradient&customColorList=1,6,14,20,26&height=150&section=header&text=%F0%9F%94%84%20Scenario%2003%20%E2%80%94%20End-to-End%20Execution&fontSize=30&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=DNSentinel%20Lab%20%C2%B7%20Scenario%2003%20%C2%B7%20Fast%20Flux%20DNS%20%C2%B7%20Scenario%2003&descSize=13&descAlignY=68&descColor=F59E0B" width="100%" alt="Scenario 03 — End-to-End Execution" />
 
 <div align="center">
 
-![Scenario](https://img.shields.io/badge/Scenario_03-COMPLETE-2EA44F?style=flat-square) ![MITRE](https://img.shields.io/badge/MITRE-T1568.001-E34F26?style=flat-square) ![Closeout](https://img.shields.io/badge/Closeout-Evidence_Backed-F59E0B?style=flat-square)
+![Scenario](https://img.shields.io/badge/Scenario_03-COMPLETE-2EA44F?style=flat-square) ![Workspace](https://img.shields.io/badge/Workspace-Scenario_03-F59E0B?style=flat-square) ![MITRE](https://img.shields.io/badge/MITRE-T1568.001-E34F26?style=flat-square)
 
-[🏠 Scenario Home](README.md) · [🎯 Operator](attacker/README.md) · [🔎 SOC](soc/README.md) · [🛡️ IR](ir/README.md) · [🧾 Evidence](evidence/README.md)
+[🏠 Scenario Home](README.md) · [🧾 Evidence](evidence/README.md)
 
 </div>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
-
 # 🎬 Scenario 03 — End-to-End Execution
 
 This is the short operational record of the completed **Fast Flux DNS** exercise. It connects the pre-built detection, official operator run, live alert, SOC investigation, Incident Response, final response decision, safe-state verification, cleanup and final reveal without reproducing every command or screenshot.
@@ -151,7 +150,7 @@ Sonia locked:
 
 The existing RPZ/sinkhole capability was not activated. No resolver policy was changed merely to produce a containment screenshot.
 
-## ✅ 10. Safe-state verification
+## ✅ ✅ 10. Safe-state verification
 
 IR still proved that the response surface was safe:
 
@@ -188,7 +187,7 @@ The official controller and victim loop were stopped cleanly during the exercise
 
 The exact EC2 teardown timestamp was not included in the preserved role evidence, so the repository records the cleanup result without inventing a timestamp.
 
-## ✅ Final outcome
+## 🏁 ✅ Final outcome
 
 > **Scenario 03 completed as a realistic information-separated Fast Flux detection-and-response exercise.** The controlled hostname moved across three project-owned public endpoints; the victim genuinely followed the returned destinations; the frozen Splunk detection generated a live lead; SOC independently confirmed abnormal Fast Flux-like behavior and escalated with attribution limits; IR independently strengthened DNS history and endpoint context, then correctly chose no containment; the resolver/RPZ safe state was verified; ground truth was revealed only after defender decisions were locked; and the temporary Fast Flux endpoint pool was retired after the exercise.
 
@@ -200,10 +199,14 @@ Continue to the deeper role stories:
 - [Incident Response](ir/INCIDENT-RESPONSE.md)
 - [Final Comparison](exercise/final-comparison.md)
 
-<div align="center">
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
-**DNSentinel Scenario 03 · Evidence before verdict · Humans before automation**
+<div align="center">
 
 [🏠 Scenario Home](README.md) · [⬆ Back to top](#top)
 
+**Evidence before attribution. Context before containment.**
+
 </div>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=26,20,14,6,1&height=80&section=footer" width="100%" alt="DNSentinel Scenario 03 footer" />
