@@ -21,12 +21,98 @@ This workspace connects the evidence preserved by each role **without flattening
 ## 🔁 Evidence Architecture
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#030712",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#f8fafc",
+    "fontSize": "30px"
+  },
+  "flowchart": {
+    "nodeSpacing": 55,
+    "rankSpacing": 70,
+    "curve": "basis",
+    "padding": 22
+  }
+}}%%
+
 flowchart LR
-    A["🏗️ Infrastructure +<br/>Detection Engineering"] --> B["🎯 Operator<br/>Ground Truth"]
-    A --> C["🔎 SOC<br/>Defender Evidence"]
-    C --> D["🛡️ IR<br/>Independent Validation"]
-    B --> E["🎭 Final Comparison"]
-    D --> E
+
+    %% =====================================================
+    %% FOUNDATION
+    %% =====================================================
+    A["🏗️ INFRASTRUCTURE<br/>+ DETECTION ENGINEERING"]
+
+
+    %% =====================================================
+    %% TWO INDEPENDENT EVIDENCE PATHS
+    %% =====================================================
+    B["🎯 OPERATOR<br/>GROUND TRUTH"]
+
+    C["🔎 SOC<br/>DEFENDER EVIDENCE"]
+
+    D["🛡️ IR<br/>INDEPENDENT VALIDATION"]
+
+
+    %% =====================================================
+    %% FINAL COMPARISON
+    %% =====================================================
+    E["🎭 FINAL COMPARISON<br/>Ground Truth ↔ Defender Findings"]
+
+
+    %% =====================================================
+    %% FLOW
+    %% =====================================================
+    A ==> B
+
+    A ==> C
+
+    C ==> D
+
+    B ==> E
+
+    D ==> E
+
+
+    %% =====================================================
+    %% PREMIUM GLOSSY STYLES
+    %% =====================================================
+
+    %% Foundation
+    classDef foundation fill:#172554,stroke:#60a5fa,stroke-width:7px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    %% Operator path
+    classDef groundTruth fill:#78350f,stroke:#fbbf24,stroke-width:7px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    %% SOC evidence
+    classDef soc fill:#075985,stroke:#22d3ee,stroke-width:7px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    %% IR validation
+    classDef ir fill:#312e81,stroke:#a78bfa,stroke-width:7px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    %% Final comparison
+    classDef final fill:#14532d,stroke:#86efac,stroke-width:8px,color:#ffffff,font-size:34px,font-weight:bold;
+
+
+    %% =====================================================
+    %% APPLY STYLES
+    %% =====================================================
+    class A foundation;
+    class B groundTruth;
+    class C soc;
+    class D ir;
+    class E final;
+
+
+    %% =====================================================
+    %% THICK HIGH-CONTRAST CONNECTORS
+    %% =====================================================
+    linkStyle 0 stroke:#fbbf24,stroke-width:6px;
+    linkStyle 1 stroke:#22d3ee,stroke-width:6px;
+    linkStyle 2 stroke:#a78bfa,stroke-width:6px;
+    linkStyle 3 stroke:#fbbf24,stroke-width:6px;
+    linkStyle 4 stroke:#86efac,stroke-width:6px;
 ```
 
 ## 🖼️ Cross-Role Highlights
