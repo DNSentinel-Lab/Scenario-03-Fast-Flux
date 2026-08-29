@@ -1,17 +1,31 @@
-# Scenario 03 Screenshot Evidence
+# Scenario 03 Screenshot Navigation
 
-The public evidence set is curated rather than a dump of every build screenshot.
+The public repository keeps screenshots curated by purpose rather than reproducing every image captured during engineering and execution.
 
-## [`infrastructure/`](infrastructure/)
+## Engineering visual evidence
 
-Proves the Fast Flux endpoint SG, three-node pool, Route 53 TTL/record state, UPSERT rotation, authoritative answer checks, victim follow-up and VPC Flow visibility.
+### [`infrastructure/`](infrastructure/)
 
-## [`detection-engineering/`](detection-engineering/)
+Build/validation evidence for the controlled endpoint pool, Route 53 record, controller rotation, authoritative resolution, victim follow-up and VPC Flow visibility.
 
-Proves field validation, baseline, Resolver answer extraction, false-positive discovery, final rule, triggered alert and final dashboard.
+### [`detection-engineering/`](detection-engineering/)
 
-## [`troubleshooting/`](troubleshooting/)
+Detection Engineering evidence: data validation, baseline, Resolver answer extraction, benign dynamic-service noise, answer/network correlation, Detection v1.0, alerting, AI and Dashboard Studio.
 
-Keeps only problems that changed the engineering approach: RFC1918 contamination, Resolver telemetry discovery, rejected churn feature, webhook schema failure and successful boundary isolation.
+### [`troubleshooting/`](troubleshooting/)
 
-Official attacker/SOC/IR screenshots will be added only after that execution happens.
+Only engineering problems that changed the design: RFC1918 contamination, Resolver data-source discovery, rejected churn-rate feature, webhook schema failure and successful API-boundary isolation.
+
+## Official exercise visual evidence
+
+The execution evidence is stored inside the role workspace that owns it:
+
+- 🎯 [`../attacker/evidence/`](../attacker/evidence/) — Lubaba's operator evidence
+- 🔎 [`../soc/evidence/`](../soc/evidence/) — Abdul-Rehman's SOC investigation evidence
+- 🛡️ [`../ir/evidence/`](../ir/evidence/) — Sonia's IR/Defender evidence
+
+This avoids duplicating the same evidence in several folders while keeping the repository story clear.
+
+## Presentation rule
+
+A screenshot should answer a technical question. The flagship role documents use only the strongest images; the remaining curated evidence stays available through each role's evidence index.
