@@ -42,14 +42,14 @@ The engineering goal was not to alert on “a domain has several A records.” L
 %%{init: {
   "theme": "base",
   "themeVariables": {
-    "background": "#050814",
+    "background": "#030712",
     "primaryTextColor": "#ffffff",
     "lineColor": "#f8fafc",
     "fontSize": "29px"
   },
   "flowchart": {
-    "nodeSpacing": 52,
-    "rankSpacing": 64,
+    "nodeSpacing": 48,
+    "rankSpacing": 58,
     "curve": "basis",
     "padding": 20
   }
@@ -58,145 +58,136 @@ The engineering goal was not to alert on “a domain has several A records.” L
 flowchart LR
 
     %% =====================================================
-    %% FOUNDATION
+    %% 1 · DATA FOUNDATION
     %% =====================================================
-    A["🧠 FROZEN DETECTION<br/>ENGINEERING"]
-
-
-    %% =====================================================
-    %% INFORMATION-SEPARATED PATHS
-    %% =====================================================
-    subgraph PATHS[" "]
+    subgraph FOUNDATION[" "]
         direction TB
 
-        %% -------------------------------------------------
-        %% OPERATOR / GROUND-TRUTH PATH
-        %% -------------------------------------------------
-        subgraph OPERATOR[" "]
-            direction LR
+        H1["📡 1 · DATA FOUNDATION"]
 
-            OH["🎯 OPERATOR PATH"]
+        A["📡 VALIDATE<br/>Resolver + Flow Fields"]
 
-            B["🎯 OPERATOR<br/>GROUND TRUTH"]
+        B["📊 BASELINE<br/>Normal Dynamic DNS"]
 
-            X["🔒 HIDDEN FROM DEFENDERS<br/>UNTIL REVEAL"]
+        C["🧪 CHALLENGE<br/>Weak Churn Features"]
 
-            OH ==> B ==> X
-        end
-
-
-        %% -------------------------------------------------
-        %% DEFENDER PATH
-        %% -------------------------------------------------
-        subgraph DEFENDER[" "]
-            direction LR
-
-            DH["🛡️ DEFENDER PATH"]
-
-            C["🔎 SOC<br/>INVESTIGATION"]
-
-            D["🛡️ IR<br/>VALIDATION"]
-
-            E["⚖️ RESPONSE<br/>DECISION"]
-
-            DH ==> C ==> D ==> E
-        end
+        H1 ==> A ==> B ==> C
     end
 
 
     %% =====================================================
-    %% REVEAL + CLOSEOUT
+    %% 2 · DETECTION ENGINEERING
     %% =====================================================
-    F["🎭 GROUND-TRUTH<br/>REVEAL"]
+    subgraph ENGINEERING[" "]
+        direction TB
 
-    G["🧾 FINAL<br/>COMPARISON"]
+        H2["🛠️ 2 · DETECTION ENGINEERING"]
 
-    H["♻️ TEMPORARY NODE<br/>CLEANUP + CLOSEOUT"]
+        D["🔗 CORRELATE<br/>Answers ↔ Destinations"]
 
+        E["🧹 TUNE<br/>RFC1918 + Benign Lookup"]
 
-    %% =====================================================
-    %% MAIN FLOW
-    %% =====================================================
-    A ==> B
-    A ==> C
+        F["🧠 FREEZE<br/>Detection v1.0"]
 
-    X -.-> F
-    E ==> F
-
-    F ==> G ==> H
+        H2 ==> D ==> E ==> F
+    end
 
 
     %% =====================================================
-    %% FOUNDATION
+    %% 3 · SOC DELIVERY
     %% =====================================================
-    classDef foundation fill:#172554,stroke:#60a5fa,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+    subgraph SOCFLOW[" "]
+        direction TB
 
+        H3["🛡️ 3 · SOC DELIVERY"]
 
-    %% =====================================================
-    %% OPERATOR PATH — ORANGE / RED
-    %% =====================================================
-    classDef operatorHeader fill:#78350f,stroke:#fbbf24,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+        G["🚨 SCHEDULED ALERT<br/>Production Detection"]
 
-    classDef truth fill:#9a3412,stroke:#fb923c,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+        H["🤖 AI EVIDENCE<br/>Contract"]
 
-    classDef hidden fill:#450a0a,stroke:#fb7185,stroke-width:6px,color:#ffffff,font-size:28px,font-weight:bold;
+        I["🔎 SOC INVESTIGATION<br/>Human Validation"]
 
-
-    %% =====================================================
-    %% DEFENDER PATH — CYAN / BLUE
-    %% =====================================================
-    classDef defenderHeader fill:#075985,stroke:#67e8f9,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
-
-    classDef soc fill:#083344,stroke:#22d3ee,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
-
-    classDef ir fill:#312e81,stroke:#a78bfa,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
-
-    classDef decision fill:#713f12,stroke:#fde047,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+        H3 ==> G ==> H ==> I
+    end
 
 
     %% =====================================================
-    %% REVEAL / COMPARISON / CLOSEOUT
+    %% KEEP THE THREE STAGES PARALLEL
     %% =====================================================
-    classDef reveal fill:#581c87,stroke:#f0abfc,stroke-width:7px,color:#ffffff,font-size:31px,font-weight:bold;
-
-    classDef final fill:#14532d,stroke:#86efac,stroke-width:7px,color:#ffffff,font-size:31px,font-weight:bold;
-
-    classDef cleanup fill:#0f766e,stroke:#5eead4,stroke-width:7px,color:#ffffff,font-size:29px,font-weight:bold;
+    FOUNDATION ==> ENGINEERING
+    ENGINEERING ==> SOCFLOW
 
 
     %% =====================================================
-    %% APPLY CLASSES
+    %% PREMIUM NEON HEADERS
     %% =====================================================
-    class A foundation;
+    classDef dataHeader fill:#075985,stroke:#67e8f9,stroke-width:7px,color:#ffffff,font-size:34px,font-weight:bold;
 
-    class OH operatorHeader;
-    class B truth;
-    class X hidden;
+    classDef engHeader fill:#7c2d12,stroke:#fb923c,stroke-width:7px,color:#ffffff,font-size:34px,font-weight:bold;
 
-    class DH defenderHeader;
-    class C soc;
-    class D ir;
-    class E decision;
+    classDef socHeader fill:#4c1d95,stroke:#e879f9,stroke-width:7px,color:#ffffff,font-size:34px,font-weight:bold;
 
-    class F reveal;
-    class G final;
-    class H cleanup;
+    class H1 dataHeader;
+    class H2 engHeader;
+    class H3 socHeader;
 
 
     %% =====================================================
-    %% PREMIUM PANELS
+    %% DATA FOUNDATION COLORS
     %% =====================================================
-    style PATHS fill:#050814,stroke:#334155,stroke-width:2px
+    classDef validate fill:#0c4a6e,stroke:#22d3ee,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
 
-    style OPERATOR fill:#160a05,stroke:#fb923c,stroke-width:4px
+    classDef baseline fill:#172554,stroke:#60a5fa,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
 
-    style DEFENDER fill:#051521,stroke:#22d3ee,stroke-width:4px
+    classDef challenge fill:#4338ca,stroke:#a5b4fc,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    class A validate;
+    class B baseline;
+    class C challenge;
+
+
+    %% =====================================================
+    %% DETECTION ENGINEERING COLORS
+    %% =====================================================
+    classDef correlate fill:#78350f,stroke:#fbbf24,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef tune fill:#9a3412,stroke:#fb923c,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef freeze fill:#7f1d1d,stroke:#fb7185,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    class D correlate;
+    class E tune;
+    class F freeze;
+
+
+    %% =====================================================
+    %% SOC DELIVERY COLORS
+    %% =====================================================
+    classDef alert fill:#991b1b,stroke:#f87171,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef ai fill:#581c87,stroke:#f0abfc,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef investigation fill:#065f46,stroke:#4ade80,stroke-width:7px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    class G alert;
+    class H ai;
+    class I investigation;
+
+
+    %% =====================================================
+    %% GLOSSY PANELS
+    %% =====================================================
+    style FOUNDATION fill:#051521,stroke:#22d3ee,stroke-width:4px
+
+    style ENGINEERING fill:#180d05,stroke:#fb923c,stroke-width:4px
+
+    style SOCFLOW fill:#150821,stroke:#d946ef,stroke-width:4px
 
 
     %% =====================================================
     %% BRIGHT CONNECTORS
     %% =====================================================
-    linkStyle default stroke:#f8fafc,stroke-width:5px;
+    linkStyle default stroke:#f8fafc,stroke-width:6px;
 ```
 
 ## 🖼️ Engineering Evidence Highlights
