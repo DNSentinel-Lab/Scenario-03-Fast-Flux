@@ -58,9 +58,6 @@ This evidence chain explains **why IR refined the case from unresolved Fast Flux
 | [`E20-final-victim-dns-verification.png`](E20-final-victim-dns-verification.png) | Victim-side normal DNS + Scenario 03 public answer / live TTL verification. |
 | [`T01-resolver-self-query-refused.png`](T01-resolver-self-query-refused.png) | Troubleshooting: resolver self-query refused; client-path validation used instead. |
 
-## Integrity
-
-See [`EVIDENCE-MANIFEST.csv`](EVIDENCE-MANIFEST.csv) and [`SHA256SUMS.txt`](SHA256SUMS.txt). Hashes were generated for the files as integrated into the final Scenario 03 repository.
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
 <div align="center">
