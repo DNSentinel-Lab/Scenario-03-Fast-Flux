@@ -14,7 +14,7 @@
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
-# 🧾 Scenario 03 IR — Curated Evidence
+# 🧾 Scenario 03 IR — Evidence
 
 This evidence chain explains **why IR refined the case from unresolved Fast Flux-like behavior to controlled/expected activity without forcing containment**.
 
