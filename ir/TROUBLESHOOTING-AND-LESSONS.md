@@ -11,7 +11,6 @@
 </div>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
-# 🧩 Scenario 03 IR — Troubleshooting and Lessons Learned
 
 Only investigation issues that materially changed the evidence path or reasoning are documented here. Minor navigation/copy-paste mistakes are intentionally excluded.
 
