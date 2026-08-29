@@ -39,22 +39,155 @@ The engineering goal was not to alert on “a domain has several A records.” L
 ## 🔁 Engineering Path
 
 ```mermaid
-flowchart LR
-    A["📡 Validate<br/>Resolver + Flow Fields"] --> B["📊 Baseline<br/>Normal Dynamic DNS"]
-    B --> C["🧪 Challenge<br/>Weak Churn Features"]
-    C --> D["🔗 Correlate<br/>Answers ↔ Destinations"]
-    D --> E["🧹 Tune<br/>RFC1918 + Benign Lookup"]
-    E --> F["🧠 Freeze<br/>Detection v1.0"]
-    F --> G["🚨 Scheduled<br/>Alert"]
-    G --> H["🤖 AI<br/>Evidence Contract"]
-    H --> I["🔎 SOC<br/>Investigation"]
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#030712",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#f8fafc",
+    "fontSize": "29px"
+  },
+  "flowchart": {
+    "nodeSpacing": 48,
+    "rankSpacing": 58,
+    "curve": "basis",
+    "padding": 20
+  }
+}}%%
 
-    classDef eng fill:#3b1d0b,stroke:#f97316,color:#fff,stroke-width:2px;
-    classDef data fill:#0f2940,stroke:#38bdf8,color:#fff,stroke-width:2px;
-    classDef soc fill:#082f49,stroke:#22d3ee,color:#fff,stroke-width:2px;
-    class A,B data;
-    class C,D,E,F,G,H eng;
-    class I soc;
+flowchart LR
+
+    %% =====================================================
+    %% 1 · DATA FOUNDATION
+    %% =====================================================
+    subgraph FOUNDATION[" "]
+        direction TB
+
+        H1["📡 1 · DATA FOUNDATION"]
+
+        A["📡 VALIDATE<br/>Resolver + Flow Fields"]
+
+        B["📊 BASELINE<br/>Normal Dynamic DNS"]
+
+        C["🧪 CHALLENGE<br/>Weak Churn Features"]
+
+        H1 ==> A ==> B ==> C
+    end
+
+
+    %% =====================================================
+    %% 2 · DETECTION ENGINEERING
+    %% =====================================================
+    subgraph ENGINEERING[" "]
+        direction TB
+
+        H2["🛠️ 2 · DETECTION ENGINEERING"]
+
+        D["🔗 CORRELATE<br/>Answers ↔ Destinations"]
+
+        E["🧹 TUNE<br/>RFC1918 + Benign Lookup"]
+
+        F["🧠 FREEZE<br/>Detection v1.0"]
+
+        H2 ==> D ==> E ==> F
+    end
+
+
+    %% =====================================================
+    %% 3 · SOC DELIVERY
+    %% =====================================================
+    subgraph SOCFLOW[" "]
+        direction TB
+
+        H3["🛡️ 3 · SOC DELIVERY"]
+
+        G["🚨 SCHEDULED ALERT<br/>Production Detection"]
+
+        H["🤖 AI EVIDENCE<br/>Contract"]
+
+        I["🔎 SOC INVESTIGATION<br/>Human Validation"]
+
+        H3 ==> G ==> H ==> I
+    end
+
+
+    %% =====================================================
+    %% KEEP THE THREE STAGES PARALLEL
+    %% =====================================================
+    FOUNDATION ==> ENGINEERING
+    ENGINEERING ==> SOCFLOW
+
+
+    %% =====================================================
+    %% PREMIUM NEON HEADERS
+    %% =====================================================
+    classDef dataHeader fill:#075985,stroke:#67e8f9,stroke-width:7px,color:#ffffff,font-size:34px,font-weight:bold;
+
+    classDef engHeader fill:#7c2d12,stroke:#fb923c,stroke-width:7px,color:#ffffff,font-size:34px,font-weight:bold;
+
+    classDef socHeader fill:#4c1d95,stroke:#e879f9,stroke-width:7px,color:#ffffff,font-size:34px,font-weight:bold;
+
+    class H1 dataHeader;
+    class H2 engHeader;
+    class H3 socHeader;
+
+
+    %% =====================================================
+    %% DATA FOUNDATION COLORS
+    %% =====================================================
+    classDef validate fill:#0c4a6e,stroke:#22d3ee,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef baseline fill:#172554,stroke:#60a5fa,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef challenge fill:#4338ca,stroke:#a5b4fc,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    class A validate;
+    class B baseline;
+    class C challenge;
+
+
+    %% =====================================================
+    %% DETECTION ENGINEERING COLORS
+    %% =====================================================
+    classDef correlate fill:#78350f,stroke:#fbbf24,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef tune fill:#9a3412,stroke:#fb923c,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef freeze fill:#7f1d1d,stroke:#fb7185,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    class D correlate;
+    class E tune;
+    class F freeze;
+
+
+    %% =====================================================
+    %% SOC DELIVERY COLORS
+    %% =====================================================
+    classDef alert fill:#991b1b,stroke:#f87171,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef ai fill:#581c87,stroke:#f0abfc,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    classDef investigation fill:#065f46,stroke:#4ade80,stroke-width:7px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    class G alert;
+    class H ai;
+    class I investigation;
+
+
+    %% =====================================================
+    %% GLOSSY PANELS
+    %% =====================================================
+    style FOUNDATION fill:#051521,stroke:#22d3ee,stroke-width:4px
+
+    style ENGINEERING fill:#180d05,stroke:#fb923c,stroke-width:4px
+
+    style SOCFLOW fill:#150821,stroke:#d946ef,stroke-width:4px
+
+
+    %% =====================================================
+    %% BRIGHT CONNECTORS
+    %% =====================================================
+    linkStyle default stroke:#f8fafc,stroke-width:6px;
 ```
 
 ## 🖼️ Engineering Evidence Highlights
