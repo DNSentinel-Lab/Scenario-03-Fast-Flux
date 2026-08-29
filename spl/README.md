@@ -21,12 +21,91 @@ This workspace separates the **clean production path** from intermediate enginee
 ## 🧭 Canonical Production Path
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#030712",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#f8fafc",
+    "fontSize": "31px"
+  },
+  "flowchart": {
+    "nodeSpacing": 58,
+    "rankSpacing": 72,
+    "curve": "basis",
+    "padding": 22
+  }
+}}%%
+
 flowchart LR
-    A["📊 baseline.spl"] --> B["🔎 hunting.spl"]
-    B --> C["🧠 detection.spl<br/>v1.0"]
-    C --> D["✅ validation.spl"]
-    D --> E["🚨 scheduled-alert.md"]
-    C --> F["🧹 fastflux_benign_domains.csv"]
+
+    %% =====================================================
+    %% DETECTION ENGINEERING FILE FLOW
+    %% =====================================================
+    A["📊 baseline.spl"]
+
+    B["🔎 hunting.spl"]
+
+    C["🧠 detection.spl<br/>v1.0"]
+
+    D["✅ validation.spl"]
+
+    E["🚨 scheduled-alert.md"]
+
+    F["🧹 fastflux_benign_domains.csv"]
+
+
+    %% =====================================================
+    %% MAIN FLOW
+    %% =====================================================
+    A ==> B ==> C ==> D ==> E
+
+    %% TUNING / BENIGN LOOKUP BRANCH
+    C ==> F
+
+
+    %% =====================================================
+    %% PREMIUM GLOSSY NODE STYLES
+    %% =====================================================
+
+    %% Baseline
+    classDef baseline fill:#172554,stroke:#60a5fa,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    %% Hunting
+    classDef hunting fill:#075985,stroke:#22d3ee,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    %% Detection — visual centerpiece
+    classDef detection fill:#4c1d95,stroke:#e879f9,stroke-width:7px,color:#ffffff,font-size:33px,font-weight:bold;
+
+    %% Validation
+    classDef validation fill:#14532d,stroke:#4ade80,stroke-width:6px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    %% Scheduled alert
+    classDef alert fill:#7f1d1d,stroke:#fb7185,stroke-width:7px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    %% Benign tuning list
+    classDef tuning fill:#78350f,stroke:#fbbf24,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+
+    %% =====================================================
+    %% APPLY COLORS
+    %% =====================================================
+    class A baseline;
+    class B hunting;
+    class C detection;
+    class D validation;
+    class E alert;
+    class F tuning;
+
+
+    %% =====================================================
+    %% PREMIUM CONNECTORS
+    %% =====================================================
+    linkStyle 0 stroke:#60a5fa,stroke-width:6px;
+    linkStyle 1 stroke:#c084fc,stroke-width:6px;
+    linkStyle 2 stroke:#4ade80,stroke-width:6px;
+    linkStyle 3 stroke:#fb7185,stroke-width:6px;
+    linkStyle 4 stroke:#fbbf24,stroke-width:6px;
 ```
 
 | File | Purpose |
