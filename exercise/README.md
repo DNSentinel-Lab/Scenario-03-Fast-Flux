@@ -1,6 +1,6 @@
 <a id="top"></a>
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,12,19,24,30&height=190&section=header&text=%F0%9F%8E%AD%20Exercise%20Control%20%26%20Ground%20Truth&fontSize=34&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Scenario%2003%20%C2%B7%20Information%20Separation%20%C2%B7%20Final%20Reveal&descSize=15&descAlignY=61&descColor=A78BFA" width="100%" alt="🎭 Exercise Control & Ground Truth" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=190&section=header&text=Exercise%20Control%20and%20Ground%20Truth&fontSize=34&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Scenario%2003%20-%20Information%20Separation%20-%20Final%20Reveal&descSize=15&descAlignY=61" width="100%" alt="🎭 Exercise Control & Ground Truth" />
 
 <div align="center">
 
@@ -21,16 +21,107 @@ The scenario was designed so each role could only claim what its evidence suppor
 ## 🔐 Information-Separation Model
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#050814",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#e5eefc",
+    "fontSize": "28px"
+  },
+  "flowchart": {
+    "nodeSpacing": 52,
+    "rankSpacing": 62,
+    "curve": "basis",
+    "padding": 20
+  }
+}}%%
+
 flowchart TB
-    A["🧠 Frozen Detection Engineering"] --> B["🎯 Operator Ground Truth"]
-    B -. "🔒 hidden from defenders" .-> X[" "]
-    A --> C["🔎 SOC Investigation"]
-    C --> D["🛡️ IR Validation"]
-    D --> E["⚖️ Response Decision"]
-    E --> F["🎭 Ground-Truth Reveal"]
-    B --> F
-    F --> G["🧾 Final Comparison"]
-    G --> H["♻️ Temporary Node Cleanup + Closeout"]
+
+    %% =====================================================
+    %% TOP FOUNDATION
+    %% =====================================================
+    A["🧠 FROZEN DETECTION<br/>ENGINEERING"]
+
+    %% =====================================================
+    %% LEFT — OPERATOR SIDE
+    %% =====================================================
+    subgraph LEFT[" "]
+        direction TB
+        B["🎯 OPERATOR<br/>GROUND TRUTH"]
+        X["🔒 HIDDEN FROM DEFENDERS<br/>UNTIL REVEAL"]
+        B --> X
+    end
+
+    %% =====================================================
+    %% RIGHT — DEFENDER SIDE
+    %% =====================================================
+    subgraph RIGHT[" "]
+        direction TB
+        C["🔎 SOC<br/>INVESTIGATION"]
+        D["🛡️ IR<br/>VALIDATION"]
+        E["⚖️ RESPONSE<br/>DECISION"]
+
+        C --> D --> E
+    end
+
+    %% =====================================================
+    %% SHARED OUTCOME
+    %% =====================================================
+    F["🎭 GROUND-TRUTH<br/>REVEAL"]
+    G["🧾 FINAL<br/>COMPARISON"]
+    H["♻️ TEMPORARY NODE<br/>CLEANUP + CLOSEOUT"]
+
+    %% =====================================================
+    %% FLOW
+    %% =====================================================
+    A ==> B
+    A ==> C
+
+    X -. "withheld until analyst work is complete" .-> F
+    E ==> F
+
+    F ==> G ==> H
+
+    %% =====================================================
+    %% PREMIUM STYLES
+    %% =====================================================
+    classDef foundation fill:#172554,stroke:#60a5fa,stroke-width:5px,color:#ffffff,font-size:29px,font-weight:bold;
+    classDef truth fill:#7c2d12,stroke:#fb923c,stroke-width:5px,color:#ffffff,font-size:29px,font-weight:bold;
+    classDef hidden fill:#3f1d1d,stroke:#f87171,stroke-width:5px,color:#ffffff,font-size:27px,font-weight:bold;
+    classDef soc fill:#083344,stroke:#22d3ee,stroke-width:5px,color:#ffffff,font-size:29px,font-weight:bold;
+    classDef ir fill:#312e81,stroke:#a78bfa,stroke-width:5px,color:#ffffff,font-size:29px,font-weight:bold;
+    classDef decision fill:#422006,stroke:#fbbf24,stroke-width:5px,color:#ffffff,font-size:29px,font-weight:bold;
+    classDef reveal fill:#581c87,stroke:#e879f9,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+    classDef final fill:#14532d,stroke:#4ade80,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+    classDef cleanup fill:#0f766e,stroke:#2dd4bf,stroke-width:6px,color:#ffffff,font-size:29px,font-weight:bold;
+
+    class A foundation;
+    class B truth;
+    class X hidden;
+    class C soc;
+    class D ir;
+    class E decision;
+    class F reveal;
+    class G final;
+    class H cleanup;
+
+    %% =====================================================
+    %% CONTAINER STYLES
+    %% =====================================================
+    style LEFT fill:#120a07,stroke:#fb923c,stroke-width:2px
+    style RIGHT fill:#08131f,stroke:#38bdf8,stroke-width:2px
+
+    %% =====================================================
+    %% CONNECTOR STYLES
+    %% =====================================================
+    linkStyle 0 stroke:#fb923c,stroke-width:5px
+    linkStyle 1 stroke:#38bdf8,stroke-width:5px
+    linkStyle 2 stroke:#f87171,stroke-width:4px,stroke-dasharray:8 6
+    linkStyle 3 stroke:#e879f9,stroke-width:5px
+    linkStyle 4 stroke:#86efac,stroke-width:5px
+    linkStyle 5 stroke:#2dd4bf,stroke-width:5px
 ```
 
 ## ✅ Completed Gates
