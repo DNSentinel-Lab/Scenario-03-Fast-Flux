@@ -17,6 +17,7 @@
 # 📊 Scenario 03 — Dashboard Studio
 
 **Dashboard Engineer:** [Musfira](https://github.com/MUSFIRA-ZAFAR)
+
 **Title:** `Scenario 03 - Fast Flux DNS Detection`  
 **Export:** [`scenario-03-fast-flux-detection.dashboard.json`](scenario-03-fast-flux-detection.dashboard.json)
 
