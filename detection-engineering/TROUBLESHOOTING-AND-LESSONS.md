@@ -1,6 +1,6 @@
 <a id="top"></a>
 
-<img src="https://capsule-render.vercel.app/api?type=soft&color=gradient&customColorList=1,6,14,20,26&height=125&section=header&text=%F0%9F%A7%A0%20Troubleshooting%20%26%20Learning%20Journey&fontSize=25&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=DNSentinel%20Lab%20%C2%B7%20Scenario%2003%20%C2%B7%20Fast%20Flux%20DNS%20%C2%B7%20Detection%20Engineering&descSize=13&descAlignY=68&descColor=F97316" width="100%" alt="Troubleshooting & Learning Journey" />
+<img src="https://capsule-render.vercel.app/api?type=soft&color=gradient&height=125&section=header&text=Troubleshooting%20and%20Learning%20Journey&fontSize=25&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=DNSentinel%20Lab%20-%20Scenario%2003%20-%20Fast%20Flux%20DNS%20-%20Detection%20Engineering&descSize=13&descAlignY=68" width="100%" alt="🧠 Troubleshooting & Learning Journey" />
 
 <div align="center">
 
@@ -11,6 +11,7 @@
 </div>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+
 # 🧩 Troubleshooting & Learning Journey
 
 Scenario 03 was not a straight-line build. The Detection Engineering work repeatedly produced results that looked wrong, incomplete, or confusing. Each problem was treated as evidence about the data rather than as a reason to force the detection to match expectations.
