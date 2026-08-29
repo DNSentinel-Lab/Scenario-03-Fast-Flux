@@ -1,8 +1,21 @@
-# Troubleshooting & Learning Journey
+<a id="top"></a>
+
+<img src="https://capsule-render.vercel.app/api?type=soft&color=gradient&customColorList=1,6,14,20,26&height=125&section=header&text=%F0%9F%A7%A0%20Troubleshooting%20%26%20Learning%20Journey&fontSize=25&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=DNSentinel%20Lab%20%C2%B7%20Scenario%2003%20%C2%B7%20Fast%20Flux%20DNS%20%C2%B7%20Detection%20Engineering&descSize=13&descAlignY=68&descColor=F97316" width="100%" alt="Troubleshooting & Learning Journey" />
+
+<div align="center">
+
+![Scenario](https://img.shields.io/badge/Scenario_03-COMPLETE-2EA44F?style=flat-square) ![Workspace](https://img.shields.io/badge/Workspace-Detection_Engineering-F97316?style=flat-square) ![MITRE](https://img.shields.io/badge/MITRE-T1568.001-E34F26?style=flat-square)
+
+[🏠 Scenario Home](../README.md) · [🧠 Workspace](README.md) · [🧾 Evidence](../evidence/README.md)
+
+</div>
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+# 🧩 Troubleshooting & Learning Journey
 
 Scenario 03 was not a straight-line build. The Detection Engineering work repeatedly produced results that looked wrong, incomplete, or confusing. Each problem was treated as evidence about the data rather than as a reason to force the detection to match expectations.
 
-## 1. The first 60-minute Fast Flux hunt returned zero results
+## 🔎 1. The first 60-minute Fast Flux hunt returned zero results
 
 **Symptom:** A 5-minute/2-destination VPC Flow hunt returned no rows.
 
@@ -12,7 +25,7 @@ Scenario 03 was not a straight-line build. The Detection Engineering work repeat
 
 **Lesson:** A zero-result search does not automatically mean the SPL is wrong. Validate event freshness and ground truth first.
 
-## 2. A private internal IP polluted the multi-destination hunt
+## 🔎 2. A private internal IP polluted the multi-destination hunt
 
 **Symptom:** The first live 5-minute result showed one Fast Flux public IP plus `10.50.10.128`, still satisfying `>=2` destinations.
 
@@ -22,7 +35,7 @@ Scenario 03 was not a straight-line build. The Detection Engineering work repeat
 
 **Lesson:** Thresholds need scope. “Two destinations” is meaningless if unrelated internal traffic is allowed into the population.
 
-## 3. DNS + network correlation was too broad
+## 🌐 3. DNS + network correlation was too broad
 
 **Symptom:** The prototype correlation showed the Fast Flux domain together with GuardDuty, SSM and other normal domains in the same 5-minute bucket.
 
@@ -32,7 +45,7 @@ Scenario 03 was not a straight-line build. The Detection Engineering work repeat
 
 **Lesson:** Correlation by time is not the same as correlation by entity.
 
-## 4. Resolver Query Logs looked missing, but were already present
+## 🔎 4. Resolver Query Logs looked missing, but were already present
 
 **Symptom:** AWS sourcetype inventory did not show a dedicated Route 53 Resolver sourcetype.
 
@@ -42,7 +55,7 @@ Scenario 03 was not a straight-line build. The Detection Engineering work repeat
 
 **Lesson:** A generic sourcetype can still contain the exact telemetry needed. Inspect raw events before onboarding another copy of the same data.
 
-## 5. DNS answer churn alone produced many false positives
+## 📌 5. DNS answer churn alone produced many false positives
 
 **Symptom:** A generic `dc(answer_ip)>=2` hunt flagged `esm.ubuntu.com`, GuardDuty, SSM, S3, Route 53, `quickdraw.splunk.com`, and other benign services.
 
@@ -52,7 +65,7 @@ Scenario 03 was not a straight-line build. The Detection Engineering work repeat
 
 **Lesson:** Fast Flux detection must be behavioral and contextual, not “multiple A records = malicious.”
 
-## 6. The “one IP per response” hypothesis failed
+## 🤖 6. The “one IP per response” hypothesis failed
 
 **Hypothesis:** The lab Fast Flux domain might return one IP per DNS response while SSM returns several at once.
 
@@ -62,7 +75,7 @@ Scenario 03 was not a straight-line build. The Detection Engineering work repeat
 
 **Lesson:** A detection engineer should be willing to delete an attractive hypothesis when the data disproves it.
 
-## 7. Churn rate also failed as a discriminator
+## 🤖 7. Churn rate also failed as a discriminator
 
 **Observation:** The controlled Fast Flux domain showed roughly 1–3 unique IPs in 5-minute windows, while legitimate SSM sometimes showed 6–10.
 
@@ -70,7 +83,7 @@ Scenario 03 was not a straight-line build. The Detection Engineering work repeat
 
 **Lesson:** Benign cloud infrastructure can be more dynamic than a small controlled Fast Flux lab.
 
-## 8. Lookup CSV formatting repeatedly caused confusion
+## 📌 8. Lookup CSV formatting repeatedly caused confusion
 
 **Problems encountered:**
 
@@ -82,7 +95,7 @@ Scenario 03 was not a straight-line build. The Detection Engineering work repeat
 
 **Lesson:** Small data-quality mistakes in a lookup can silently weaken tuning logic. Validate knowledge objects just like telemetry.
 
-## 9. Saved-alert scheduling was initially wrong
+## 🚨 9. Saved-alert scheduling was initially wrong
 
 **Symptom:** The cron expression shown in the UI was `0 6 * * 1`.
 
@@ -96,7 +109,7 @@ Scenario 03 was not a straight-line build. The Detection Engineering work repeat
 
 **Lesson:** Detection SPL can be perfect while operational scheduling still makes the rule ineffective.
 
-## 10. AI events appeared to be missing because the wrong index was searched
+## 🤖 10. AI events appeared to be missing because the wrong index was searched
 
 **Symptom:** `index=ai_triage` returned zero events.
 
@@ -111,7 +124,7 @@ sourcetype=dns_soc:ai:triage
 
 **Lesson:** Verify the producer configuration instead of assuming an index name from an earlier design note.
 
-## 11. Webhook connectivity worked, but the endpoint still returned HTTP 400
+## 📌 11. Webhook connectivity worked, but the endpoint still returned HTTP 400
 
 **Connectivity test:** A GET from the Splunk container returned `405 Method Not Allowed` with POST allowed. This proved the container could reach the Flask route.
 
@@ -123,7 +136,7 @@ sourcetype=dns_soc:ai:triage
 
 **Lesson:** Network reachability and application-contract correctness are separate layers.
 
-## 12. A manual POST became the decisive isolation test
+## 📌 12. A manual POST became the decisive isolation test
 
 A Splunk-style JSON envelope was POSTed manually to `/splunk-webhook`.
 
@@ -133,7 +146,7 @@ This proved the full AI/HEC pipeline worked and narrowed the remaining fault to 
 
 **Lesson:** When several components are involved, test one boundary at a time.
 
-## 13. Dispatch-folder inspection did not work in this container
+## 🤖 13. Dispatch-folder inspection did not work in this container
 
 Attempts to find the scheduled search `results.csv.gz` through the expected Splunk dispatch path returned nothing.
 
@@ -141,7 +154,7 @@ Attempts to find the scheduled search `results.csv.gz` through the expected Splu
 
 **Lesson:** Troubleshooting is not about insisting on one method; use the telemetry your environment actually exposes.
 
-## 14. Payload size proved the scheduled alert had moved to the new contract
+## 🚨 14. Payload size proved the scheduled alert had moved to the new contract
 
 Old failing webhook payloads were around **787 bytes**. After the corrected alert fields were saved, new webhook POSTs were around **1331–1362 bytes**.
 
@@ -149,7 +162,7 @@ Soon after, scheduled `scenario-03-fastflux-...` AI events appeared in `dns_soc_
 
 **Lesson:** Even when full payload capture is unavailable, secondary telemetry can show that a configuration change took effect.
 
-## 15. Dashboard “expected 3” did not match the data
+## 📌 15. Dashboard “expected 3” did not match the data
 
 **Symptom:** A 24-hour single-value panel showed 4 unique Fast Flux answer IPs rather than the expected three lab nodes.
 
@@ -161,6 +174,18 @@ Soon after, scheduled `scenario-03-fastflux-...` AI events appeared in `dns_soc_
 
 ---
 
-## Overall learning
+## 💡 Overall learning
 
 The strongest outcome was not that every query worked immediately. It was that each confusing result was investigated until its cause was understood. The final rule became stronger because several tempting shortcuts were tested and rejected: broad time correlation, raw churn thresholds, answer-count assumptions, and churn-rate assumptions. The finished detection is evidence-driven because the troubleshooting itself shaped the design.
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+
+<div align="center">
+
+[🏠 Scenario Home](../README.md) · [🧠 Workspace](README.md) · [⬆ Back to top](#top)
+
+**Evidence before attribution. Context before containment.**
+
+</div>
+
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=26,20,14,6,1&height=80&section=footer" width="100%" alt="DNSentinel Scenario 03 footer" />
