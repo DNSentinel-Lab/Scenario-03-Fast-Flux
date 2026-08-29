@@ -37,16 +37,15 @@ This repository now records the complete case rather than only the engineering p
 
 | Workstream | Final result | Owner |
 |---|---|---|
-| Fast Flux infrastructure | ✅ Built, validated, then temporary flux nodes retired after the exercise | Musfira + team |
+| Fast Flux infrastructure | ✅ Built, validated, then temporary flux nodes retired after the exercise | [Musfira](https://github.com/MUSFIRA-ZAFAR) |
 | Detection Engineering | ✅ Complete / frozen Detection v1.0 | [Musfira](https://github.com/MUSFIRA-ZAFAR) |
 | Official operator execution | ✅ Complete | [Lubaba](https://github.com/lubaba1513-pixel) |
 | Independent SOC investigation | ✅ Complete — `INCONCLUSIVE — ESCALATION WARRANTED` | [Abdul-Rehman](https://github.com/abdul4rehman215) |
 | AI assistance | ✅ Working — **Partially Correct**, advisory only | Detection + SOC |
 | Incident Response | ✅ Complete — `CONTROLLED / EXPECTED SCENARIO ACTIVITY` | [Sonia](https://github.com/sonia11mansha415) |
-| RPZ / sinkhole decision | ✅ Available but **not activated** because containment was not justified | Sonia |
-| Resolver / RPZ safe-state verification | ✅ Complete | Sonia |
+| RPZ / sinkhole decision | ✅ Available but **not activated** because containment was not justified | [Sonia](https://github.com/sonia11mansha415) |
+| Resolver / RPZ safe-state verification | ✅ Complete | [Sonia](https://github.com/sonia11mansha415) |
 | Final ground-truth comparison | ✅ Complete | Team |
-| Scenario closeout | ✅ Complete | Team |
 
 > [!IMPORTANT]
 > Scenario 03 did **not** force a sinkhole action for portfolio appearance. IR concluded that the behavior was controlled, inactive, and did not justify an enforcing resolver-policy change. The absence of containment is itself an evidence-backed response decision.
