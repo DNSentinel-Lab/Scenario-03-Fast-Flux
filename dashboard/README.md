@@ -21,7 +21,3 @@ The final Dashboard Studio JSON export is [`scenario-03-fast-flux-detection.dash
 5. [`Detection Metadata`](panels/panel-05-detection-metadata.spl)
 
 ![Detection Context](../screenshots/detection-engineering/12-dashboard-detection-context.png)
-
-## Data-quality note
-
-The 24-hour history intentionally preserves an older temporary IP (`34.227.61.247`) observed twice. The dashboard was **not** altered to force the history to show only the expected three current lab nodes. The active-IP single value uses a shorter 30-minute view and reflects current data.
