@@ -11,6 +11,7 @@
 </div>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+
 # 🎬 Scenario 03 — End-to-End Execution
 
 This is the short operational record of the completed **Fast Flux DNS** exercise. It connects the pre-built detection, official operator run, live alert, SOC investigation, Incident Response, final response decision, safe-state verification, cleanup and final reveal without reproducing every command or screenshot.
