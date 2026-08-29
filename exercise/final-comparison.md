@@ -11,6 +11,7 @@
 </div>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
+
 # 🧾 Final Comparison — One Fast Flux Event, Four Evidence Views
 
 This comparison was created only after the SOC and IR decisions were locked. It does not retroactively give a role information that the role did not have when making its decision.
