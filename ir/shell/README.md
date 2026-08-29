@@ -19,11 +19,84 @@
 These scripts support **defender-side validation**, not scenario generation.
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#030712",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#f8fafc",
+    "fontSize": "32px"
+  },
+  "flowchart": {
+    "nodeSpacing": 52,
+    "rankSpacing": 65,
+    "curve": "basis",
+    "padding": 22
+  }
+}}%%
+
 flowchart LR
-    A["🛡️ Resolver Checks"] --> B["✅ Unbound / RPZ Safe State"]
-    B --> C["🖥️ Victim Checks"]
-    C --> D["🌐 Authorized-Client DNS Validation"]
-    D --> E["✅ Final Safe-State Proof"]
+
+    A["🛡️ 01 · RESOLVER<br/>CHECKS"]
+
+    B["✅ 02 · UNBOUND / RPZ<br/>SAFE STATE"]
+
+    C["🖥️ 03 · VICTIM<br/>CHECKS"]
+
+    D["🌐 04 · AUTHORIZED CLIENT<br/>DNS VALIDATION"]
+
+    E["🏁 05 · FINAL<br/>SAFE-STATE PROOF"]
+
+    A ==> B ==> C ==> D ==> E
+
+
+    %% =====================================================
+    %% RESOLVER
+    %% =====================================================
+    classDef resolver fill:#172554,stroke:#60a5fa,stroke-width:6px,color:#ffffff,font-size:32px,font-weight:bold;
+
+
+    %% =====================================================
+    %% RPZ SAFE STATE
+    %% =====================================================
+    classDef rpz fill:#0f766e,stroke:#5eead4,stroke-width:6px,color:#ffffff,font-size:32px,font-weight:bold;
+
+
+    %% =====================================================
+    %% VICTIM CHECK
+    %% =====================================================
+    classDef victim fill:#4c1d95,stroke:#c084fc,stroke-width:6px,color:#ffffff,font-size:32px,font-weight:bold;
+
+
+    %% =====================================================
+    %% DNS VALIDATION
+    %% =====================================================
+    classDef dns fill:#075985,stroke:#22d3ee,stroke-width:6px,color:#ffffff,font-size:32px,font-weight:bold;
+
+
+    %% =====================================================
+    %% FINAL PROOF
+    %% =====================================================
+    classDef proof fill:#14532d,stroke:#86efac,stroke-width:7px,color:#ffffff,font-size:34px,font-weight:bold;
+
+
+    %% =====================================================
+    %% APPLY COLORS
+    %% =====================================================
+    class A resolver;
+    class B rpz;
+    class C victim;
+    class D dns;
+    class E proof;
+
+
+    %% =====================================================
+    %% BRIGHT NEON CONNECTORS
+    %% =====================================================
+    linkStyle 0 stroke:#60a5fa,stroke-width:6px;
+    linkStyle 1 stroke:#c084fc,stroke-width:6px;
+    linkStyle 2 stroke:#22d3ee,stroke-width:6px;
+    linkStyle 3 stroke:#4ade80,stroke-width:6px;
 ```
 
 | Script | Purpose |
