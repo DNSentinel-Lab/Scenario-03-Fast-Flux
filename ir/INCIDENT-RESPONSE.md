@@ -11,7 +11,6 @@
 </div>
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
-# 🛡️ Incident Response — Scenario 03 Fast Flux DNS
 
 **Incident Responder / Defender:** [Sonia](https://github.com/sonia11mansha415)  
 **SOC handoff:** `INCONCLUSIVE — ESCALATION WARRANTED`  
