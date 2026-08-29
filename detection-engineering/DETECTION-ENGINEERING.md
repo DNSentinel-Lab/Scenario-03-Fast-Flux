@@ -167,12 +167,14 @@ The hardest part was not writing SPL syntax. Several results initially looked li
 
 By the end of the phase, the detection was no longer “find changing IPs.” It had become a correlation rule with explicit false-positive boundaries, a scheduled operational path, an AI evidence contract and an analyst dashboard.
 
-## Handoff
+## Handoff and official-run outcome
 
-Detection Engineering is frozen and ready for the independent official exercise. The next owners are:
+Detection Engineering was frozen before the official exercise and remained unchanged while Lubaba generated the controlled Fast Flux behavior. The production alert then surfaced the official Scenario 03 lead for Abdul-Rehman's independent SOC investigation.
 
-- **Lubaba:** controlled simulation / ground truth;
-- **Abdul-Rehman:** SOC investigation;
-- **Sonia:** IR / Defender.
+The completed downstream chain is now:
 
-No official SOC or IR outcome is pre-filled here.
+- **Lubaba:** official controlled rotation + private ground truth — complete;
+- **Abdul-Rehman:** SOC investigation — `INCONCLUSIVE — ESCALATION WARRANTED`;
+- **Sonia:** IR / Defender — `CONTROLLED / EXPECTED SCENARIO ACTIVITY — NO CONTAINMENT REQUIRED`.
+
+The later defender results do not change the Detection Engineering conclusion: Detection v1.0 successfully surfaced the Fast Flux-like behavior while preserving the need for human context and attribution.
