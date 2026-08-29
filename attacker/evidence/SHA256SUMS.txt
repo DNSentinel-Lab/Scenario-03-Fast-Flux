@@ -1,8 +1,0 @@
-100194d067f88eda9107ea69cb4b18db7a39273516a74c850a6d375c9eb56078  04-authoritative-dns-baseline.png
-545c1c9542f261a91ed20d1f46bbafa883652f179e3b7965226dc87d49de1d48  05-flux-node-health-and-public-ips.png
-23e111be9b89e2fe884c29e91e075eb8c2d515cb6099d2212f0e0058f7630e39  06-official-fast-flux-start.png
-a0c6580da27ebd78a98ab6514529e5ffb9ee0f0c1b8555a8328edf03042417d6  07-first-complete-rotation-cycle.png
-a7f4a2f746d7382a55be4522f001c92776f609cd7751b1a5e9aa8b7c7ea4a2cf  08-victim-follow-up-start-and-transition.png
-993f7adcf198b4b54aaf1653c5580c914d82392e337984208ea54c92b640513c  09-victim-follows-third-node.png
-aa470a2ca9f181986bae9c70b7ddd31ccce9dea78c4c223c797be8613654952c  11-victim-follow-up-stop.png
-50d849853ec42aa8f9b31332e8f923cf6eea79b561d383299dea3c56be4deb51  12-controller-stop-confirmation.png
