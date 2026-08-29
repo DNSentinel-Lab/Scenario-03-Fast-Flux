@@ -1,0 +1,14 @@
+index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow
+src_ip="10.50.30.20"
+(dest_ip="13.220.94.188" OR dest_ip="52.73.218.100" OR dest_ip="54.81.98.44")
+earliest="08/28/2026:12:45:00"
+latest="08/28/2026:12:55:00"
+| stats count as connections
+        min(_time) as first_seen
+        max(_time) as last_seen
+        values(dest_port) as ports
+        values(action) as actions
+        sum(bytes) as bytes
+  by dest_ip
+| convert ctime(first_seen) ctime(last_seen)
+| sort first_seen

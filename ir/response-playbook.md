@@ -1,3 +1,5 @@
+> **Closeout note:** This is the pre-response playbook prepared before the completed official IR phase. Sonia ultimately chose **no containment** after independent validation; the executed outcome is documented in [`INCIDENT-RESPONSE.md`](INCIDENT-RESPONSE.md) and [`FINAL-IR-REPORT.md`](FINAL-IR-REPORT.md).
+
 # Scenario 03 IR Response Playbook — Sonia
 
 ## Gate 1 — independent validation

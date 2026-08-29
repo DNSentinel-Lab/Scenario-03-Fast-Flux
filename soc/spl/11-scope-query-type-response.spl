@@ -1,0 +1,8 @@
+index=dns_soc_dns sourcetype=unbound:dns
+"flux.soclab.abdul4rehman215.tech"
+earliest="08/28/2026:12:40:00"
+latest="08/28/2026:13:00:00"
+| stats count as events
+        values(qtype) as query_types
+        values(rcode) as response_codes
+  by client_ip, qname

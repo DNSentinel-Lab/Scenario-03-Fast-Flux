@@ -1,0 +1,143 @@
+_time,ai.confidence,ai.cyber_kill_chain.explanation,ai.cyber_kill_chain.stage,ai.missing_evidence{},ai.mitre_attack.explanation,ai.mitre_attack.tactic,ai.mitre_attack.technique_id,ai.mitre_attack.technique_name,ai.network_context.explanation,ai.network_context.primary_osi_layer,ai.network_context.protocols{},ai.network_context.related_layers{},ai.observed_indicators{},ai.response_considerations{},ai.summary,ai.suspicion_reasons{},alert.alert_id,alert.alert_name,alert.event_time,alert.evidence.client_ip,alert.evidence.detection_reason,alert.evidence.domain,alert.evidence.matched_connections,alert.evidence.matched_ips,alert.evidence.mitre_name,alert.evidence.mitre_technique,alert.evidence.unique_matched_ips,alert.scenario,alert.severity,alert.source,human_validation_required,processed_at,request_id
+2026-08-28T13:00:15.000+0000,medium,"If the domain and rotating-resolution behavior were confirmed as malicious, repeated client connections after DNS resolution could fit command-and-control communications. The current evidence only establishes DNS answers followed by connections and does not identify connection purpose, payloads, beaconing, or malicious infrastructure; therefore this stage is tentative.
+If the domain and rotating-resolution behavior were confirmed as malicious, repeated client connections after DNS resolution could fit command-and-control communications. The current evidence only establishes DNS answers followed by connections and does not identify connection purpose, payloads, beaconing, or malicious infrastructure; therefore this stage is tentative.","Command and Control
+Command and Control","DNS query and response logs, including timestamps, record types, TTL values, resolver information, and the full set of returned addresses over time.
+Historical DNS-resolution data to determine whether addresses rotate rapidly, how frequently they change, and whether the domain has a larger or changing IP pool.
+Connection telemetry for each matched IP, including destination ports, transport protocol, timestamps, durations, byte counts, and connection outcomes.
+Application-layer telemetry, such as TLS SNI/certificate details, HTTP Host headers, URLs, user agents, proxy logs, or payload inspection, where available.
+Reputation, ownership, hosting, and threat-intelligence context for the domain and matched IPs.
+Endpoint/process telemetry identifying which process, user, or host activity on 10.50.30.20 initiated the DNS queries and subsequent connections.
+Baseline information showing whether this domain and these destination IPs are expected for the client or organization.
+DNS query and response logs, including timestamps, record types, TTL values, resolver information, and the full set of returned addresses over time.
+Historical DNS-resolution data to determine whether addresses rotate rapidly, how frequently they change, and whether the domain has a larger or changing IP pool.
+Connection telemetry for each matched IP, including destination ports, transport protocol, timestamps, durations, byte counts, and connection outcomes.
+Application-layer telemetry, such as TLS SNI/certificate details, HTTP Host headers, URLs, user agents, proxy logs, or payload inspection, where available.
+Reputation, ownership, hosting, and threat-intelligence context for the domain and matched IPs.
+Endpoint/process telemetry identifying which process, user, or host activity on 10.50.30.20 initiated the DNS queries and subsequent connections.
+Baseline information showing whether this domain and these destination IPs are expected for the client or organization.","The supplied alert explicitly maps the behavior to T1568.001, and the DNS-to-connection correlation may be consistent with dynamic resolution infrastructure. However, the evidence does not show core fast-flux characteristics such as repeated resolution changes over time, unusually low TTLs, a large rotating address pool, or attribution of the domain/IPs to malicious infrastructure. This should be treated as an analyst-context mapping rather than a final classification.
+The supplied alert explicitly maps the behavior to T1568.001, and the DNS-to-connection correlation may be consistent with dynamic resolution infrastructure. However, the evidence does not show core fast-flux characteristics such as repeated resolution changes over time, unusually low TTLs, a large rotating address pool, or attribution of the domain/IPs to malicious infrastructure. This should be treated as an analyst-context mapping rather than a final classification.","Command and Control
+Command and Control","T1568.001
+T1568.001","Dynamic Resolution: Fast Flux DNS
+Dynamic Resolution: Fast Flux DNS","DNS is the directly evidenced application-layer protocol because the alert describes multiple DNS answer IPs for a domain. The subsequent connections provide correlation between DNS resolution and network activity, but no application protocol for those connections (for example, HTTP, HTTPS, TLS, or another service) is supplied. The listed IPv4 addresses are network-layer endpoints. No transport protocol, ports, DNS record types, TTL values, or packet/flow details are provided.
+DNS is the directly evidenced application-layer protocol because the alert describes multiple DNS answer IPs for a domain. The subsequent connections provide correlation between DNS resolution and network activity, but no application protocol for those connections (for example, HTTP, HTTPS, TLS, or another service) is supplied. The listed IPv4 addresses are network-layer endpoints. No transport protocol, ports, DNS record types, TTL values, or packet/flow details are provided.","Application layer (Layer 7)
+Application layer (Layer 7)","DNS
+DNS","Transport layer (Layer 4)
+Network layer (Layer 3)
+Transport layer (Layer 4)
+Network layer (Layer 3)","Client IP: 10.50.30.20
+Domain: flux.soclab.abdul4rehman215.tech
+42 matched connections
+3 unique matched destination IPs
+Matched IPs: 13.220.94.188, 52.73.218.100, 54.81.98.44
+Detection reason: multiple DNS answer IPs were followed by connections to those same IPs within five minutes
+Alert-supplied ATT&CK reference: T1568.001 / Dynamic Resolution: Fast Flux DNS
+Client IP: 10.50.30.20
+Domain: flux.soclab.abdul4rehman215.tech
+42 matched connections
+3 unique matched destination IPs
+Matched IPs: 13.220.94.188, 52.73.218.100, 54.81.98.44
+Detection reason: multiple DNS answer IPs were followed by connections to those same IPs within five minutes
+Alert-supplied ATT&CK reference: T1568.001 / Dynamic Resolution: Fast Flux DNS","Validate the DNS timeline and TTLs to determine whether the domain demonstrates actual rapid resolution changes rather than ordinary multi-address hosting or load balancing.
+Review network-flow and proxy telemetry to characterize the 42 connections, including their destination ports, frequency, session duration, and transferred data.
+Determine the originating process and user context on 10.50.30.20, if endpoint telemetry is available.
+Compare the domain and IPs against approved services, asset inventories, DNS history, and available threat-intelligence sources.
+Check whether other internal clients resolved or contacted the same domain and whether their behavior is similar.
+Preserve relevant DNS, flow, proxy, and endpoint telemetry for further analysis before any remediation decision.
+Validate the DNS timeline and TTLs to determine whether the domain demonstrates actual rapid resolution changes rather than ordinary multi-address hosting or load balancing.","The alert identifies 42 connections from internal client 10.50.30.20 to three IP addresses associated with DNS answers for flux.soclab.abdul4rehman215.tech, with the connections occurring within five minutes of the DNS responses. This pattern is consistent with the detection logic for potentially dynamic DNS resolution, but the supplied evidence does not establish malicious fast-flux infrastructure or malicious activity.
+The alert identifies 42 connections from internal client 10.50.30.20 to three IP addresses associated with DNS answers for flux.soclab.abdul4rehman215.tech, with the connections occurring within five minutes of the DNS responses. This pattern is consistent with the detection logic for potentially dynamic DNS resolution, but the supplied evidence does not establish malicious fast-flux infrastructure or malicious activity.","The client connected to several IP addresses returned for the same domain shortly after DNS resolution, matching the alert's fast-flux-oriented correlation rule.
+The domain resolved to three distinct IP addresses involved in the correlated connections.
+The available evidence shows behavior potentially compatible with dynamic infrastructure, but three IPs alone does not demonstrate rapid IP rotation, low DNS TTLs, proxy-node churn, or malicious intent.
+The client connected to several IP addresses returned for the same domain shortly after DNS resolution, matching the alert's fast-flux-oriented correlation rule.
+The domain resolved to three distinct IP addresses involved in the correlated connections.
+The available evidence shows behavior potentially compatible with dynamic infrastructure, but three IPs alone does not demonstrate rapid IP rotation, low DNS TTLs, proxy-node churn, or malicious intent.","scenario-03-fastflux-20260828125000
+scenario-03-fastflux-20260828125000","Suspicious Fast Flux DNS Behavior
+Suspicious Fast Flux DNS Behavior","2026-08-28T12:50:00Z
+2026-08-28T12:50:00Z","10.50.30.20
+10.50.30.20","Multiple DNS answer IPs were followed by connections to those same IPs within 5 minutes
+Multiple DNS answer IPs were followed by connections to those same IPs within 5 minutes","flux.soclab.abdul4rehman215.tech
+flux.soclab.abdul4rehman215.tech","42
+42","13.220.94.188,52.73.218.100,54.81.98.44
+13.220.94.188,52.73.218.100,54.81.98.44","Dynamic Resolution: Fast Flux DNS
+Dynamic Resolution: Fast Flux DNS","T1568.001
+T1568.001","3
+3","Scenario 03 - Fast Flux DNS
+Scenario 03 - Fast Flux DNS","medium
+medium","10.50.30.20
+10.50.30.20",TRUE,"2026-08-28T13:00:15.892450+00:00
+2026-08-28T13:00:15.892450+00:00","0a6f77eb-17a9-48c9-9437-8e3da10c4b30
+0a6f77eb-17a9-48c9-9437-8e3da10c4b30"
+2026-08-28T12:55:15.000+0000,medium,"If the domain uses rapidly changing or distributed resolution to maintain access to remote infrastructure, the behavior could fit Command and Control. The evidence only demonstrates DNS resolution followed by connections, however, so benign load balancing, cloud-hosted services, or other legitimate multi-IP hosting remain possible.
+If the domain uses rapidly changing or distributed resolution to maintain access to remote infrastructure, the behavior could fit Command and Control. The evidence only demonstrates DNS resolution followed by connections, however, so benign load balancing, cloud-hosted services, or other legitimate multi-IP hosting remain possible.","Command and Control
+Command and Control","DNS query and response logs, including timestamps, record types, TTL values, resolver, and complete answer sets.
+Historical DNS resolution data showing whether IP answers rotate rapidly, at unusual volume, or across a larger and changing IP pool.
+Per-connection timestamps, destination ports, transport protocol, application protocol, byte counts, session duration, and connection outcomes.
+The distribution of the 36 connections across the three IP addresses.
+Process, user, host, and endpoint telemetry identifying what on 10.50.30.20 initiated the DNS queries and network connections.
+Domain age, registration, reputation, threat-intelligence results, and known legitimate business purpose.
+Reputation, ownership, ASN, and historical association data for the listed IP addresses.
+Evidence of suspicious payload transfer, beaconing periodicity, authentication activity, or other post-connection behavior.
+Whether other internal clients resolved or connected to the same domain or IPs.
+DNS query and response logs, including timestamps, record types, TTL values, resolver, and complete answer sets.
+Historical DNS resolution data showing whether IP answers rotate rapidly, at unusual volume, or across a larger and changing IP pool.
+Per-connection timestamps, destination ports, transport protocol, application protocol, byte counts, session duration, and connection outcomes.
+The distribution of the 36 connections across the three IP addresses.
+Process, user, host, and endpoint telemetry identifying what on 10.50.30.20 initiated the DNS queries and network connections.
+Domain age, registration, reputation, threat-intelligence results, and known legitimate business purpose.
+Reputation, ownership, ASN, and historical association data for the listed IP addresses.
+Evidence of suspicious payload transfer, beaconing periodicity, authentication activity, or other post-connection behavior.
+Whether other internal clients resolved or connected to the same domain or IPs.","The supplied domain-to-multiple-IP resolution and subsequent connections are consistent with the alert-provided mapping to Dynamic Resolution: Fast Flux DNS. However, DNS TTLs, answer rotation over time, broader resolver history, and evidence that the infrastructure is attacker-controlled are absent; therefore, this is an analyst-context mapping rather than a determination of adversarial command-and-control activity.
+The supplied domain-to-multiple-IP resolution and subsequent connections are consistent with the alert-provided mapping to Dynamic Resolution: Fast Flux DNS. However, DNS TTLs, answer rotation over time, broader resolver history, and evidence that the infrastructure is attacker-controlled are absent; therefore, this is an analyst-context mapping rather than a determination of adversarial command-and-control activity.","Command and Control
+Command and Control","T1568.001
+T1568.001","Dynamic Resolution: Fast Flux DNS
+Dynamic Resolution: Fast Flux DNS","The primary evidence concerns DNS name resolution at the application layer: one domain resolved to multiple IP addresses. The observed follow-on connections provide application activity correlation, but their application protocol is not supplied. The destination IPv4 addresses are Layer 3 indicators. Transport protocol, ports, DNS record type, DNS TTL values, and connection protocol details are not present.
+The primary evidence concerns DNS name resolution at the application layer: one domain resolved to multiple IP addresses. The observed follow-on connections provide application activity correlation, but their application protocol is not supplied. The destination IPv4 addresses are Layer 3 indicators. Transport protocol, ports, DNS record type, DNS TTL values, and connection protocol details are not present.","Application layer (Layer 7)
+Application layer (Layer 7)","DNS
+DNS","Transport layer (Layer 4)
+Network layer (Layer 3)
+Transport layer (Layer 4)
+Network layer (Layer 3)","Client IP: 10.50.30.20
+Domain: flux.soclab.abdul4rehman215.tech
+36 matched connections
+3 unique matched destination IPs
+Matched IPs: 13.220.94.188, 52.73.218.100, 54.81.98.44
+Detection reason: DNS answer IPs were followed by connections to those same IPs within 5 minutes
+Alert-provided ATT&CK reference: T1568.001, Dynamic Resolution: Fast Flux DNS
+Client IP: 10.50.30.20
+Domain: flux.soclab.abdul4rehman215.tech
+36 matched connections
+3 unique matched destination IPs
+Matched IPs: 13.220.94.188, 52.73.218.100, 54.81.98.44
+Detection reason: DNS answer IPs were followed by connections to those same IPs within 5 minutes
+Alert-provided ATT&CK reference: T1568.001, Dynamic Resolution: Fast Flux DNS","Validate the DNS timeline and TTL values to determine whether this is actual fast-flux behavior rather than ordinary multi-IP hosting or load balancing.
+Review connection telemetry for ports, protocols, frequency, bytes transferred, and whether traffic shows periodic or automated patterns.
+Identify the initiating process and user context on 10.50.30.20 and determine whether the domain is expected for installed software or business activity.
+Check internal DNS, proxy, firewall, and endpoint records for additional systems communicating with this domain or the listed IPs.
+Enrich the domain and IPs using approved reputation, registration, ownership, and historical-resolution sources.
+Compare observed behavior with known approved cloud services and any organizational allowlists before drawing conclusions.
+Validate the DNS timeline and TTL values to determine whether this is actual fast-flux behavior rather than ordinary multi-IP hosting or load balancing.
+Review connection telemetry for ports, protocols, frequency, bytes transferred, and whether traffic shows periodic or automated patterns.
+Identify the initiating process and user context on 10.50.30.20 and determine whether the domain is expected for installed software or business activity.","The alert indicates that client 10.50.30.20 received multiple DNS answer IPs for flux.soclab.abdul4rehman215.tech and then made 36 connections to three of those IPs within five minutes. This pattern is consistent with the detection logic for potentially suspicious dynamic DNS resolution, but the supplied evidence does not establish whether the domain or infrastructure is malicious.
+The alert indicates that client 10.50.30.20 received multiple DNS answer IPs for flux.soclab.abdul4rehman215.tech and then made 36 connections to three of those IPs within five minutes. This pattern is consistent with the detection logic for potentially suspicious dynamic DNS resolution, but the supplied evidence does not establish whether the domain or infrastructure is malicious.","A single domain was associated with three distinct DNS answer IPs.
+The client subsequently connected to the resolved IPs within the defined five-minute correlation window.
+The alert specifically identifies this DNS-to-connection behavior as suspicious fast-flux-like activity.
+Thirty-six correlated connections may indicate repeated use of the resolved infrastructure, although the distribution of those connections across IPs and time is not provided.
+A single domain was associated with three distinct DNS answer IPs.
+The client subsequently connected to the resolved IPs within the defined five-minute correlation window.
+The alert specifically identifies this DNS-to-connection behavior as suspicious fast-flux-like activity.
+Thirty-six correlated connections may indicate repeated use of the resolved infrastructure, although the distribution of those connections across IPs and time is not provided.","scenario-03-fastflux-20260828125000
+scenario-03-fastflux-20260828125000","Suspicious Fast Flux DNS Behavior
+Suspicious Fast Flux DNS Behavior","2026-08-28T12:50:00Z
+2026-08-28T12:50:00Z","10.50.30.20
+10.50.30.20","Multiple DNS answer IPs were followed by connections to those same IPs within 5 minutes
+Multiple DNS answer IPs were followed by connections to those same IPs within 5 minutes","flux.soclab.abdul4rehman215.tech
+flux.soclab.abdul4rehman215.tech","36
+36","13.220.94.188,52.73.218.100,54.81.98.44
+13.220.94.188,52.73.218.100,54.81.98.44","Dynamic Resolution: Fast Flux DNS
+Dynamic Resolution: Fast Flux DNS","T1568.001
+T1568.001","3
+3","Scenario 03 - Fast Flux DNS
+Scenario 03 - Fast Flux DNS","medium
+medium","10.50.30.20
+10.50.30.20",TRUE,"2026-08-28T12:55:15.608721+00:00
+2026-08-28T12:55:15.608721+00:00","a853677a-422a-4f5d-bf10-e416ece302e7
+a853677a-422a-4f5d-bf10-e416ece302e7"

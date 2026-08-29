@@ -1,0 +1,7 @@
+index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow
+src_ip="10.50.30.20"
+(dest_ip="13.220.94.188" OR dest_ip="52.73.218.100" OR dest_ip="54.81.98.44")
+earliest="08/28/2026:12:45:00"
+latest="08/28/2026:12:55:00"
+| sort 0 _time
+| table _time src_ip dest_ip dest_port action bytes duration

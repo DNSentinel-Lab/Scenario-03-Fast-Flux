@@ -1,28 +1,35 @@
-# Scenario 03 Official Exercise Gate
+<a id="top"></a>
 
-**Engineering state:** frozen and ready  
-**Official exercise:** pending
+> 🧭 [Scenario 03](../README.md) › **Exercise Control / Final Reveal**
 
-## Frozen before execution
+# 🎭 Scenario 03 Exercise Control
 
-- Fast Flux infrastructure design;
-- Detection v1.0;
-- `fastflux_benign_domains.csv`;
-- scheduled alert;
-- AI evidence contract;
-- Dashboard Studio searches.
+**Engineering:** ✅ Frozen before execution  
+**Official operator run:** ✅ Complete  
+**SOC:** ✅ Complete  
+**IR:** ✅ Complete  
+**Final reveal:** ✅ Complete
 
-## Execution order
+This workspace preserves the information-separation rules that made the scenario realistic and the final comparison that became possible only after defender decisions were locked.
+
+## Files
+
+- [`REALISTIC-EXERCISE-PROTOCOL.md`](REALISTIC-EXERCISE-PROTOCOL.md) — execution/reveal rules
+- [`final-comparison.md`](final-comparison.md) — operator ground truth vs Detection v1.0 vs AI vs SOC vs IR
+
+## Completed flow
 
 ```text
-1. Lubaba starts official controlled behavior + private ground truth
-2. Frozen detection/alert/AI/dashboard observe it
-3. Abdul-Rehman investigates independently and locks disposition
-4. Sonia independently validates and decides on response
-5. If approved: containment → verification → safe reset
-6. Reveal operator ground truth
-7. Compare operator vs detection vs AI vs SOC vs IR
-8. Final lessons + COMPLETE status
+frozen engineering
+→ Lubaba official operator execution
+→ Detection v1.0 / alert / AI
+→ Abdul-Rehman independent SOC investigation
+→ Sonia independent IR validation
+→ response decision: no containment required
+→ resolver/RPZ safe-state verification
+→ ground-truth reveal
+→ temporary node cleanup
+→ final closeout
 ```
 
-The scenario must not be marked complete before steps 1–8 are evidenced.
+[🏠 Scenario Home](../README.md) · [🎬 Execution](../SCENARIO-03-EXECUTION.md) · [⬆ Back to top](#top)

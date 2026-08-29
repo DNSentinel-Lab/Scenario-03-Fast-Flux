@@ -1,0 +1,141 @@
+/* Scenario 03 — SOC investigation queries
+   Evidence-first, defender-visible only.
+   Individual files under executed/ preserve the exact searches shown in the investigation screenshots. */
+
+/* ===== 01-monitoring-readiness-dns.spl ===== */
+index=dns_soc_dns sourcetype=unbound:dns earliest=-15m
+| stats count as events min(_time) as first_seen max(_time) as last_seen
+| convert ctime(first_seen) ctime(last_seen)
+
+/* ===== 02-monitoring-readiness-vpc.spl ===== */
+index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow earliest=-15m
+| stats count as events min(_time) as first_seen max(_time) as last_seen
+| convert ctime(first_seen) ctime(last_seen)
+
+/* ===== 03-preexisting-alert-raw-dns.spl ===== */
+index=dns_soc_dns sourcetype=unbound:dns "us-east-1.ec2.archive.ubuntu.com"
+| sort 0 _time
+| table _time _raw
+
+/* ===== 04-live-domain-raw-dns.spl ===== */
+index=dns_soc_dns sourcetype=unbound:dns
+"flux.soclab.abdul4rehman215.tech"
+earliest="08/28/2026:12:45:00"
+latest="08/28/2026:12:55:00"
+| sort 0 _time
+| table _time _raw
+
+/* ===== 05-live-domain-expanded-fields.spl ===== */
+index=dns_soc_dns sourcetype=unbound:dns
+"flux.soclab.abdul4rehman215.tech"
+earliest="08/28/2026:12:45:00"
+latest="08/28/2026:12:55:00"
+| table _time *
+
+/* ===== 06-vpc-flow-raw-three-ips.spl ===== */
+index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow
+src_ip="10.50.30.20"
+(dest_ip="13.220.94.188" OR dest_ip="52.73.218.100" OR dest_ip="54.81.98.44")
+earliest="08/28/2026:12:45:00"
+latest="08/28/2026:12:55:00"
+| sort 0 _time
+| table _time src_ip dest_ip dest_port action bytes duration
+
+/* ===== 07-vpc-flow-summary-three-ips.spl ===== */
+index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow
+src_ip="10.50.30.20"
+(dest_ip="13.220.94.188" OR dest_ip="52.73.218.100" OR dest_ip="54.81.98.44")
+earliest="08/28/2026:12:45:00"
+latest="08/28/2026:12:55:00"
+| stats count as connections
+        min(_time) as first_seen
+        max(_time) as last_seen
+        values(dest_port) as ports
+        values(action) as actions
+        sum(bytes) as bytes
+  by dest_ip
+| convert ctime(first_seen) ctime(last_seen)
+| sort first_seen
+
+/* ===== 08-benign-lookup-contents.spl ===== */
+| inputlookup fastflux_benign_domains.csv
+
+/* ===== 09-benign-lookup-no-match.spl ===== */
+| inputlookup fastflux_benign_domains.csv
+| search query_name="flux.soclab.abdul4rehman215.tech"
+
+/* ===== 10-scope-single-client.spl ===== */
+index=dns_soc_dns sourcetype=unbound:dns
+"flux.soclab.abdul4rehman215.tech"
+earliest="08/28/2026:12:40:00"
+latest="08/28/2026:13:00:00"
+| stats count as dns_events
+        min(_time) as first_seen
+        max(_time) as last_seen
+  by client_ip
+| convert ctime(first_seen) ctime(last_seen)
+| sort - dns_events
+
+/* ===== 11-scope-query-type-response.spl ===== */
+index=dns_soc_dns sourcetype=unbound:dns
+"flux.soclab.abdul4rehman215.tech"
+earliest="08/28/2026:12:40:00"
+latest="08/28/2026:13:00:00"
+| stats count as events
+        values(qtype) as query_types
+        values(rcode) as response_codes
+  by client_ip, qname
+
+/* ===== 12-baseline-top-a-domains.spl ===== */
+index=dns_soc_dns sourcetype=unbound:dns
+client_ip="10.50.30.20"
+earliest="08/28/2026:12:40:00"
+latest="08/28/2026:13:00:00"
+qtype="A"
+| stats count as dns_events
+        min(_time) as first_seen
+        max(_time) as last_seen
+  by qname
+| convert ctime(first_seen) ctime(last_seen)
+| sort - dns_events
+| head 20
+
+/* ===== 13-baseline-deviation.spl ===== */
+index=dns_soc_dns sourcetype=unbound:dns
+client_ip="10.50.30.20"
+earliest="08/28/2026:12:40:00"
+latest="08/28/2026:13:00:00"
+qtype="A"
+| stats count as dns_events by qname
+| eventstats avg(dns_events) as avg_events
+             stdev(dns_events) as stdev_events
+| eval deviation=round((dns_events-avg_events),2)
+| sort - dns_events
+| head 20
+
+/* ===== 14-ai-search.spl ===== */
+index=dns_soc_ai
+"flux.soclab.abdul4rehman215.tech"
+earliest="08/28/2026:12:45:00"
+latest="08/28/2026:13:05:00"
+| sort - _time
+
+/* ===== 15-ai-expanded-fields.spl ===== */
+index=dns_soc_ai
+"flux.soclab.abdul4rehman215.tech"
+earliest="08/28/2026:12:45:00"
+latest="08/28/2026:13:05:00"
+| sort - _time
+| head 2
+| spath
+| table _time ai.* alert.* human_validation_required processed_at request_id
+
+/* ===== 16-ai-raw.spl ===== */
+index=dns_soc_ai
+"flux.soclab.abdul4rehman215.tech"
+earliest="08/28/2026:12:45:00"
+latest="08/28/2026:13:05:00"
+| sort - _time
+| head 2
+| table _time _raw
+

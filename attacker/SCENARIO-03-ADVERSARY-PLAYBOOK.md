@@ -1,3 +1,5 @@
+> **Closeout note:** This is the pre-approved playbook used for the completed official Scenario 03 run. The execution outcome and reveal-ready ground truth are now documented in [`PROJECT-LEAD-ADVERSARY.md`](PROJECT-LEAD-ADVERSARY.md) and [`GROUND-TRUTH.md`](GROUND-TRUTH.md).
+
 # Scenario 03 Official Simulation Playbook — Lubaba
 
 ## Before start

@@ -1,0 +1,31 @@
+# Defender-discovered endpoint commands
+# Source: /root/.bash_history on dns-soc-victim01
+# IMPORTANT: these were discovered by IR; they were not executed by IR during evidence collection.
+# Bash history did not preserve per-command timestamps.
+
+dig flux.soclab.abdul4rehman215.tech
+dig +noall +answer flux.soclab.abdul4rehman215.tech
+curl http://flux.soclab.abdul4rehman215.tech
+curl --connect-timeout 5 http://13.220.94.188
+curl --connect-timeout 5 http://52.73.218.100
+curl --connect-timeout 5 http://54.81.98.44
+
+DOMAIN="flux.soclab.abdul4rehman215.tech"
+RESOLVER="10.50.30.10"
+IP=$(dig @"$RESOLVER" "$DOMAIN" A +short | tail -1)
+echo "DNS returned: $IP"
+curl -v --connect-timeout 5 -H "Host: $DOMAIN" "http://$IP/"
+
+# Representative repeated follow-up logic discovered in history:
+while true; do
+  TS=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+  IP=$(dig @"$RESOLVER" "$DOMAIN" A +short | tail -1)
+  echo "===== $TS ====="
+  echo "DNS answer: $IP"
+  curl -sS --connect-timeout 5 -H "Host: $DOMAIN" "http://$IP/" -o /dev/null -w "HTTP destination=$IP status=%{http_code} remote_ip=%{remote_ip}\n"
+  sleep 20
+done
+
+# History also contained labels:
+# SCENARIO 03 OFFICIAL VICTIM FOLLOW-UP
+# OFFICIAL VICTIM FOLLOW-UP COMPLETE

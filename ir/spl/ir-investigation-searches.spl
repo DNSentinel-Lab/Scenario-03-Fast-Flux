@@ -1,0 +1,87 @@
+# Scenario 03 IR — Splunk searches actually used
+# These are investigation/validation searches, not detection-engineering searches.
+
+# 01 - AWS sourcetype inventory
+index=dns_soc_aws
+| stats count as events min(_time) as first_seen max(_time) as last_seen by sourcetype
+| convert ctime(first_seen) ctime(last_seen)
+| sort - events
+
+# 02 - Find Scenario 03 domain across AWS sources
+index=dns_soc_aws "flux.soclab.abdul4rehman215.tech"
+| stats count as events by sourcetype source
+| sort - events
+
+# 03 - Raw Resolver Query Log inspection
+index=dns_soc_aws sourcetype=aws:s3 source="*vpcdnsquerylogs*" "flux.soclab.abdul4rehman215.tech" earliest="08/28/2026:12:40:00" latest="08/28/2026:13:00:00"
+| sort 0 _time
+| table _time _raw
+
+# 04 - Independent A-answer history
+index=dns_soc_aws sourcetype=aws:s3 source="*vpcdnsquerylogs*" "flux.soclab.abdul4rehman215.tech" earliest="08/28/2026:12:40:00" latest="08/28/2026:13:00:00"
+| spath
+| spath path=answers{}.Rdata output=answer_ip
+| mvexpand answer_ip
+| stats count as dns_events min(_time) as first_seen max(_time) as last_seen by answer_ip
+| convert ctime(first_seen) ctime(last_seen)
+| sort first_seen
+
+# 05 - Exact answer-transition timeline using AWS query_timestamp
+index=dns_soc_aws sourcetype=aws:s3 source="*vpcdnsquerylogs*" "flux.soclab.abdul4rehman215.tech" earliest="08/28/2026:12:30:00" latest="08/28/2026:13:05:00"
+| spath
+| spath path=answers{}.Rdata output=answer_ip
+| mvexpand answer_ip
+| where isnotnull(answer_ip)
+| eval exact_time=strptime(query_timestamp,"%Y-%m-%dT%H:%M:%SZ")
+| sort 0 exact_time
+| streamstats current=f last(answer_ip) as previous_ip
+| where isnull(previous_ip) OR answer_ip!=previous_ip
+| eval exact_utc=strftime(exact_time,"%Y-%m-%d %H:%M:%S UTC")
+| table exact_utc answer_ip previous_ip
+
+# 06 - Historical TTL presence check
+index=dns_soc_aws sourcetype=aws:s3 source="*vpcdnsquerylogs*" "flux.soclab.abdul4rehman215.tech" earliest="08/28/2026:12:20:00" latest="08/28/2026:13:05:00"
+| regex _raw="(?i)ttl"
+| table query_timestamp _raw
+
+# 07 - Victim to three DNS-answer IPs, narrow IR window
+index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow src_ip="10.50.30.20" (dest_ip="13.220.94.188" OR dest_ip="52.73.218.100" OR dest_ip="54.81.98.44") earliest="08/28/2026:12:40:00" latest="08/28/2026:13:00:00"
+| stats count as connections values(dest_port) as ports values(action) as actions min(_time) as first_seen max(_time) as last_seen by dest_ip
+| convert ctime(first_seen) ctime(last_seen)
+| sort dest_ip
+
+# 08 - Current DNS activity check
+index=dns_soc_aws sourcetype=aws:s3 source="*vpcdnsquerylogs*" "flux.soclab.abdul4rehman215.tech" earliest=-30m
+| stats count as dns_events max(query_timestamp) as last_query_timestamp values(answers{}.Rdata) as recent_answers
+
+# 09 - Current network activity check
+index=dns_soc_aws sourcetype=aws:cloudwatchlogs:vpcflow src_ip="10.50.30.20" (dest_ip="13.220.94.188" OR dest_ip="52.73.218.100" OR dest_ip="54.81.98.44") earliest=-30m
+| stats count as connections max(_time) as last_seen values(dest_ip) as recent_destinations
+| convert ctime(last_seen)
+
+# 10 - Expanded single-client scope
+index=dns_soc_dns sourcetype=unbound:dns "flux.soclab.abdul4rehman215.tech" earliest="08/28/2026:12:20:00" latest="08/28/2026:13:05:00"
+| stats count as queries min(_time) as first_seen max(_time) as last_seen by client_ip
+| convert ctime(first_seen) ctime(last_seen)
+| sort - queries
+
+# 11 - Endpoint telemetry inventory by hostname
+host="dns-soc-victim01" earliest="08/28/2026:12:20:00" latest="08/28/2026:13:05:00"
+| stats count as events by index sourcetype source
+| sort - events
+
+# 12 - Endpoint telemetry fallback by victim IP
+"10.50.30.20" earliest="08/28/2026:12:20:00" latest="08/28/2026:13:05:00"
+| stats count as events by index sourcetype source
+| sort - events
+
+# 13 - CloudTrail SSM actor around root session
+index=dns_soc_aws sourcetype=aws:cloudtrail earliest="08/28/2026:12:48:00" latest="08/28/2026:12:56:00" (eventName="StartSession" OR eventName="SendCommand")
+| table _time eventName userIdentity.type userIdentity.arn userIdentity.userName sourceIPAddress requestParameters.target responseElements.sessionId
+| sort _time
+
+# 14 - Full-window SSM sessions targeting victim instance
+# Replace <victim_instance_id> with the defender-known victim EC2 instance ID.
+index=dns_soc_aws sourcetype=aws:cloudtrail earliest="08/28/2026:12:10:00" latest="08/28/2026:13:10:00" eventName="StartSession" requestParameters.target="<victim_instance_id>"
+| table _time userIdentity.type userIdentity.arn userIdentity.userName sourceIPAddress requestParameters.target responseElements.sessionId
+| sort _time

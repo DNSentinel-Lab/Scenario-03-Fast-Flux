@@ -1,105 +1,141 @@
 # Scenario 03 Runbook — Fast Flux DNS
 
-**Scenario status:** 🟠 Ready for official execution  
-**Infrastructure:** ✅ Validated  
-**Detection Engineering:** ✅ Complete  
-**Official SOC / IR:** ⏳ Pending
+**Scenario status:** ✅ COMPLETE  
+**MITRE:** `T1568.001 — Dynamic Resolution: Fast Flux DNS`  
+**Cyber Kill Chain:** Command & Control
 
-## 1. Objective — ✅ Ready
+## 1. Objective — ✅ Complete
 
-Investigate controlled Fast Flux-like DNS behavior by combining changing A answers, client follow-up network destinations, benign dynamic-DNS context and human response decisions.
+Demonstrate and investigate controlled Fast Flux-like behavior by combining changing DNS A answers, real victim follow-up destinations, benign dynamic-service context, independent SOC reasoning and a proportionate IR decision.
 
-## 2. Architecture — ✅ Implemented
+## 2. Architecture — ✅ Implemented / exercised
 
-- victim: `10.50.30.20`;
-- defender resolver: `10.50.30.10`;
-- controlled flux nodes: `10.60.10.21–23` with public HTTP reachability;
-- `flux.soclab.abdul4rehman215.tech` with 60-second TTL;
-- Route 53 UPSERT rotation;
-- Splunk Resolver + VPC Flow + AI evidence.
+- victim: `dns-soc-victim01` / `10.50.30.20`;
+- defender resolver: `dns-soc-resolver01` / `10.50.30.10`;
+- controlled flux nodes: `10.60.10.21–23` with temporary exercise-time public IPv4 addresses;
+- `flux.soclab.abdul4rehman215.tech` with configured 60-second TTL during the controlled run;
+- Route 53 UPSERT rotation from `dns-attack01`;
+- Splunk Resolver Query Log, Unbound, VPC Flow and AI evidence paths.
 
-## 3. Roles — ✅ Locked
+The three temporary flux EC2 nodes were retired after the exercise.
 
-| Role | Owner |
-|---|---|
-| Attack / Simulation | Lubaba |
-| SOC Analyst / Hunter | Abdul-Rehman |
-| Detection Engineer | Musfira |
-| IR / Defender | Sonia |
+## 3. Roles — ✅ Complete
 
-## 4. Infrastructure / pre-flight — ✅ Validated
+| Role | Owner | Final responsibility |
+|---|---|---|
+| Project Lead / Operator | Lubaba | official controller + victim follow-up ground truth |
+| SOC Analyst / Threat Hunter | Abdul-Rehman | defender-only investigation + disposition + IR handoff |
+| Detection Engineer | Musfira | telemetry, baseline, tuned detection, alert, AI contract, dashboard |
+| IR / Defender | Sonia | independent validation, host/context review, response decision, safe-state proof |
 
-The three-node pool, SG, HTTP responses, Route 53 update path, authoritative answers, victim cache refresh, follow-up connections and VPC Flow evidence have been proven.
+## 4. Infrastructure / pre-flight — ✅ Complete
+
+Controller identity, syntax/material settings, authoritative baseline, three-node health, Route 53 rotation, victim follow-up, HTTP `200` and VPC Flow visibility were validated.
 
 ## 5. Baseline — ✅ Complete
 
-Normal victim network/DNS behavior was measured before final thresholds were frozen.
+Normal dynamic cloud services were measured before final thresholds were frozen. Legitimate AWS/Ubuntu/Splunk answer churn was observed and used for tuning.
 
 ## 6. Hunting — ✅ Complete
 
-Public destination churn, Resolver answer churn and DNS-answer/network matching were tested. Legitimate dynamic services were found and used for tuning.
+Resolver answer churn, public destination churn and DNS-answer/network matching were tested. Weak discriminators were rejected rather than forced into Detection v1.0.
 
 ## 7. Detection — ✅ Complete
 
-Detection v1.0: [`spl/detection.spl`](spl/detection.spl)
+Canonical Detection v1.0: [`spl/detection.spl`](spl/detection.spl)
 
 ```text
 5-minute window
-unique_matched_ips >= 2
-matched_connections >= 3
 A + NOERROR
 public answers only
+unique_matched_ips >= 2
+matched_connections >= 3
 known benign dynamic domains excluded
 ```
 
 ## 8. Alert — ✅ Complete
 
-Scheduled every five minutes, Number of Results > 0, Triggered Alerts + webhook.
+The scheduled production alert `Suspicious Fast Flux DNS Behavior` fired during the official execution. A repeated trigger/update for the same 12:50 bucket later increased the matched-connection count.
 
-## 9. AI assistance — ✅ Engineering validated
+## 9. AI assistance — ✅ Complete / validated
 
-Shared AI bridge receives the Scenario 03 result contract and writes advisory summaries to `dns_soc_ai`.
+The shared bridge returned Scenario 03 triage evidence to `dns_soc_ai`. SOC graded the AI **Partially Correct** and retained it as advisory only.
 
 ## 10. Dashboard — ✅ Complete
 
 Final JSON: [`dashboard/scenario-03-fast-flux-detection.dashboard.json`](dashboard/scenario-03-fast-flux-detection.dashboard.json)
 
-## 11. Official simulation — ⏳ Pending
+## 11. Official simulation — ✅ Complete
 
-Owner: Lubaba. Use [`attacker/SCENARIO-03-ADVERSARY-PLAYBOOK.md`](attacker/SCENARIO-03-ADVERSARY-PLAYBOOK.md). Keep ground truth private until defender decisions are locked.
+Lubaba ran the frozen controller and victim follow-up path without inspecting Splunk or changing timing to force a detection.
 
-## 12. SOC analysis — ⏳ Pending
+Official controller window:
 
-Owner: Abdul-Rehman. Use [`soc/investigation-template.md`](soc/investigation-template.md).
+```text
+2026-08-28T12:43:43Z → 2026-08-28T12:58:30Z
+```
 
-## 13. IR / containment — ⏳ Pending
+## 12. SOC analysis — ✅ Complete
 
-Owner: Sonia. Use [`ir/response-playbook.md`](ir/response-playbook.md). Response must be human-approved and narrow.
+Abdul-Rehman independently validated DNS/network behavior, benign lookup, one-client scope, baseline deviation and AI limitations.
 
-## 14. Verification — ⏳ Pending
+Final SOC disposition:
 
-Prove before/after DNS + network behavior and normal DNS continuity.
+> **INCONCLUSIVE — ESCALATION WARRANTED**
 
-## 15. Cleanup / reset — ⏳ Pending
+## 13. IR / response — ✅ Complete
 
-Stop rotation, reset temporary DNS/response policy as agreed, stop/terminate temporary flux resources when the exercise is closed, and verify safe state.
+Sonia independently recovered the three historical A answers, validated transition chronology and network follow-up, investigated endpoint context and current activity, and concluded:
 
-## 16. Final comparison — ⏳ Pending
+> **CONTROLLED / EXPECTED SCENARIO ACTIVITY — NO CONTAINMENT REQUIRED**
 
-Compare Lubaba ground truth with Detection v1.0, AI summary, Abdul-Rehman's SOC conclusion and Sonia's IR decision.
+The prepared RPZ/sinkhole mechanism was not activated because an enforcing change was not proportionate.
+
+## 14. Verification — ✅ Complete
+
+IR verified:
+
+- current Scenario 03 activity inactive;
+- no active matching process;
+- no Scenario 03 RPZ rule;
+- valid/active Unbound;
+- unrelated DNS working;
+- scenario domain resolving normally through the victim's configured resolver path.
+
+## 15. Cleanup / reset — ✅ Complete with evidence note
+
+- victim follow-up loop stopped;
+- controller stopped and process absence confirmed;
+- no Scenario 03 RPZ action required reset;
+- resolver/RPZ safe state independently verified;
+- three temporary flux EC2 nodes were stopped/deleted/reset after the exercise.
+
+The exact temporary-node teardown timestamp was not preserved in the attached evidence package and is not fabricated here.
+
+## 16. Final comparison — ✅ Complete
+
+[`exercise/final-comparison.md`](exercise/final-comparison.md) compares operator ground truth with Detection v1.0, AI, SOC and IR without retroactively changing what each role could know at decision time.
 
 ## 17. MITRE — ✅ Locked
 
 `T1568.001 — Dynamic Resolution: Fast Flux DNS`
 
-## 18. False positives — ✅ Engineering complete
+The mapping describes observed dynamic-resolution behavior; it is not proof of malware or malicious ownership.
 
-Known dynamic AWS/Ubuntu/Splunk services were observed and tuned through a lookup. The analyst must still consider CDN/cloud/load-balancing context.
+## 18. False positives — ✅ Complete
 
-## 19. Lessons — 🟡 Engineering lessons complete
+Legitimate dynamic AWS/Ubuntu/Splunk services were observed. The final rule uses answer-to-destination correlation plus a benign-domain lookup rather than `multiple A answers = malicious`.
 
-Detection Engineering lessons are documented. Official exercise lessons remain pending.
+## 19. Lessons — ✅ Complete
 
-## 20. Screenshots / evidence — 🟡 Engineering curated
+Detection Engineering, operator, SOC and IR lessons are documented in their role workspaces. Only material technical reasoning/troubleshooting was retained.
 
-Infrastructure and Detection Engineering evidence is curated. Official attacker/SOC/IR evidence will be added only after execution.
+## 20. Screenshots / evidence — ✅ Curated
+
+- Infrastructure / Detection Engineering: [`screenshots/`](screenshots/)
+- Operator: [`attacker/evidence/`](attacker/evidence/)
+- SOC: [`soc/evidence/`](soc/evidence/)
+- IR: [`ir/evidence/`](ir/evidence/)
+- Cross-role Evidence Center: [`evidence/README.md`](evidence/README.md)
+
+**Scenario 03 closeout:** ✅ COMPLETE

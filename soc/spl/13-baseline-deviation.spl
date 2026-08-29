@@ -1,0 +1,11 @@
+index=dns_soc_dns sourcetype=unbound:dns
+client_ip="10.50.30.20"
+earliest="08/28/2026:12:40:00"
+latest="08/28/2026:13:00:00"
+qtype="A"
+| stats count as dns_events by qname
+| eventstats avg(dns_events) as avg_events
+             stdev(dns_events) as stdev_events
+| eval deviation=round((dns_events-avg_events),2)
+| sort - dns_events
+| head 20

@@ -1,0 +1,2 @@
+| inputlookup fastflux_benign_domains.csv
+| search query_name="flux.soclab.abdul4rehman215.tech"

@@ -1,3 +1,5 @@
+> **Closeout note:** This is the Detection Engineering handoff that defined the evidence contract before the official run. Abdul-Rehman later completed the SOC investigation; see [`../soc/SOC-ANALYST-INVESTIGATION.md`](../soc/SOC-ANALYST-INVESTIGATION.md).
+
 # SOC Analyst Handoff — Scenario 03 Fast Flux DNS
 
 ## Alert

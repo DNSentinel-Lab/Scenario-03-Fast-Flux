@@ -1,0 +1,7 @@
+index=dns_soc_ai
+"flux.soclab.abdul4rehman215.tech"
+earliest="08/28/2026:12:45:00"
+latest="08/28/2026:13:05:00"
+| sort - _time
+| head 2
+| table _time _raw
