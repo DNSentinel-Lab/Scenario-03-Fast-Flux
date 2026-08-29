@@ -1,6 +1,6 @@
 <a id="top"></a>
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=26,20,14,6,1&height=190&section=header&text=%F0%9F%8E%AF%20Project%20Lead%20%26%20Fast%20Flux%20Operator&fontSize=34&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Scenario%2003%20%C2%B7%20Lubaba%20%C2%B7%20Controlled%20Rotation%20%2B%20Private%20Ground%20Truth&descSize=15&descAlignY=61&descColor=F59E0B" width="100%" alt="🎯 Project Lead & Fast Flux Operator" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=190&section=header&text=Project%20Lead%20and%20Fast%20Flux%20Operator&fontSize=34&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Scenario%2003%20-%20Lubaba%20-%20Controlled%20Rotation%20and%20Private%20Ground%20Truth&descSize=15&descAlignY=61" width="100%" alt="🎯 Project Lead & Fast Flux Operator" />
 
 <div align="center">
 
@@ -37,15 +37,55 @@ Lubaba owned the official Fast Flux execution boundary: artifact validation, aut
 ## 🔁 Operator Flow
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#050814",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#dbeafe",
+    "fontSize": "30px"
+  },
+  "flowchart": {
+    "nodeSpacing": 44,
+    "rankSpacing": 70,
+    "curve": "basis",
+    "padding": 20
+  }
+}}%%
+
 flowchart LR
-    A["🔐 Preflight"] --> B["🌐 Authoritative Baseline"]
-    B --> C["🔄 Start Controller"]
-    C --> D["🧭 Complete 3-Node Rotation"]
-    D --> E["🖥️ Victim Follow-Up"]
-    E --> F["🛑 Stop Victim"]
-    F --> G["🛑 Stop Controller"]
-    G --> H["🧾 Preserve Ground Truth"]
-    H --> I["🎭 Final Reveal"]
+
+    A["🔐 01 · PREFLIGHT"]
+    B["🌐 02 · AUTHORITATIVE<br/>BASELINE"]
+    C["⚙️ 03 · START<br/>CONTROLLER"]
+    D["🧭 04 · COMPLETE<br/>3-NODE ROTATION"]
+    E["🖥️ 05 · VICTIM<br/>FOLLOW-UP"]
+    F["🛑 06 · STOP<br/>VICTIM"]
+    G["🛑 07 · STOP<br/>CONTROLLER"]
+    H["🧾 08 · PRESERVE<br/>GROUND TRUTH"]
+    I["🎭 09 · FINAL<br/>REVEAL"]
+
+    A ==> B ==> C ==> D ==> E ==> F ==> G ==> H ==> I
+
+    classDef prep fill:#112b6b,stroke:#60a5fa,stroke-width:5px,color:#ffffff,font-size:30px;
+    classDef baseline fill:#063b56,stroke:#22d3ee,stroke-width:5px,color:#ffffff,font-size:30px;
+    classDef control fill:#4c1d95,stroke:#c084fc,stroke-width:5px,color:#ffffff,font-size:30px;
+    classDef rotation fill:#7c2d12,stroke:#fb923c,stroke-width:5px,color:#ffffff,font-size:30px;
+    classDef victim fill:#065f46,stroke:#4ade80,stroke-width:5px,color:#ffffff,font-size:30px;
+    classDef stop fill:#8b1e3f,stroke:#fb7185,stroke-width:5px,color:#ffffff,font-size:30px;
+    classDef preserve fill:#713f12,stroke:#facc15,stroke-width:5px,color:#ffffff,font-size:30px;
+    classDef reveal fill:#1e1b4b,stroke:#a78bfa,stroke-width:5px,color:#ffffff,font-size:30px;
+
+    class A prep;
+    class B baseline;
+    class C control;
+    class D rotation;
+    class E victim;
+    class F,G stop;
+    class H preserve;
+    class I reveal;
+
+    linkStyle default stroke:#e5f3ff,stroke-width:4px;
 ```
 
 ## 🖼️ Official Evidence Highlights
