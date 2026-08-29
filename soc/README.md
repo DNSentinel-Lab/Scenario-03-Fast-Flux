@@ -1,6 +1,6 @@
 <a id="top"></a>
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,12,20,24,26&height=190&section=header&text=%F0%9F%94%8E%20SOC%20Analyst%20%26%20Threat%20Hunting&fontSize=34&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Scenario%2003%20%C2%B7%20Abdul-Rehman%20%C2%B7%20Fast%20Flux%20Investigation&descSize=15&descAlignY=61&descColor=22D3EE" width="100%" alt="🔎 SOC Analyst & Threat Hunting" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=190&section=header&text=SOC%20Analyst%20and%20Threat%20Hunting&fontSize=34&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Scenario%2003%20-%20Abdul-Rehman%20-%20Fast%20Flux%20Investigation&descSize=15&descAlignY=61" width="100%" alt="🔎 SOC Analyst & Threat Hunting" />
 
 <div align="center">
 
@@ -40,15 +40,155 @@ Abdul-Rehman investigated the live Fast Flux alert **without operator ground tru
 ## 🔁 Investigation Path
 
 ```mermaid
+%%{init: {
+  "theme": "base",
+  "themeVariables": {
+    "background": "#030712",
+    "primaryTextColor": "#ffffff",
+    "lineColor": "#f8fafc",
+    "fontSize": "30px"
+  },
+  "flowchart": {
+    "nodeSpacing": 50,
+    "rankSpacing": 60,
+    "curve": "basis",
+    "padding": 22
+  }
+}}%%
+
 flowchart LR
-    A["🚨 Live Alert"] --> B["📡 Raw DNS"]
-    B --> C["🌐 VPC Flow"]
-    C --> D["🧹 Benign Lookup"]
-    D --> E["🎯 Client Scope"]
-    E --> F["📊 Baseline"]
-    F --> G["🤖 AI Challenge"]
-    G --> H["🧭 5W1H"]
-    H --> I["📨 IR Handoff"]
+
+    %% =====================================================
+    %% 1 · EVIDENCE INTAKE
+    %% =====================================================
+    subgraph EVIDENCE[" "]
+        direction TB
+
+        H1["🚨 1 · EVIDENCE INTAKE"]
+
+        A["🚨 LIVE ALERT<br/>Detection Trigger"]
+
+        B["📡 RAW DNS<br/>Resolver Evidence"]
+
+        C["🌐 VPC FLOW<br/>Network Evidence"]
+
+        H1 ==> A ==> B ==> C
+    end
+
+
+    %% =====================================================
+    %% 2 · BEHAVIOR ANALYSIS
+    %% =====================================================
+    subgraph ANALYSIS[" "]
+        direction TB
+
+        H2["🔎 2 · BEHAVIOR ANALYSIS"]
+
+        D["🧹 BENIGN LOOKUP<br/>Known-Safe Comparison"]
+
+        E["🎯 CLIENT SCOPE<br/>Affected Host / Source"]
+
+        F["📊 BASELINE<br/>Normal vs Current"]
+
+        H2 ==> D ==> E ==> F
+    end
+
+
+    %% =====================================================
+    %% 3 · DECISION + HANDOFF
+    %% =====================================================
+    subgraph DECISION[" "]
+        direction TB
+
+        H3["🛡️ 3 · DECISION + HANDOFF"]
+
+        G["🤖 AI CHALLENGE<br/>Question the Evidence"]
+
+        H["🧭 5W1H<br/>Who · What · When<br/>Where · Why · How"]
+
+        I["📨 IR HANDOFF<br/>Evidence-Backed Escalation"]
+
+        H3 ==> G ==> H ==> I
+    end
+
+
+    %% =====================================================
+    %% KEEP THE THREE COLUMNS PARALLEL
+    %% =====================================================
+    EVIDENCE ==> ANALYSIS
+    ANALYSIS ==> DECISION
+
+
+    %% =====================================================
+    %% PREMIUM NEON HEADERS
+    %% =====================================================
+    classDef evidenceHeader fill:#7f1d1d,stroke:#fb7185,stroke-width:7px,color:#ffffff,font-size:35px,font-weight:bold;
+
+    classDef analysisHeader fill:#075985,stroke:#67e8f9,stroke-width:7px,color:#ffffff,font-size:35px,font-weight:bold;
+
+    classDef decisionHeader fill:#4c1d95,stroke:#e879f9,stroke-width:7px,color:#ffffff,font-size:35px,font-weight:bold;
+
+    class H1 evidenceHeader;
+    class H2 analysisHeader;
+    class H3 decisionHeader;
+
+
+    %% =====================================================
+    %% EVIDENCE COLORS
+    %% =====================================================
+    classDef alert fill:#991b1b,stroke:#fb7185,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef dns fill:#0c4a6e,stroke:#22d3ee,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef flow fill:#172554,stroke:#60a5fa,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    class A alert;
+    class B dns;
+    class C flow;
+
+
+    %% =====================================================
+    %% ANALYSIS COLORS
+    %% =====================================================
+    classDef benign fill:#14532d,stroke:#4ade80,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef scope fill:#713f12,stroke:#fbbf24,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef baseline fill:#312e81,stroke:#a78bfa,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    class D benign;
+    class E scope;
+    class F baseline;
+
+
+    %% =====================================================
+    %% DECISION COLORS
+    %% =====================================================
+    classDef ai fill:#581c87,stroke:#f0abfc,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef fivew fill:#9a3412,stroke:#fb923c,stroke-width:6px,color:#ffffff,font-size:30px,font-weight:bold;
+
+    classDef handoff fill:#065f46,stroke:#86efac,stroke-width:7px,color:#ffffff,font-size:31px,font-weight:bold;
+
+    class G ai;
+    class H fivew;
+    class I handoff;
+
+
+    %% =====================================================
+    %% GLOSSY PANELS
+    %% =====================================================
+    style EVIDENCE fill:#17080c,stroke:#fb7185,stroke-width:4px
+
+    style ANALYSIS fill:#051521,stroke:#22d3ee,stroke-width:4px
+
+    style DECISION fill:#150821,stroke:#d946ef,stroke-width:4px
+
+
+    %% =====================================================
+    %% BRIGHT CONNECTORS
+    %% =====================================================
+    linkStyle default stroke:#f8fafc,stroke-width:6px;
 ```
 
 ## 🖼️ SOC Evidence Highlights
