@@ -16,7 +16,7 @@
 
 # 🖼️ Scenario 03 Screenshot Navigation
 
-The repository keeps screenshots **curated by purpose** rather than copying every capture into every role folder.
+The repository keeps screenshots **curated by purpose**.
 
 ## 🏗️ Engineering Visual Evidence
 
@@ -45,7 +45,7 @@ Official evidence remains inside the role workspace that owns it:
 
 > **A screenshot should answer a technical question.**
 
-Flagship documents use only the strongest images. The remaining curated artifacts stay available through the role evidence indexes and integrity manifests.
+Flagship documents use only the strongest images. The remaining curated artifacts stay available through the role evidence indexes.
 
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="section divider" />
 
