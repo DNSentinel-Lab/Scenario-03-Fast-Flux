@@ -40,8 +40,6 @@ Scenario 03 asks a deceptively simple question:
 
 The team built the answer in layers. Musfira engineered a rule that matched DNS-returned public addresses to the destinations actually contacted by the victim. Lubaba then ran the approved Fast Flux controller without using Splunk feedback to steer the outcome. Abdul-Rehman rebuilt the case from defender telemetry and escalated only what the evidence justified. Sonia independently strengthened DNS answer history, investigated endpoint context, and decided that containment was **not** proportionate because the activity was controlled and already inactive.
 
-This repository now records the complete case rather than only the engineering preparation.
-
 ## 🏁 Scenario 03 Closeout Snapshot
 
 <table>
