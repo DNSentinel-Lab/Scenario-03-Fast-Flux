@@ -79,7 +79,7 @@ This repository now records the complete case rather than only the engineering p
 | Ground-truth reveal + closeout | ✅ Complete | Team |
 
 > [!IMPORTANT]
-> Scenario 03 did **not** force a sinkhole action for portfolio appearance. IR concluded that the behavior was controlled, inactive, and did not justify an enforcing resolver-policy change. The absence of containment is itself an evidence-backed response decision.
+> In Scenario 03 sinkhole action was not implemented. IR concluded that the behavior was controlled, inactive, and did not justify an enforcing resolver-policy change. The absence of containment is itself an evidence-backed response decision.
 
 ## 👥 Four Roles · One Connected Case
 
@@ -347,7 +347,7 @@ flowchart LR
 | `dns-flux-node02` | `10.60.10.22` | `52.73.218.100` |
 | `dns-flux-node03` | `10.60.10.23` | `54.81.98.44` |
 
-These public IPs are **historical run evidence**, not permanent architecture constants. The three temporary flux EC2 nodes were stopped/deleted/reset after the exercise. The exact teardown timestamp was not part of the preserved evidence package, so this repository does not invent one.
+These public IPs are **historical run evidence**. The three temporary flux EC2 nodes were deleted after the exercise.
 
 ## 🎬 Official Operator Result
 
@@ -399,13 +399,13 @@ RFC1918 excluded
 known benign dynamic domains excluded by lookup
 ```
 
-The important tuning lesson was that ordinary AWS/Ubuntu/Splunk services also produced answer churn. The rule therefore detects **correlated behavior**, not simply “multiple A records.”
+The important tuning lesson was that ordinary AWS/Ubuntu/Splunk services also produced answer churn. The rule therefore detects **correlated behavior**.
 
 [Read Musfira's Detection Engineering story →](detection-engineering/DETECTION-ENGINEERING.md)
 
 ## 🔎 SOC Investigation — Evidence Before Verdict
 
-The live alert surfaced the scenario domain with three public IPs. Abdul-Rehman then rebuilt the case rather than accepting the alert as a verdict.
+The live alert surfaced the scenario domain with three public IPs. [Abdul Rehman](https://github.com/abdul4rehman215) then rebuilt the case rather than accepting the alert as a verdict.
 
 ### Key SOC findings
 
@@ -421,7 +421,7 @@ The live alert surfaced the scenario domain with three public IPs. Abdul-Rehman 
 | Next-highest A-query domain | **20** events |
 | AI validation | **Partially Correct** |
 
-The 37-versus-42 difference was preserved rather than forced to match; the manual investigation and production rule used different aggregation/window logic.
+The 37-versus-42 difference was preserved, the manual investigation and production rule used different aggregation/window logic.
 
 [Abdul-Rehman](https://github.com/abdul4rehman215) locked:
 
@@ -465,7 +465,7 @@ raw evidence
 - RPZ safe-state and Unbound health verification;
 - normal DNS verification from the victim.
 
-Sonia's final decision:
+[Sonia's](https://github.com/sonia11mansha415) final decision:
 
 > ## **CONTROLLED / EXPECTED SCENARIO ACTIVITY — NO CONTAINMENT REQUIRED**
 
@@ -496,7 +496,7 @@ Even without an enforcing change, IR verified that the environment was left safe
 
 > **Build → Rotate → Correlate → Detect → Investigate → Decide → Verify**
 
-The strongest evidence is curated here as a **visual proof layer**. The full role-owned evidence sets remain in their original folders with manifests and hashes.
+The strongest evidence is curated here as a **visual proof layer**. The full role-owned evidence sets remain in their original folders.
 
 ### 🏗️ Fast Flux Infrastructure Evidence
 
@@ -631,7 +631,7 @@ The SOC disposition remains professionally correct: process, user and authorizat
 | [`soc/`](soc/) | Abdul-Rehman's alert triage, investigation SPL, 5W1H, AI validation and IR handoff |
 | [`ir/`](ir/) | Sonia's independent validation, host/context investigation, response decision and safe-state proof |
 | [`exercise/`](exercise/) | information-separation protocol and final ground-truth comparison |
-| [`evidence/`](evidence/) | cross-role Evidence Center and integrity manifest |
+| [`evidence/`](evidence/) | cross-role Evidence Center |
 | [`spl/`](spl/) | canonical Detection Engineering SPL and tuning lookup |
 | [`dashboard/`](dashboard/) | final Scenario 03 Dashboard Studio JSON and panels |
 | [`ai/`](ai/) | Scenario 03 AI evidence contract and validation artifacts |
