@@ -184,9 +184,7 @@ The defenders had reached their decisions without these private operator timesta
 
 ## 🧹 12. Post-exercise cleanup
 
-The official controller and victim loop were stopped cleanly during the exercise. After the exercise, the three temporary Fast Flux EC2 nodes were stopped/deleted/reset as part of team closeout.
-
-The exact EC2 teardown timestamp was not included in the preserved role evidence, so the repository records the cleanup result without inventing a timestamp.
+The official controller and victim loop were stopped cleanly during the exercise. After the exercise, the three temporary Fast Flux EC2 nodes were deleted as part of team closeout.
 
 ## 🏁 ✅ Final outcome
 
