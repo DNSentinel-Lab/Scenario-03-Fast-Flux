@@ -122,9 +122,7 @@ IR verified:
 - controller stopped and process absence confirmed;
 - no Scenario 03 RPZ action required reset;
 - resolver/RPZ safe state independently verified;
-- three temporary flux EC2 nodes were stopped/deleted/reset after the exercise.
-
-The exact temporary-node teardown timestamp was not preserved in the attached evidence package and is not fabricated here.
+- three temporary flux EC2 nodes were deleted after the exercise.
 
 ## 🏁 16. Final comparison — ✅ Complete
 
